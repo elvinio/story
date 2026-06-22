@@ -47,14 +47,12 @@ MAX_RETRIES   = 3
 RETRY_DELAYS  = [2, 5, 10]
 
 
-def collect_nodes(story: dict) -> list[dict]:
+def collect_nodes(story: dict, fmt: str) -> list[dict]:
     """Return all nodes that need audio, in chapter order."""
     nodes = []
     for chapter in story.get("chapters", []):
         chapter_id = chapter["id"]
         for node in chapter.get("nodes", []):
-            if not node.get("audio"):
-                continue
             text = ""
             if node["type"] == "paragraph":
                 text = node.get("text", "").strip()
@@ -62,12 +60,14 @@ def collect_nodes(story: dict) -> list[dict]:
                 text = node.get("caption", "").strip()
             if not text:
                 continue
+            # Use existing audio path or derive one from chapter/node IDs
+            audio_path = node.get("audio") or f"audio/{chapter_id}-{node['id']}.{fmt}"
             nodes.append({
-                "id":        node["id"],
-                "type":      node["type"],
+                "id":         node["id"],
+                "type":       node["type"],
                 "chapter_id": chapter_id,
-                "audio_path": node["audio"],   # relative to story folder
-                "text":      text,
+                "audio_path": audio_path,
+                "text":       text,
             })
     return nodes
 
@@ -166,9 +166,9 @@ def main() -> None:
     story_dir = story_path.parent
     title = story.get("meta", {}).get("title", story_path.parent.name)
 
-    nodes = collect_nodes(story)
+    nodes = collect_nodes(story, args.format)
     if not nodes:
-        print("No audio nodes found in story.json (nodes need an 'audio' field with text).")
+        print("No audio nodes found in story.json (no paragraph or diagram nodes with text).")
         sys.exit(0)
 
     print(f"\nStory:   {title}")
@@ -213,6 +213,21 @@ def main() -> None:
                     if status == "ok":    ok_count    += 1
                     elif status == "skip": skip_count  += 1
                     else:                  error_count += 1
+
+    # Write audio paths back into story.json for any nodes that didn't have them
+    if not args.dry_run:
+        node_audio_map = {n["id"]: n["audio_path"] for n in nodes}
+        changed = False
+        for chapter in story.get("chapters", []):
+            for node in chapter.get("nodes", []):
+                if node["id"] in node_audio_map and not node.get("audio"):
+                    node["audio"] = node_audio_map[node["id"]]
+                    changed = True
+        if changed:
+            with story_path.open("w", encoding="utf-8") as f:
+                json.dump(story, f, indent=2, ensure_ascii=False)
+                f.write("\n")
+            print(f"Updated {story_path.name} with audio paths.")
 
     # Summary
     print()
