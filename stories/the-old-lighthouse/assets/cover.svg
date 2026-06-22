@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 320" width="240" height="320">
+  <!-- Sky gradient -->
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1a3a5c"/>
+      <stop offset="60%" stop-color="#2e6a9e"/>
+      <stop offset="100%" stop-color="#4a8ab5"/>
+    </linearGradient>
+    <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2a5f8a"/>
+      <stop offset="100%" stop-color="#1a3a5c"/>
+    </linearGradient>
+    <linearGradient id="beam" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fff8c0" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#fff8c0" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffe87a" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#ffe87a" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Sky -->
+  <rect width="240" height="220" fill="url(#sky)"/>
+
+  <!-- Stars -->
+  <circle cx="30" cy="25" r="1" fill="white" opacity="0.7"/>
+  <circle cx="80" cy="18" r="1.2" fill="white" opacity="0.6"/>
+  <circle cx="140" cy="30" r="0.9" fill="white" opacity="0.8"/>
+  <circle cx="200" cy="15" r="1.1" fill="white" opacity="0.5"/>
+  <circle cx="55" cy="50" r="0.8" fill="white" opacity="0.6"/>
+  <circle cx="175" cy="55" r="1" fill="white" opacity="0.7"/>
+  <circle cx="210" cy="42" r="0.7" fill="white" opacity="0.5"/>
+
+  <!-- Moon -->
+  <circle cx="195" cy="38" r="14" fill="#fff8e0" opacity="0.9"/>
+  <circle cx="201" cy="33" r="11" fill="#2e6a9e" opacity="0.85"/>
+
+  <!-- Storm clouds -->
+  <ellipse cx="60" cy="70" rx="45" ry="22" fill="#1a2e40" opacity="0.7"/>
+  <ellipse cx="95" cy="60" rx="38" ry="18" fill="#1a2e40" opacity="0.6"/>
+  <ellipse cx="40" cy="80" rx="30" ry="16" fill="#152535" opacity="0.8"/>
+
+  <!-- Light beam from lighthouse -->
+  <polygon points="120,148 220,90 240,100 240,140 180,160" fill="url(#beam)"/>
+
+  <!-- Sea -->
+  <rect x="0" y="215" width="240" height="105" fill="url(#sea)"/>
+
+  <!-- Wave lines -->
+  <path d="M0,230 Q30,224 60,230 Q90,236 120,230 Q150,224 180,230 Q210,236 240,230" fill="none" stroke="#4a8ab5" stroke-width="1.5" opacity="0.5"/>
+  <path d="M0,248 Q40,242 80,248 Q120,254 160,248 Q200,242 240,248" fill="none" stroke="#4a8ab5" stroke-width="1" opacity="0.4"/>
+  <path d="M0,265 Q35,260 70,265 Q105,270 140,265 Q175,260 210,265 Q230,268 240,265" fill="none" stroke="#3a7aaa" stroke-width="1" opacity="0.35"/>
+
+  <!-- Cliff / rocks -->
+  <path d="M85,220 L95,200 L105,215 L115,195 L130,215 L145,205 L155,215 L155,320 L85,320 Z" fill="#3d3020"/>
+  <path d="M0,240 L0,320 L90,320 L90,220 L75,230 L60,215 L45,228 L30,210 L15,225 Z" fill="#4a3a28"/>
+
+  <!-- Lighthouse tower -->
+  <!-- Base -->
+  <rect x="108" y="195" width="26" height="8" rx="2" fill="#b8a88a"/>
+  <!-- Tower body (slightly tapered) -->
+  <path d="M110,100 L112,195 L130,195 L132,100 Z" fill="#d4c4a8"/>
+  <!-- Tower stripes -->
+  <path d="M110,140 L132,140 L131,155 L111,155 Z" fill="#c8b090" opacity="0.6"/>
+  <!-- Tower outline -->
+  <path d="M110,100 L112,195 L130,195 L132,100" fill="none" stroke="#8b7040" stroke-width="1"/>
+  <!-- Window - middle -->
+  <rect x="116" y="165" width="10" height="12" rx="5" fill="#7ab0d4" stroke="#8b7040" stroke-width="0.8"/>
+  <!-- Window - upper -->
+  <rect x="117" y="125" width="8" height="10" rx="4" fill="#7ab0d4" stroke="#8b7040" stroke-width="0.8"/>
+
+  <!-- Lantern room -->
+  <rect x="107" y="82" width="28" height="20" rx="2" fill="#c8b090" stroke="#8b7040" stroke-width="1"/>
+  <!-- Lantern windows -->
+  <rect x="110" y="85" width="9" height="14" rx="1" fill="#ffe87a" opacity="0.9"/>
+  <rect x="123" y="85" width="9" height="14" rx="1" fill="#ffe87a" opacity="0.9"/>
+  <!-- Lamp glow -->
+  <ellipse cx="121" cy="92" rx="16" ry="10" fill="url(#glow)"/>
+  <!-- Dome cap -->
+  <polygon points="121,68 108,82 134,82" fill="#a89060" stroke="#8b7040" stroke-width="0.8"/>
+  <!-- Flag -->
+  <line x1="121" y1="68" x2="121" y2="55" stroke="#8b7040" stroke-width="1"/>
+  <polygon points="121,55 134,60 121,65" fill="#c84040"/>
+
+  <!-- Door -->
+  <rect x="116" y="183" width="10" height="12" rx="5" fill="#6b4c2a" stroke="#8b7040" stroke-width="0.8"/>
+
+  <!-- Title text -->
+  <rect x="0" y="272" width="240" height="48" fill="#1a2530" opacity="0.75"/>
+  <text x="120" y="293" text-anchor="middle" font-family="Georgia, serif" font-size="14" font-style="italic" fill="#f0e8d0">The Old Lighthouse</text>
+  <text x="120" y="310" text-anchor="middle" font-family="Georgia, serif" font-size="10" fill="#c0b090">by Mira Chen</text>
+</svg>

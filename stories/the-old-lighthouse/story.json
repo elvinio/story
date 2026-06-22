@@ -1,0 +1,102 @@
+{
+  "id": "the-old-lighthouse",
+  "version": 1,
+  "meta": {
+    "title": "The Old Lighthouse",
+    "subtitle": "A tale of the sea",
+    "author": "Mira Chen",
+    "coverImage": "assets/cover.svg",
+    "ageRange": "7-10",
+    "wordCount": 480,
+    "estimatedMinutes": 5,
+    "tags": ["adventure", "sea", "courage"]
+  },
+  "chapters": [
+    {
+      "id": "ch1",
+      "title": "The Storm Arrives",
+      "nodes": [
+        {
+          "type": "paragraph",
+          "id": "p1",
+          "text": "On the rocky shore of Pelican Bay stood a lighthouse so old that the seagulls thought it was part of the cliff. Its white walls were covered in soft green moss, and its red door had not been painted in twenty years. But every single night, without fail, its great lamp shone out across the dark sea.",
+          "audio": "audio/ch1-p1.mp3"
+        },
+        {
+          "type": "paragraph",
+          "id": "p2",
+          "text": "Keeper Doris had lived in the lighthouse for thirty years. Every evening she climbed the one hundred and twelve spiral stairs, a lantern swinging in one hand and a thermos of hot tea in the other. She knew every creak of every step.",
+          "audio": "audio/ch1-p2.mp3"
+        },
+        {
+          "type": "diagram",
+          "id": "d1",
+          "caption": "Inside the Old Lighthouse — click each floor to find out more",
+          "altText": "A cross-section of the lighthouse showing four floors: the base room, the oil room, the watch room, and the lamp room at the top.",
+          "svgFile": "diagrams/lighthouse-cross-section.svg",
+          "audio": "audio/ch1-d1.mp3"
+        },
+        {
+          "type": "paragraph",
+          "id": "p3",
+          "text": "On the night of the great storm, dark clouds rolled in from the west like a curtain being pulled across the sky. The wind howled through the cracks in the old walls. Then, with a crack and a fizz, the great lamp went dark.",
+          "audio": "audio/ch1-p3.mp3"
+        },
+        {
+          "type": "paragraph",
+          "id": "p4",
+          "text": "Doris gasped. Without the light, ships out at sea would not know where the sharp rocks were. She could already hear the waves crashing louder and louder below. She had to do something — and fast.",
+          "audio": "audio/ch1-p4.mp3"
+        }
+      ]
+    },
+    {
+      "id": "ch2",
+      "title": "The Hand-Crank Lamp",
+      "nodes": [
+        {
+          "type": "paragraph",
+          "id": "p5",
+          "text": "Doris rushed to the old wooden chest that sat under the stairs. She threw it open and dug through old rope, oilcans, and dusty maps. At the very bottom, wrapped in a piece of sailcloth, was her grandfather's hand-crank lamp.",
+          "audio": "audio/ch2-p5.mp3"
+        },
+        {
+          "type": "paragraph",
+          "id": "p6",
+          "text": "She carried the lamp up all one hundred and twelve stairs as fast as her tired legs would take her. Her hands shook as she set it on the windowsill of the watch room. She began to crank — slowly at first, then faster and faster.",
+          "audio": "audio/ch2-p6.mp3"
+        },
+        {
+          "type": "paragraph",
+          "id": "p7",
+          "text": "For a long moment, nothing happened. Then a pale, wavering light flickered to life. It was not as bright as the great lamp — but it was something. Doris kept cranking, her arms aching, her breath coming in short puffs.",
+          "audio": "audio/ch2-p7.mp3"
+        }
+      ]
+    },
+    {
+      "id": "ch3",
+      "title": "A Light in the Dark",
+      "nodes": [
+        {
+          "type": "paragraph",
+          "id": "p8",
+          "text": "Far out at sea, the captain of the fishing boat Seagull spotted a tiny light bobbing on the shore. \"Hard to port!\" she shouted, and the crew leaned on the wheel with all their strength. The boat swung away from the rocks just in time.",
+          "audio": "audio/ch3-p8.mp3"
+        },
+        {
+          "type": "paragraph",
+          "id": "p9",
+          "text": "All through the long, wild night, Doris kept cranking. Her arms ached so much she could barely feel them. But she did not stop. Not once. Because somewhere out there, in the dark and the rain, sailors were counting on her light.",
+          "audio": "audio/ch3-p9.mp3"
+        },
+        {
+          "type": "paragraph",
+          "id": "p10",
+          "text": "When morning came at last, the storm was gone. Doris looked out from the top of the lighthouse. In the bay below, three fishing boats sat safely at anchor. Their crews waved up at her, and she waved back with both arms. Then she sat down on the cold stone floor, closed her eyes, and slept.",
+          "audio": "audio/ch3-p10.mp3"
+        }
+      ]
+    }
+  ]
+}
