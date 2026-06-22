@@ -1,3 +1,39 @@
+// Supported formats in preference order for tryFormats fallback.
+// Opus (.opus) and OGG Vorbis (.ogg) are both carried in the Ogg container.
+// All modern browsers (Chrome 33+, Firefox 15+, Edge 14+) support Opus.
+// Safari supports Opus from v11+ (macOS High Sierra / iOS 11).
+const FORMAT_FALLBACKS = {
+  'opus': ['opus', 'ogg', 'mp3'],
+  'ogg':  ['ogg',  'opus', 'mp3'],
+  'mp3':  ['mp3',  'opus', 'ogg'],
+};
+
+const MIME = {
+  opus: 'audio/ogg; codecs=opus',
+  ogg:  'audio/ogg; codecs=vorbis',
+  mp3:  'audio/mpeg',
+};
+
+function canPlay(ext) {
+  const probe = document.createElement('audio');
+  return probe.canPlayType(MIME[ext] || '') !== '';
+}
+
+// Build the best src to try given a raw audio path.
+// If the browser can't play the file's native format, swap the extension to
+// the first supported alternative (useful when serving both opus and mp3).
+function resolveSrc(rawSrc) {
+  const ext = rawSrc.split('.').pop().toLowerCase();
+  const base = rawSrc.slice(0, rawSrc.lastIndexOf('.'));
+  const fallbacks = FORMAT_FALLBACKS[ext] || [ext];
+  for (const fmt of fallbacks) {
+    if (canPlay(fmt)) {
+      return fmt === ext ? rawSrc : `${base}.${fmt}`;
+    }
+  }
+  return rawSrc; // let the browser decide and error naturally
+}
+
 function dispatch(name, detail) {
   document.dispatchEvent(new CustomEvent('audioplayer:' + name, { detail }));
 }
@@ -7,7 +43,6 @@ export class AudioPlayer {
     this._audio = new Audio();
     this._queue = [];   // [{ id, audioSrc, text }]
     this._index = -1;
-    this._loading = false;
 
     this._audio.addEventListener('ended', () => this._advance());
     this._audio.addEventListener('timeupdate', () => {
@@ -21,7 +56,6 @@ export class AudioPlayer {
     this._audio.addEventListener('pause', () =>
       dispatch('playerstate', { playing: false }));
     this._audio.addEventListener('error', () => {
-      // Audio file missing or unplayable — emit error so UI can reflect it
       dispatch('playerstate', { playing: false, audioMissing: true });
     });
   }
@@ -73,7 +107,7 @@ export class AudioPlayer {
     if (!node) return;
     dispatch('nodestart', { nodeId: node.id, nodeText: node.text });
     this._audio.pause();
-    this._audio.src = node.audioSrc;
+    this._audio.src = resolveSrc(node.audioSrc);
     this._audio.load();
     this._audio.play().catch(err => {
       // AbortError fires when load() interrupts an in-progress play — safe to ignore
