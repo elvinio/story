@@ -1,0 +1,11 @@
+[
+  {
+    "id": "the-old-lighthouse",
+    "title": "The Old Lighthouse",
+    "author": "Mira Chen",
+    "coverImage": "stories/the-old-lighthouse/assets/cover.svg",
+    "ageRange": "7–10",
+    "estimatedMinutes": 5,
+    "tags": ["adventure", "sea", "courage"]
+  }
+]

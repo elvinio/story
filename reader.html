@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Story Reader</title>
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/reader.css">
+</head>
+<body class="reader-page">
+
+  <header class="reader-header">
+    <a href="index.html" class="back-btn" aria-label="Back to library" title="Back to library">&#8592;</a>
+    <h1 id="story-title" class="reader-title">Loading&hellip;</h1>
+    <div class="header-actions">
+      <button class="icon-btn" id="toc-toggle" aria-label="Toggle chapters" title="Chapters">&#9776;</button>
+      <button class="icon-btn" id="settings-btn" aria-label="Reading settings" title="Settings">&#9881;</button>
+    </div>
+  </header>
+
+  <div class="reader-layout">
+
+    <aside id="chapter-toc" class="toc-panel" aria-label="Chapters" hidden>
+      <p class="toc-panel-title">Chapters</p>
+      <nav class="toc-nav" id="toc-nav"></nav>
+    </aside>
+
+    <main id="reader-viewport">
+      <article id="story-content" aria-live="polite">
+        <p style="font-style:italic;opacity:0.5;padding:2rem 0;">Loading story&hellip;</p>
+      </article>
+    </main>
+
+  </div>
+
+  <!-- Audio bar (hidden until first play) -->
+  <footer class="audio-bar" id="audio-bar" hidden aria-label="Audio controls">
+    <div class="audio-bar-info" id="audio-node-preview" aria-live="polite"></div>
+
+    <div class="audio-bar-controls">
+      <button class="audio-ctrl-btn" id="audio-prev" aria-label="Previous paragraph" title="Previous">&#9664;&#9664;</button>
+      <button class="audio-ctrl-btn play-pause" id="audio-play-pause" aria-label="Play">&#9654;</button>
+      <button class="audio-ctrl-btn" id="audio-next" aria-label="Next paragraph" title="Next">&#9654;&#9654;</button>
+    </div>
+
+    <div class="audio-bar-progress" aria-label="Progress">
+      <div class="audio-progress-track"
+           role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"
+           id="audio-progress-bar">
+        <div class="audio-progress-fill" id="audio-progress-fill"></div>
+      </div>
+    </div>
+
+    <select class="audio-speed-select" id="playback-speed" aria-label="Playback speed">
+      <option value="0.75">0.75&times;</option>
+      <option value="1" selected>1&times;</option>
+      <option value="1.25">1.25&times;</option>
+      <option value="1.5">1.5&times;</option>
+    </select>
+  </footer>
+
+  <!-- Settings dialog (identical markup on every page) -->
+  <dialog id="settings-panel" aria-label="Reading settings">
+    <div class="settings-header">
+      <h2>Reading Settings</h2>
+      <button class="settings-close-btn" id="settings-close" aria-label="Close settings">&#10005;</button>
+    </div>
+    <div class="settings-body">
+
+      <div class="setting-row">
+        <div class="setting-row-label">
+          <span>Font Size</span>
+          <span class="setting-value" id="font-size-value"></span>
+        </div>
+        <input type="range" id="setting-font-size" min="14" max="26" step="1" aria-label="Font size">
+      </div>
+
+      <div class="setting-row">
+        <div class="setting-row-label"><span>Font</span></div>
+        <select id="setting-font-family" aria-label="Font family">
+          <option value="Georgia, 'Times New Roman', serif">Georgia (Classic)</option>
+          <option value="Palatino, 'Palatino Linotype', 'Book Antiqua', serif">Palatino (Elegant)</option>
+          <option value="'Book Antiqua', Palatino, serif">Book Antiqua</option>
+          <option value="Verdana, Geneva, sans-serif">Verdana (Easy to read)</option>
+        </select>
+      </div>
+
+      <div class="setting-row">
+        <div class="setting-row-label">
+          <span>Background Warmth</span>
+          <span class="setting-value" id="warmth-value"></span>
+        </div>
+        <input type="range" id="setting-warmth" min="0" max="100" step="1" aria-label="Background warmth">
+      </div>
+
+      <div class="setting-row">
+        <div class="setting-row-label">
+          <span>Line Height</span>
+          <span class="setting-value" id="line-height-value"></span>
+        </div>
+        <input type="range" id="setting-line-height" min="14" max="24" step="1" aria-label="Line height">
+      </div>
+
+      <div class="setting-row">
+        <div class="setting-row-label">
+          <span>Paragraph Spacing</span>
+          <span class="setting-value" id="paragraph-gap-value"></span>
+        </div>
+        <input type="range" id="setting-paragraph-gap" min="5" max="22" step="1" aria-label="Paragraph spacing">
+      </div>
+
+    </div>
+    <div class="settings-footer">
+      <button class="settings-reset-btn" id="settings-reset">Reset to defaults</button>
+    </div>
+  </dialog>
+
+  <script type="module" src="js/settings.js"></script>
+  <script type="module" src="js/audio-player.js"></script>
+  <script type="module" src="js/scroll-tracker.js"></script>
+  <script type="module" src="js/reader.js"></script>
+</body>
+</html>

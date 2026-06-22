@@ -1,0 +1,213 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 500" style="max-width:100%;height:auto;font-family:Georgia,serif;">
+  <defs>
+    <style>
+      .floor-zone { fill: #d4c4a8; stroke: #8b6914; stroke-width: 1.2; cursor: pointer; }
+      .floor-zone:hover { fill: #e6d5b0; }
+      .floor-zone.active { fill: #f5d87a; }
+      .sep { fill: #a08040; }
+      .window-glass { fill: #9ecae1; stroke: #8b6914; stroke-width: 0.8; }
+      .door-fill { fill: #6b4c2a; stroke: #8b6914; stroke-width: 0.8; }
+      .lamp-glow { fill: #ffe87a; }
+      .structure { fill: #c0a870; stroke: #8b6914; stroke-width: 1.5; }
+      .label { font-size: 12px; fill: #3b2f1e; cursor: pointer; }
+      .label.active { fill: #8b6914; font-weight: bold; }
+      .label-line { stroke: #8b6914; stroke-width: 0.7; stroke-dasharray: 3,2; opacity: 0.55; }
+      .hint { font-size: 11px; fill: #8b6914; font-style: italic; }
+      .desc-title { font-size: 13px; fill: #3b2f1e; font-weight: bold; }
+      .desc-body { font-size: 11.5px; fill: #3b2f1e; }
+      .floor-num { font-size: 10px; fill: #8b6914; text-anchor: middle; opacity: 0.7; }
+    </style>
+  </defs>
+
+  <!-- ── Lighthouse cross-section ── -->
+
+  <!-- Dome cap -->
+  <polygon points="200,38 178,66 222,66" class="structure"/>
+  <!-- Flag pole -->
+  <line x1="200" y1="28" x2="200" y2="38" stroke="#8b6914" stroke-width="1.2"/>
+  <polygon points="200,28 214,33 200,38" fill="#c84040"/>
+
+  <!-- Lantern gallery rail -->
+  <rect x="172" y="63" width="56" height="5" class="structure"/>
+
+  <!-- ── Floor 4: Lamp Room (y 68–130) ── -->
+  <g id="floor-lamp" role="button" aria-label="Lamp Room" tabindex="0" onclick="lhSelect('lamp')" onkeydown="if(event.key==='Enter')lhSelect('lamp')">
+    <rect x="178" y="68" width="44" height="62" class="floor-zone" id="zone-lamp"/>
+    <!-- Big lamp -->
+    <circle cx="200" cy="95" r="16" class="lamp-glow" opacity="0.75"/>
+    <circle cx="200" cy="95" r="8" fill="#fff8a0"/>
+    <!-- Lens lines -->
+    <line x1="200" y1="79" x2="200" y2="111" stroke="#d4a017" stroke-width="0.7" opacity="0.6"/>
+    <line x1="184" y1="95" x2="216" y2="95" stroke="#d4a017" stroke-width="0.7" opacity="0.6"/>
+    <!-- Lantern windows -->
+    <rect x="180" y="73" width="10" height="20" rx="5" class="window-glass"/>
+    <rect x="210" y="73" width="10" height="20" rx="5" class="window-glass"/>
+    <!-- Floor number -->
+    <text x="200" y="127" class="floor-num">4</text>
+  </g>
+  <!-- Floor separator -->
+  <rect x="174" y="130" width="52" height="5" class="sep"/>
+
+  <!-- ── Floor 3: Watch Room (y 135–210) ── -->
+  <g id="floor-watch" role="button" aria-label="Watch Room" tabindex="0" onclick="lhSelect('watch')" onkeydown="if(event.key==='Enter')lhSelect('watch')">
+    <rect x="174" y="135" width="52" height="75" class="floor-zone" id="zone-watch"/>
+    <!-- Round porthole window -->
+    <circle cx="200" cy="165" r="13" class="window-glass"/>
+    <circle cx="200" cy="165" r="10" fill="#9ecae1" opacity="0.7"/>
+    <line x1="200" y1="152" x2="200" y2="178" stroke="#8b6914" stroke-width="0.7" opacity="0.5"/>
+    <line x1="187" y1="165" x2="213" y2="165" stroke="#8b6914" stroke-width="0.7" opacity="0.5"/>
+    <!-- Small desk item (telescope) -->
+    <rect x="184" y="195" width="18" height="4" rx="2" fill="#8b6914" opacity="0.5"/>
+    <!-- Floor number -->
+    <text x="200" y="207" class="floor-num">3</text>
+  </g>
+  <!-- Floor separator -->
+  <rect x="172" y="210" width="56" height="5" class="sep"/>
+
+  <!-- ── Floor 2: Oil Room (y 215–290) ── -->
+  <g id="floor-oil" role="button" aria-label="Oil Room" tabindex="0" onclick="lhSelect('oil')" onkeydown="if(event.key==='Enter')lhSelect('oil')">
+    <rect x="172" y="215" width="56" height="75" class="floor-zone" id="zone-oil"/>
+    <!-- Oil barrels -->
+    <ellipse cx="188" cy="228" rx="7" ry="5" fill="#8b6914" opacity="0.4"/>
+    <rect x="181" y="228" width="14" height="22" rx="3" fill="#a07030" opacity="0.5" stroke="#8b6914" stroke-width="0.6"/>
+    <ellipse cx="188" cy="250" rx="7" ry="4" fill="#8b6914" opacity="0.4"/>
+    <!-- Second barrel -->
+    <ellipse cx="208" cy="228" rx="7" ry="5" fill="#8b6914" opacity="0.4"/>
+    <rect x="201" y="228" width="14" height="22" rx="3" fill="#a07030" opacity="0.45" stroke="#8b6914" stroke-width="0.6"/>
+    <ellipse cx="208" cy="250" rx="7" ry="4" fill="#8b6914" opacity="0.4"/>
+    <!-- Small window -->
+    <rect x="192" y="258" width="14" height="18" rx="4" class="window-glass"/>
+    <!-- Floor number -->
+    <text x="200" y="285" class="floor-num">2</text>
+  </g>
+  <!-- Floor separator -->
+  <rect x="170" y="290" width="60" height="5" class="sep"/>
+
+  <!-- ── Floor 1: Base Room (y 295–390) ── -->
+  <g id="floor-base" role="button" aria-label="Base Room" tabindex="0" onclick="lhSelect('base')" onkeydown="if(event.key==='Enter')lhSelect('base')">
+    <rect x="168" y="295" width="64" height="95" class="floor-zone" id="zone-base"/>
+    <!-- Windows -->
+    <rect x="173" y="308" width="16" height="18" rx="4" class="window-glass"/>
+    <rect x="211" y="308" width="16" height="18" rx="4" class="window-glass"/>
+    <!-- Fireplace -->
+    <rect x="191" y="333" width="18" height="22" rx="2" fill="#6b4c2a" opacity="0.5" stroke="#8b6914" stroke-width="0.7"/>
+    <path d="M193,350 Q200,340 207,350" fill="#e85020" opacity="0.5"/>
+    <!-- Small bed -->
+    <rect x="172" y="360" width="26" height="14" rx="3" fill="#c8a880" opacity="0.5" stroke="#8b6914" stroke-width="0.6"/>
+    <!-- Floor number -->
+    <text x="200" y="383" class="floor-num">1</text>
+  </g>
+
+  <!-- Foundation base -->
+  <rect x="158" y="390" width="84" height="12" rx="3" class="structure"/>
+
+  <!-- Tower outline (borders over the floor zones) -->
+  <rect x="168" y="68" width="64" height="322" fill="none" stroke="#8b6914" stroke-width="1.8"/>
+
+  <!-- ── Labels (left side) ── -->
+  <line x1="178" y1="99" x2="145" y2="99" class="label-line"/>
+  <text x="140" y="103" text-anchor="end" class="label" id="lbl-lamp">Lamp Room</text>
+
+  <line x1="174" y1="172" x2="145" y2="172" class="label-line"/>
+  <text x="140" y="176" text-anchor="end" class="label" id="lbl-watch">Watch Room</text>
+
+  <line x1="172" y1="252" x2="145" y2="252" class="label-line"/>
+  <text x="140" y="256" text-anchor="end" class="label" id="lbl-oil">Oil Room</text>
+
+  <line x1="168" y1="342" x2="145" y2="342" class="label-line"/>
+  <text x="140" y="346" text-anchor="end" class="label" id="lbl-base">Base Room</text>
+
+  <!-- ── Description panel ── -->
+  <rect id="desc-bg" x="8" y="414" width="404" height="80" rx="9"
+        fill="#f5efe6" stroke="#d4a017" stroke-width="1" opacity="0" pointer-events="none"/>
+  <text id="desc-title" x="22" y="434" class="desc-title" opacity="0" pointer-events="none"></text>
+  <text id="desc-l1"    x="22" y="452" class="desc-body"  opacity="0" pointer-events="none"></text>
+  <text id="desc-l2"    x="22" y="468" class="desc-body"  opacity="0" pointer-events="none"></text>
+  <text id="desc-l3"    x="22" y="484" class="desc-body"  opacity="0" pointer-events="none"></text>
+
+  <!-- Hint text (visible before any floor selected) -->
+  <text id="lh-hint" x="210" y="453" text-anchor="middle" class="hint">Tap a floor to learn more</text>
+
+  <script>
+    var lhFloors = {
+      lamp: {
+        label: 'lbl-lamp', zone: 'zone-lamp', group: 'floor-lamp',
+        title: 'The Lamp Room',
+        lines: ['At the very top is the great lamp.', 'A huge glass lens spins around it, sending beams of light far out to sea.', 'Ships use the light to stay away from the dangerous rocks below.']
+      },
+      watch: {
+        label: 'lbl-watch', zone: 'zone-watch', group: 'floor-watch',
+        title: 'The Watch Room',
+        lines: ['The keeper stands here and watches the sea through the big round window.', 'There is a logbook, a telephone, and a brass telescope on the desk.', 'On stormy nights, Doris spent many hours at this window.']
+      },
+      oil: {
+        label: 'lbl-oil', zone: 'zone-oil', group: 'floor-oil',
+        title: 'The Oil Room',
+        lines: ['Big metal tanks store the oil that keeps the lamp burning.', 'The keeper carries oil up the stairs every single day.', 'It always smells of lamp oil and old wood up here.']
+      },
+      base: {
+        label: 'lbl-base', zone: 'zone-base', group: 'floor-base',
+        title: 'The Base Room',
+        lines: ["This is where Keeper Doris eats, sleeps, and keeps warm.", 'There is a small kitchen, a narrow bed, and a stone fireplace.', 'The thick walls keep out even the wildest winter storms.']
+      }
+    };
+
+    var lhCurrent = null;
+
+    function lhShow(id, visible) {
+      var el = document.getElementById(id);
+      if (el) el.setAttribute('opacity', visible ? '1' : '0');
+    }
+
+    function lhText(id, text) {
+      var el = document.getElementById(id);
+      if (el) el.textContent = text || '';
+    }
+
+    function lhClass(id, add, cls) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      if (add) el.classList.add(cls);
+      else el.classList.remove(cls);
+    }
+
+    function lhSelect(id) {
+      if (lhCurrent) {
+        var prev = lhFloors[lhCurrent];
+        lhClass(prev.zone, false, 'active');
+        lhClass(prev.label, false, 'active');
+      }
+
+      if (lhCurrent === id) {
+        lhCurrent = null;
+        lhShow('desc-bg', false);
+        lhShow('desc-title', false);
+        lhShow('desc-l1', false);
+        lhShow('desc-l2', false);
+        lhShow('desc-l3', false);
+        lhShow('lh-hint', true);
+        return;
+      }
+
+      lhCurrent = id;
+      var f = lhFloors[id];
+      lhClass(f.zone, true, 'active');
+      lhClass(f.label, true, 'active');
+
+      lhShow('lh-hint', false);
+      lhShow('desc-bg', true);
+
+      lhText('desc-title', f.title);
+      lhShow('desc-title', true);
+
+      lhText('desc-l1', f.lines[0] || '');
+      lhShow('desc-l1', !!f.lines[0]);
+
+      lhText('desc-l2', f.lines[1] || '');
+      lhShow('desc-l2', !!f.lines[1]);
+
+      lhText('desc-l3', f.lines[2] || '');
+      lhShow('desc-l3', !!f.lines[2]);
+    }
+  </script>
+</svg>

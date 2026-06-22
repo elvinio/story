@@ -1,0 +1,376 @@
+/* ── Page layout ─────────────────────────────────── */
+
+.reader-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ── Header ──────────────────────────────────────── */
+
+.reader-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.7rem 1.4rem;
+  background-color: var(--reader-bg);
+  border-bottom: 1px solid var(--ui-border);
+  box-shadow: 0 2px 10px var(--ui-shadow);
+  min-height: 52px;
+  transition: background-color 0.3s;
+}
+
+.back-btn {
+  text-decoration: none;
+  color: var(--ui-accent);
+  font-size: 1.4rem;
+  line-height: 1;
+  flex-shrink: 0;
+  padding: 0.2rem 0.4rem;
+  border-radius: 5px;
+  transition: background 0.15s;
+}
+
+.back-btn:hover {
+  background: var(--ui-accent-light);
+}
+
+.reader-title {
+  flex: 1;
+  font-size: 0.95rem;
+  font-weight: normal;
+  font-style: italic;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--reader-text);
+  opacity: 0.8;
+}
+
+.header-actions {
+  display: flex;
+  gap: 0.45rem;
+  flex-shrink: 0;
+}
+
+/* ── Content layout ──────────────────────────────── */
+
+.reader-layout {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* ── TOC sidebar ─────────────────────────────────── */
+
+.toc-panel {
+  width: 210px;
+  flex-shrink: 0;
+  padding: 1.4rem 1rem 2rem;
+  border-right: 1px solid var(--ui-border);
+  overflow-y: auto;
+  background-color: var(--reader-bg);
+  transition: background-color 0.3s;
+}
+
+.toc-panel-title {
+  font-size: 0.7rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0.5;
+  margin-bottom: 0.8rem;
+}
+
+.toc-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.toc-nav a {
+  color: var(--ui-accent);
+  text-decoration: none;
+  font-size: 0.88rem;
+  padding: 0.35rem 0.6rem;
+  border-radius: 5px;
+  display: block;
+  opacity: 0.8;
+  transition: background 0.15s, opacity 0.15s;
+}
+
+.toc-nav a:hover {
+  background: var(--ui-accent-light);
+  opacity: 1;
+}
+
+/* ── Main reading viewport ───────────────────────── */
+
+#reader-viewport {
+  flex: 1;
+  overflow-y: auto;
+  padding: 2.5rem 2rem 5rem;
+  display: flex;
+  justify-content: center;
+  scroll-behavior: smooth;
+}
+
+#story-content {
+  width: 100%;
+  max-width: var(--reader-max-width);
+}
+
+.reader-page.audio-active #reader-viewport {
+  padding-bottom: 5.5rem;
+}
+
+/* ── Chapter heading ─────────────────────────────── */
+
+.chapter-title {
+  font-size: 1.3rem;
+  font-weight: normal;
+  font-style: italic;
+  margin: 2.5rem 0 1.6rem;
+  color: var(--ui-accent);
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--ui-border);
+  scroll-margin-top: 60px;
+}
+
+.chapter-title:first-child {
+  margin-top: 0.5rem;
+}
+
+/* ── Story nodes ─────────────────────────────────── */
+
+.story-node {
+  position: relative;
+  margin-bottom: var(--reader-paragraph-gap);
+  padding: 0.5rem 0.5rem 0.5rem 1.1rem;
+  border-left: 3px solid transparent;
+  border-radius: 0 5px 5px 0;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.story-node.is-narrating {
+  border-left-color: var(--narrating-border);
+  background-color: var(--narrating-bg);
+}
+
+.story-node.is-resume-point {
+  border-left-color: var(--ui-accent);
+  background-color: var(--ui-accent-light);
+}
+
+/* ── Paragraph node ──────────────────────────────── */
+
+.node-paragraph p {
+  font-size: var(--reader-font-size);
+  font-family: var(--reader-font-family);
+  line-height: var(--reader-line-height);
+  color: var(--reader-text);
+}
+
+/* ── Play-from-here button ───────────────────────── */
+
+.play-from-here {
+  position: absolute;
+  left: -1.6rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: var(--reader-bg);
+  border: 1px solid var(--ui-border);
+  border-radius: 50%;
+  width: 1.5rem;
+  height: 1.5rem;
+  font-size: 0.6rem;
+  cursor: pointer;
+  color: var(--ui-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.18s, border-color 0.18s;
+  padding-left: 1px;
+}
+
+.story-node:hover .play-from-here,
+.story-node:focus-within .play-from-here {
+  opacity: 1;
+}
+
+.story-node.is-narrating .play-from-here {
+  opacity: 1;
+  border-color: var(--narrating-border);
+}
+
+/* ── Diagram node ────────────────────────────────── */
+
+.node-diagram {
+  margin-top: 0.5rem;
+  margin-bottom: calc(var(--reader-paragraph-gap) + 0.5rem);
+}
+
+.node-diagram figure {
+  padding: 1.25rem 1.25rem 1rem;
+  background: rgba(59, 47, 30, 0.03);
+  border: 1px solid var(--ui-border);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.diagram-svg-wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.diagram-svg-wrapper svg {
+  max-width: 100%;
+  height: auto;
+}
+
+.node-diagram figcaption {
+  text-align: center;
+  font-style: italic;
+  font-size: 0.88rem;
+  color: var(--reader-text);
+  opacity: 0.72;
+}
+
+/* ── Audio bar ───────────────────────────────────── */
+
+.audio-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 200;
+  background-color: var(--reader-bg);
+  border-top: 1px solid var(--ui-border);
+  box-shadow: 0 -3px 14px var(--ui-shadow);
+  padding: 0 1.4rem;
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  height: 58px;
+  transition: background-color 0.3s;
+}
+
+.audio-bar-info {
+  flex: 1;
+  min-width: 0;
+  font-size: 0.8rem;
+  font-style: italic;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  opacity: 0.65;
+}
+
+.audio-bar-controls {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.audio-ctrl-btn {
+  background: none;
+  border: 1px solid var(--ui-border);
+  border-radius: 7px;
+  padding: 0.35rem 0.7rem;
+  font-size: 0.95rem;
+  cursor: pointer;
+  color: var(--reader-text);
+  line-height: 1;
+  transition: background 0.15s;
+  min-width: 2.2rem;
+  text-align: center;
+}
+
+.audio-ctrl-btn:hover {
+  background: var(--ui-border);
+}
+
+.audio-ctrl-btn.play-pause {
+  min-width: 2.6rem;
+  font-size: 1rem;
+}
+
+.audio-bar-progress {
+  width: 130px;
+  flex-shrink: 0;
+}
+
+.audio-progress-track {
+  height: 4px;
+  background: rgba(59, 47, 30, 0.12);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.audio-progress-fill {
+  height: 100%;
+  background: var(--ui-accent);
+  width: 0%;
+  transition: width 0.15s linear;
+  border-radius: 2px;
+}
+
+.audio-speed-select {
+  background: none;
+  border: 1px solid var(--ui-border);
+  border-radius: 7px;
+  padding: 0.3rem 0.45rem;
+  font-size: 0.78rem;
+  color: var(--reader-text);
+  cursor: pointer;
+  flex-shrink: 0;
+  font-family: var(--reader-font-family);
+}
+
+/* ── Responsive ──────────────────────────────────── */
+
+@media (max-width: 640px) {
+  .toc-panel {
+    display: none;
+  }
+
+  .toc-panel.toc-open {
+    display: block;
+    position: fixed;
+    top: 52px;
+    left: 0;
+    bottom: 0;
+    z-index: 150;
+    width: 240px;
+    box-shadow: 4px 0 20px var(--ui-shadow);
+  }
+
+  #reader-viewport {
+    padding: 1.5rem 1.1rem 5rem;
+  }
+
+  .audio-bar-info {
+    display: none;
+  }
+
+  .audio-bar-progress {
+    width: 80px;
+  }
+
+  .play-from-here {
+    left: -1.2rem;
+    width: 1.3rem;
+    height: 1.3rem;
+    font-size: 0.55rem;
+    opacity: 1;
+  }
+}

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Story Library</title>
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/library.css">
+</head>
+<body class="library-page">
+
+  <header class="library-header">
+    <div class="library-logo">
+      <span class="library-logo-title">Story Library</span>
+      <span class="library-logo-sub">Stories for young readers</span>
+    </div>
+    <button class="icon-btn" id="settings-btn" aria-label="Open reading settings">&#9881;</button>
+  </header>
+
+  <main class="library-main">
+    <h2 class="library-section-title">Choose a story</h2>
+    <div id="library-grid">
+      <p class="library-empty">Loading stories&hellip;</p>
+    </div>
+  </main>
+
+  <!-- Settings dialog (identical markup on every page) -->
+  <dialog id="settings-panel" aria-label="Reading settings">
+    <div class="settings-header">
+      <h2>Reading Settings</h2>
+      <button class="settings-close-btn" id="settings-close" aria-label="Close settings">&#10005;</button>
+    </div>
+    <div class="settings-body">
+
+      <div class="setting-row">
+        <div class="setting-row-label">
+          <span>Font Size</span>
+          <span class="setting-value" id="font-size-value"></span>
+        </div>
+        <input type="range" id="setting-font-size" min="14" max="26" step="1" aria-label="Font size">
+      </div>
+
+      <div class="setting-row">
+        <div class="setting-row-label"><span>Font</span></div>
+        <select id="setting-font-family" aria-label="Font family">
+          <option value="Georgia, 'Times New Roman', serif">Georgia (Classic)</option>
+          <option value="Palatino, 'Palatino Linotype', 'Book Antiqua', serif">Palatino (Elegant)</option>
+          <option value="'Book Antiqua', Palatino, serif">Book Antiqua</option>
+          <option value="Verdana, Geneva, sans-serif">Verdana (Easy to read)</option>
+        </select>
+      </div>
+
+      <div class="setting-row">
+        <div class="setting-row-label">
+          <span>Background Warmth</span>
+          <span class="setting-value" id="warmth-value"></span>
+        </div>
+        <input type="range" id="setting-warmth" min="0" max="100" step="1" aria-label="Background warmth">
+      </div>
+
+      <div class="setting-row">
+        <div class="setting-row-label">
+          <span>Line Height</span>
+          <span class="setting-value" id="line-height-value"></span>
+        </div>
+        <input type="range" id="setting-line-height" min="14" max="24" step="1" aria-label="Line height">
+      </div>
+
+      <div class="setting-row">
+        <div class="setting-row-label">
+          <span>Paragraph Spacing</span>
+          <span class="setting-value" id="paragraph-gap-value"></span>
+        </div>
+        <input type="range" id="setting-paragraph-gap" min="5" max="22" step="1" aria-label="Paragraph spacing">
+      </div>
+
+    </div>
+    <div class="settings-footer">
+      <button class="settings-reset-btn" id="settings-reset">Reset to defaults</button>
+    </div>
+  </dialog>
+
+  <script type="module" src="js/settings.js"></script>
+  <script type="module" src="js/library.js"></script>
+</body>
+</html>

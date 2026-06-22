@@ -1,0 +1,197 @@
+:root {
+  --reader-bg: #f5efe6;
+  --reader-text: #3b2f1e;
+  --reader-font-family: Georgia, 'Times New Roman', serif;
+  --reader-font-size: 18px;
+  --reader-line-height: 1.85;
+  --reader-paragraph-gap: 1.4em;
+  --reader-max-width: 68ch;
+
+  --ui-accent: #8b6914;
+  --ui-accent-light: rgba(139, 105, 20, 0.12);
+  --ui-border: rgba(59, 47, 30, 0.15);
+  --ui-shadow: rgba(59, 47, 30, 0.1);
+  --narrating-bg: rgba(212, 160, 23, 0.09);
+  --narrating-border: #d4a017;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  background-color: var(--reader-bg);
+  color: var(--reader-text);
+  font-family: var(--reader-font-family);
+  font-size: var(--reader-font-size);
+  line-height: var(--reader-line-height);
+}
+
+body {
+  min-height: 100vh;
+  background-color: var(--reader-bg);
+  color: var(--reader-text);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* ── Settings dialog ─────────────────────────────── */
+
+dialog {
+  border: none;
+  border-radius: 14px;
+  padding: 0;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.22);
+  max-width: 440px;
+  width: 92vw;
+  background-color: var(--reader-bg);
+  color: var(--reader-text);
+}
+
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(2px);
+}
+
+.settings-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.2rem 1.5rem 1rem;
+  border-bottom: 1px solid var(--ui-border);
+}
+
+.settings-header h2 {
+  font-size: 1.05rem;
+  font-style: italic;
+  font-weight: normal;
+  color: var(--ui-accent);
+}
+
+.settings-close-btn {
+  background: none;
+  border: none;
+  font-size: 1.3rem;
+  cursor: pointer;
+  color: var(--reader-text);
+  opacity: 0.5;
+  line-height: 1;
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+}
+
+.settings-close-btn:hover {
+  opacity: 1;
+  background: var(--ui-border);
+}
+
+.settings-body {
+  padding: 1.2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.3rem;
+}
+
+.setting-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.setting-row-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.setting-row-label span:first-child {
+  font-size: 0.82rem;
+  font-weight: bold;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  opacity: 0.65;
+}
+
+.setting-row-label .setting-value {
+  font-size: 0.82rem;
+  color: var(--ui-accent);
+}
+
+.setting-row input[type="range"] {
+  width: 100%;
+  accent-color: var(--ui-accent);
+  cursor: pointer;
+  height: 4px;
+}
+
+.setting-row select {
+  width: 100%;
+  padding: 0.5rem 0.6rem;
+  border: 1px solid var(--ui-border);
+  border-radius: 7px;
+  background-color: var(--reader-bg);
+  color: var(--reader-text);
+  font-family: var(--reader-font-family);
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.settings-footer {
+  padding: 0.9rem 1.5rem 1.2rem;
+  border-top: 1px solid var(--ui-border);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.settings-reset-btn {
+  background: none;
+  border: 1px solid var(--ui-border);
+  border-radius: 7px;
+  padding: 0.4rem 1rem;
+  font-size: 0.82rem;
+  cursor: pointer;
+  color: var(--reader-text);
+  opacity: 0.7;
+  font-family: var(--reader-font-family);
+}
+
+.settings-reset-btn:hover {
+  opacity: 1;
+  background: var(--ui-border);
+}
+
+/* ── Badges ─────────────────────────────────────── */
+
+.badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  background: rgba(59, 47, 30, 0.08);
+  padding: 0.2rem 0.55rem;
+  border-radius: 100px;
+  white-space: nowrap;
+  font-family: Georgia, serif;
+}
+
+.badge-resume {
+  background: var(--ui-accent-light);
+  color: var(--ui-accent);
+}
+
+/* ── Icon buttons shared ─────────────────────────── */
+
+.icon-btn {
+  background: none;
+  border: 1px solid var(--ui-border);
+  border-radius: 7px;
+  padding: 0.38rem 0.65rem;
+  font-size: 1.05rem;
+  cursor: pointer;
+  color: var(--reader-text);
+  line-height: 1;
+  transition: background 0.15s;
+}
+
+.icon-btn:hover {
+  background: var(--ui-border);
+}
