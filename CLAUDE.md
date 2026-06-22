@@ -93,22 +93,24 @@ version no longer matches. Bump `version` when node IDs change.
 
 ### Node types
 
-`reader.js` (`renderNode`) currently renders **two** node types:
+`reader.js` (`renderNode`) renders **four** node types:
 
 - **`paragraph`** — `{ type, id, text, audio }`. Rendered as a `<p>`.
 - **`diagram`** — `{ type, id, caption, altText, svgFile, audio }`. The SVG is
   fetched and inlined (see "Interactive diagrams" below); `caption` becomes the
   `<figcaption>` and supplies the audio-bar preview text.
+- **`callout`** — `{ type, id, label, text }`. A highlighted aside box
+  (`label` is an uppercase heading, `text` the body). No audio.
+- **`list`** — `{ type, id, ordered, items: [...] }`. An `<ol>` when
+  `ordered: true`, otherwise a `<ul>`. No audio.
 
 Any node with an `audio` field also gets a ▶ "play from here" button.
 
-> **Gotcha:** `stories/the-shy-gas-a-nitrogen-story/story.json` also uses
-> `callout` and `list` node types. **`reader.js` does not render these yet** —
-> they currently produce empty `<section>` elements. If you want them to display,
-> add `else if (node.type === 'callout')` / `'list'` branches to `renderNode` in
-> `js/reader.js` (and matching styles in `css/reader.css`). The
-> `generate_audio.py` collector also only produces audio for `paragraph` and
-> `diagram` text, so callouts/lists are silent by design.
+> **Note:** `callout` and `list` nodes have no `audio` and are skipped by the
+> audio queue — they are read silently. `generate_audio.py` likewise only
+> produces audio for `paragraph` and `diagram` text. If you add new renderable
+> node types, add an `else if (node.type === ...)` branch to `renderNode` in
+> `js/reader.js` plus matching styles in `css/reader.css`.
 
 ### Interactive diagrams
 

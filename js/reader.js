@@ -113,6 +113,36 @@ async function renderNode(node, base, chapterId) {
     }
 
     wrapper.appendChild(fig);
+
+  } else if (node.type === 'callout') {
+    const aside = document.createElement('aside');
+    aside.className = 'callout-box';
+
+    if (node.label) {
+      const label = document.createElement('p');
+      label.className = 'callout-label';
+      label.textContent = node.label;
+      aside.appendChild(label);
+    }
+
+    if (node.text) {
+      const p = document.createElement('p');
+      p.className = 'callout-text';
+      p.textContent = node.text;
+      aside.appendChild(p);
+    }
+
+    wrapper.appendChild(aside);
+
+  } else if (node.type === 'list') {
+    const list = document.createElement(node.ordered ? 'ol' : 'ul');
+    list.className = 'story-list';
+    for (const item of node.items || []) {
+      const li = document.createElement('li');
+      li.textContent = item;
+      list.appendChild(li);
+    }
+    wrapper.appendChild(list);
   }
 
   if (node.audio) {
