@@ -7,5 +7,14 @@
     "ageRange": "7–10",
     "estimatedMinutes": 5,
     "tags": ["adventure", "sea", "courage"]
+  },
+  {
+    "id": "the-shy-gas-a-nitrogen-story",
+    "title": "The Shy Gas: A Nitrogen Story",
+    "author": "Claude",
+    "coverImage": "stories/the-shy-gas-a-nitrogen-story/assets/cover.svg",
+    "ageRange": "10–13",
+    "estimatedMinutes": 18,
+    "tags": ["science", "chemistry", "bedtime"]
   }
 ]
