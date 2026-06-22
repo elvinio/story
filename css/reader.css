@@ -244,6 +244,57 @@
   opacity: 0.72;
 }
 
+/* ── Callout node ────────────────────────────────── */
+
+.node-callout {
+  margin-top: 0.5rem;
+  margin-bottom: calc(var(--reader-paragraph-gap) + 0.5rem);
+}
+
+.callout-box {
+  padding: 1.1rem 1.3rem;
+  background: var(--ui-accent-light);
+  border: 1px solid var(--ui-border);
+  border-left: 4px solid var(--ui-accent);
+  border-radius: 0 10px 10px 0;
+}
+
+.callout-label {
+  font-size: 0.72rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ui-accent);
+  opacity: 0.85;
+  margin-bottom: 0.45rem;
+}
+
+.callout-text {
+  font-size: calc(var(--reader-font-size) - 1px);
+  font-family: var(--reader-font-family);
+  line-height: var(--reader-line-height);
+  font-style: italic;
+  color: var(--reader-text);
+}
+
+/* ── List node ───────────────────────────────────── */
+
+.node-list .story-list {
+  padding-left: 1.6rem;
+  font-size: var(--reader-font-size);
+  font-family: var(--reader-font-family);
+  line-height: var(--reader-line-height);
+  color: var(--reader-text);
+}
+
+.node-list .story-list li {
+  margin-bottom: 0.55rem;
+}
+
+.node-list .story-list li::marker {
+  color: var(--ui-accent);
+}
+
 /* ── Audio bar ───────────────────────────────────── */
 
 .audio-bar {

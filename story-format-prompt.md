@@ -46,6 +46,18 @@ The story is for the **Story Reader app**, which displays it to primary school c
           "altText": "Description of the diagram for screen readers",
           "svgFile": "diagrams/my-diagram.svg",
           "audio": "audio/ch1-d1.opus"
+        },
+        {
+          "type": "callout",
+          "id": "c1",
+          "label": "Did you know?",
+          "text": "A short highlighted aside — a fun fact or a thought to ponder."
+        },
+        {
+          "type": "list",
+          "id": "list1",
+          "ordered": true,
+          "items": ["First step", "Second step", "Third step"]
         }
       ]
     }
@@ -63,9 +75,12 @@ The story is for the **Story Reader app**, which displays it to primary school c
 - Every `node` must have a unique `id` within the whole story
   - Paragraphs: `p1`, `p2`, `p3` … (sequential across all chapters)
   - Diagrams: `d1`, `d2` …
+  - Callouts: `c1`, `c2` …
+  - Lists: `list1`, `list2` …
 - Audio paths follow the pattern `audio/<chapter-id>-<node-id>.opus`
   - Example: chapter `ch2`, paragraph `p5` → `audio/ch2-p5.opus`
   - Diagram caption audio: `audio/ch1-d1.opus`
+  - `callout` and `list` nodes are not narrated — omit their `audio` field
 
 ### Node types
 
@@ -90,6 +105,27 @@ The story is for the **Story Reader app**, which displays it to primary school c
   "audio": "audio/ch1-d1.opus"
 }
 ```
+
+**`callout`** — a short highlighted aside box for a fun fact, a side note, or a thought to ponder. It is displayed apart from the main text and is **not** narrated, so it has **no `audio` field**:
+```json
+{
+  "type": "callout",
+  "id": "c1",
+  "label": "Did you know?",
+  "text": "One or two sentences. The label is a short heading shown above the text."
+}
+```
+
+**`list`** — an ordered or unordered list (e.g. steps in an activity, or a set of points). It is **not** narrated, so it has **no `audio` field**:
+```json
+{
+  "type": "list",
+  "id": "list1",
+  "ordered": true,
+  "items": ["First item", "Second item", "Third item"]
+}
+```
+Set `"ordered": true` for a numbered list, or `false` (or omit it) for a bulleted list.
 
 ### `version`
 Always set to `1` for a new story. Increment when you revise a story that has already been distributed.
