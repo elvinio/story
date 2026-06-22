@@ -1,0 +1,382 @@
+{
+  "id": "the-shy-gas-a-nitrogen-story",
+  "version": 1,
+  "meta": {
+    "title": "The Shy Gas: A Nitrogen Story",
+    "subtitle": "A bedtime tale about the most quiet, most important gas in the whole wide world",
+    "author": "Claude",
+    "coverImage": "assets/cover.svg",
+    "ageRange": "10-13",
+    "wordCount": 2487,
+    "estimatedMinutes": 18,
+    "tags": [
+      "science",
+      "chemistry",
+      "nitrogen",
+      "nature",
+      "bedtime",
+      "educational"
+    ]
+  },
+  "chapters": [
+    {
+      "id": "ch1",
+      "title": "Take a Breath",
+      "nodes": [
+        {
+          "type": "paragraph",
+          "id": "ch1-p1",
+          "text": "Go on — take a big, slow breath. Right now. Fill your chest all the way up.",
+          "audio": "audio/ch1-ch1-p1.opus"
+        },
+        {
+          "type": "paragraph",
+          "id": "ch1-p2",
+          "text": "You probably think you just breathed in oxygen, the stuff that keeps you alive. And you did, a little. But here's a secret that almost nobody stops to think about: for every five breaths-worth of air that went into your lungs, four of them were a gas you've barely heard of.",
+          "audio": "audio/ch1-ch1-p2.opus"
+        },
+        {
+          "type": "paragraph",
+          "id": "ch1-p3",
+          "text": "Its name is nitrogen.",
+          "audio": "audio/ch1-ch1-p3.opus"
+        },
+        {
+          "type": "paragraph",
+          "id": "ch1-p4",
+          "text": "Nitrogen makes up about 78 percent of the air — nearly four-fifths of every breath, every breeze, every gust of wind that has ever ruffled your hair. The sky is basically an enormous, invisible ocean of nitrogen, and we all swim through it without ever noticing.",
+          "audio": "audio/ch1-ch1-p4.opus"
+        },
+        {
+          "type": "paragraph",
+          "id": "ch1-p5",
+          "text": "So why have you never heard much about it? Because nitrogen is shy. It is the quietest gas in the room. While oxygen is busy doing dramatic things — feeding fires, rusting iron, letting you breathe — nitrogen mostly just… floats there. Calm. Aloof. Keeping to itself.",
+          "audio": "audio/ch1-ch1-p5.opus"
+        },
+        {
+          "type": "paragraph",
+          "id": "ch1-p6",
+          "text": "But don't let the quietness fool you. This shy little gas holds one of the strongest secrets in all of chemistry. And without it, you would not exist. Let me tell you why.",
+          "audio": "audio/ch1-ch1-p6.opus"
+        }
+      ]
+    },
+    {
+      "id": "ch2",
+      "title": "The Strongest Handshake in the World",
+      "nodes": [
+        {
+          "type": "paragraph",
+          "id": "ch2-p1",
+          "text": "Nitrogen almost never travels alone. In the air, two nitrogen atoms grab hold of each other and refuse to let go. We write this little pair as N₂.",
+          "audio": "audio/ch2-ch2-p1.opus"
+        },
+        {
+          "type": "paragraph",
+          "id": "ch2-p2",
+          "text": "Now, here's the wonderful part. When most atoms hold hands, they hold on with one bond — one handshake. Some hold on with two. But these two nitrogen atoms grip each other with three bonds at once — a triple bond. Three handshakes, all at the same time, locked together.",
+          "audio": "audio/ch2-ch2-p2.opus"
+        },
+        {
+          "type": "paragraph",
+          "id": "ch2-p3",
+          "text": "Imagine two friends holding hands so tightly, with so many fingers laced together, that no matter how hard you tug, you simply cannot pull them apart. That's nitrogen. The triple bond is one of the strongest, most stubborn connections in all of nature.",
+          "audio": "audio/ch2-ch2-p3.opus"
+        },
+        {
+          "type": "paragraph",
+          "id": "ch2-p4",
+          "text": "And that is the reason nitrogen is so shy. Because it's already holding on so tightly to its partner, it has no interest in grabbing anything else. It won't burn. It won't rust things. It won't explode. It just drifts along, perfectly content, locked in the strongest handshake in the world.",
+          "audio": "audio/ch2-ch2-p4.opus"
+        },
+        {
+          "type": "callout",
+          "id": "ch2-c1",
+          "label": "A wondering thought",
+          "text": "Air is nearly four-fifths nitrogen and only one-fifth oxygen. If the air were mostly oxygen instead, the tiniest spark — a struck match, a flash of lightning — could set the whole sky on fire. The shy, peaceful nitrogen is like a calm blanket spread across the world, keeping everything from burning up. Nitrogen is the reason fire stays small."
+        }
+      ]
+    },
+    {
+      "id": "ch3",
+      "title": "The Great Problem of Life",
+      "nodes": [
+        {
+          "type": "paragraph",
+          "id": "ch3-p1",
+          "text": "Here is a puzzle, though. A real, genuine, head-scratching puzzle that troubled living things for billions of years.",
+          "audio": "audio/ch3-ch3-p1.opus"
+        },
+        {
+          "type": "paragraph",
+          "id": "ch3-p2",
+          "text": "Every single living creature — every blade of grass, every fish, every tiger, every you — needs nitrogen to be alive. Your body uses it to build proteins, the little machines that run your muscles. It uses nitrogen to build DNA, the secret instruction-book hidden inside every one of your cells that decides whether you'll have brown eyes or curly hair. No nitrogen means no proteins, no DNA, no life.",
+          "audio": "audio/ch3-ch3-p2.opus"
+        },
+        {
+          "type": "paragraph",
+          "id": "ch3-p3",
+          "text": "So you'd think it would be easy, right? The sky is packed with nitrogen! It's everywhere! Just reach up and grab some! But you can't.",
+          "audio": "audio/ch3-ch3-p3.opus"
+        },
+        {
+          "type": "paragraph",
+          "id": "ch3-p4",
+          "text": "Remember that triple bond — the unbreakable handshake? It's so strong that plants can't pull it apart. Animals can't either. You can breathe in nitrogen all day long, every day of your life, and breathe every bit of it right back out, completely unused, because your body simply cannot crack that handshake open.",
+          "audio": "audio/ch3-ch3-p4.opus"
+        },
+        {
+          "type": "paragraph",
+          "id": "ch3-p5",
+          "text": "It's the cruelest joke in nature: surrounded by an ocean of the one thing you need most, and unable to drink a single drop.",
+          "audio": "audio/ch3-ch3-p5.opus"
+        },
+        {
+          "type": "paragraph",
+          "id": "ch3-p6",
+          "text": "So life needed a hero. Someone — or something — strong enough to break the unbreakable bond. As it turned out, there were two heroes. One came from the sky. The other was hiding right beneath everyone's feet.",
+          "audio": "audio/ch3-ch3-p6.opus"
+        }
+      ]
+    },
+    {
+      "id": "ch4",
+      "title": "Hero Number One: The Hammer in the Storm",
+      "nodes": [
+        {
+          "type": "paragraph",
+          "id": "ch4-p1",
+          "text": "The first hero is lightning.",
+          "audio": "audio/ch4-ch4-p1.opus"
+        },
+        {
+          "type": "paragraph",
+          "id": "ch4-p2",
+          "text": "Picture a thunderstorm rolling in. The sky turns the colour of a bruise. The wind picks up. And then — CRACK! — a bolt of lightning splits the air in two.",
+          "audio": "audio/ch4-ch4-p2.opus"
+        },
+        {
+          "type": "paragraph",
+          "id": "ch4-p3",
+          "text": "A lightning bolt is unbelievably powerful. For one blinding instant, the air inside it is heated to about 30,000 degrees Celsius — that's roughly five times hotter than the surface of the Sun. Five times! And that — finally — is enough.",
+          "audio": "audio/ch4-ch4-p3.opus"
+        },
+        {
+          "type": "paragraph",
+          "id": "ch4-p4",
+          "text": "With that monstrous burst of energy, the lightning rips apart the stubborn triple bond. The freed nitrogen atoms, suddenly able to make new friends, immediately grab onto oxygen. They form brand-new molecules, and when the rain comes pouring down, it carries them gently to the ground, soaking into the soil as a kind of natural plant food.",
+          "audio": "audio/ch4-ch4-p4.opus"
+        },
+        {
+          "type": "paragraph",
+          "id": "ch4-p5",
+          "text": "So the next time you watch a thunderstorm from your window, here's a magical thought to keep: that storm isn't just noise and rain. It is a giant in the sky, swinging a hammer of pure lightning, smashing open nitrogen to feed the forests and fields below. Farmers long ago noticed that grass seemed greener and plants grew faster after a good thunderstorm — and now you know the secret reason why.",
+          "audio": "audio/ch4-ch4-p5.opus"
+        }
+      ]
+    },
+    {
+      "id": "ch5",
+      "title": "Hero Number Two: The Tiny Factories Underground",
+      "nodes": [
+        {
+          "type": "paragraph",
+          "id": "ch5-p1",
+          "text": "The second hero is so small you would need a microscope to see even thousands of them lined up in a row. They are bacteria — some of the tiniest living things on Earth. And certain special kinds of bacteria can do something that no thunderstorm and no king's army ever could: they can quietly, gently, patiently break the nitrogen handshake without any fire or lightning at all.",
+          "audio": "audio/ch5-ch5-p1.opus"
+        },
+        {
+          "type": "paragraph",
+          "id": "ch5-p2",
+          "text": "These remarkable little bacteria live in the soil, and some of them live inside tiny lumps on the roots of special plants — peas, beans, clover, peanuts. If you ever pull up a bean plant and look closely at its roots, you might spot little pinkish bumps called nodules. Each one is a secret underground factory, packed with billions of nitrogen-breaking bacteria, humming away in the dark.",
+          "audio": "audio/ch5-ch5-p2.opus"
+        },
+        {
+          "type": "paragraph",
+          "id": "ch5-p3",
+          "text": "The deal between the plant and the bacteria is one of the kindest friendships in all of nature. The plant says, “Live in my roots. I'll give you a cosy home and some sugary food.” And the bacteria reply, “Thank you! In return, we'll crack open nitrogen from the air and turn it into food you can actually eat.”",
+          "audio": "audio/ch5-ch5-p3.opus"
+        },
+        {
+          "type": "paragraph",
+          "id": "ch5-p4",
+          "text": "Neither one could survive nearly as well alone. Together, they thrive.",
+          "audio": "audio/ch5-ch5-p4.opus"
+        },
+        {
+          "type": "paragraph",
+          "id": "ch5-p5",
+          "text": "This whole magnificent process — lightning and bacteria taking nitrogen out of the air and turning it into something living things can finally use — has a name. It's called nitrogen fixation. (“Fixing” here doesn't mean repairing something broken; it means catching the nitrogen and pinning it down so it can be used.)",
+          "audio": "audio/ch5-ch5-p5.opus"
+        }
+      ]
+    },
+    {
+      "id": "ch6",
+      "title": "The Man Who Stole the Bacteria's Secret",
+      "nodes": [
+        {
+          "type": "paragraph",
+          "id": "ch6-p1",
+          "text": "For most of human history, farmers had a serious worry. Plants pull nitrogen out of the soil as they grow, so after a few harvests, fields became tired and hungry. Crops grew small and weak. And when crops fail, people go hungry.",
+          "audio": "audio/ch6-ch6-p1.opus"
+        },
+        {
+          "type": "paragraph",
+          "id": "ch6-p2",
+          "text": "Clever farmers found tricks. They learned to plant beans and peas one year (remember their root-factory friends!) to refill the soil's nitrogen, then plant other crops the next year. They spread animal manure on their fields. It helped — but as more and more people were born, the world needed far more food than tired soil could give.",
+          "audio": "audio/ch6-ch6-p2.opus"
+        },
+        {
+          "type": "paragraph",
+          "id": "ch6-p3",
+          "text": "Then, a little over a hundred years ago, two scientists figured out something astonishing. They learned to do what only lightning and bacteria had ever done: they built machines that could take ordinary nitrogen straight out of the air and crack open its triple bond, using great heat and great pressure.",
+          "audio": "audio/ch6-ch6-p3.opus"
+        },
+        {
+          "type": "paragraph",
+          "id": "ch6-p4",
+          "text": "Out of those machines came a compound called ammonia — one nitrogen atom holding hands with three hydrogen atoms (chemists write it NH₃). Ammonia is the magic ingredient in fertiliser, the plant food that farmers spread across their fields to make crops grow tall, green, and strong.",
+          "audio": "audio/ch6-ch6-p4.opus"
+        },
+        {
+          "type": "paragraph",
+          "id": "ch6-p5",
+          "text": "This invention changed the world more than almost anything else ever has. Think about it like this: roughly half the people alive on Earth today are fed by crops grown with this human-made fertiliser. Half! Which means there is a very real chance that you are here, reading this story tonight, partly because humans learned to copy the trick of a tiny bacterium.",
+          "audio": "audio/ch6-ch6-p5.opus"
+        },
+        {
+          "type": "callout",
+          "id": "ch6-c1",
+          "label": "A wondering thought",
+          "text": "Ammonia has a sharp, stinging smell — it's the eye-watering whiff you might notice in some cleaning sprays. A strong smell for such an important little molecule."
+        }
+      ]
+    },
+    {
+      "id": "ch7",
+      "title": "A Bag Full of Nothing? The Fun Side of Nitrogen",
+      "nodes": [
+        {
+          "type": "paragraph",
+          "id": "ch7-p1",
+          "text": "Now that you know how important nitrogen is, let me show you how fun it is — because this shy gas turns up in the most surprising places.",
+          "audio": "audio/ch7-ch7-p1.opus"
+        },
+        {
+          "type": "paragraph",
+          "id": "ch7-p2",
+          "text": "The puffy potato chip bag. Next time you grab a bag of chips, give it a squeeze. Notice how puffy it is, like a little pillow? You might think the company is cheating you with a bag full of air. But look closer — it's not ordinary air, and it's not a trick. That bag is puffed up with pure nitrogen gas.",
+          "audio": "audio/ch7-ch7-p2.opus"
+        },
+        {
+          "type": "paragraph",
+          "id": "ch7-p3",
+          "text": "Why? Two clever reasons. First, the nitrogen acts like a cushion — a soft, gassy pillow that stops your chips from getting crushed to crumbs on their bumpy journey to the shop. Second — and this is the really smart part — remember how nitrogen is too shy to react with anything? Ordinary air contains oxygen, and oxygen would make the chips go stale and soggy and horrible. But shy, peaceful nitrogen refuses to spoil them. It keeps them crispy and fresh for weeks. So that “bag of nothing” is actually a bag full of the world's best, freshest, gentlest chip-protector.",
+          "audio": "audio/ch7-ch7-p3.opus"
+        },
+        {
+          "type": "paragraph",
+          "id": "ch7-p4",
+          "text": "The smoking, frozen liquid. If you cool nitrogen gas down to a truly ridiculous temperature — about minus 196 degrees Celsius — something amazing happens. It turns into a clear, bubbling liquid called liquid nitrogen, so cold it makes the air around it swirl with thick white fog, like a witch's cauldron. Scientists and chefs use it to flash-freeze things in seconds. A flower dipped into liquid nitrogen freezes so solid and brittle that it can shatter like glass when you tap it. Some chefs even use it to make ice cream in less than a minute, right before your eyes, in a cloud of dramatic mist. (This is only ever done by trained adults with thick gloves — that cold is no joke!)",
+          "audio": "audio/ch7-ch7-p4.opus"
+        },
+        {
+          "type": "paragraph",
+          "id": "ch7-p5",
+          "text": "Nitrogen that goes BANG. Here's the strangest twist of all. Shy, peaceful nitrogen, the gas that keeps the sky from catching fire — when it's locked up inside certain special compounds, it can become explosive. TNT, dynamite, and even the airbag that puffs out to protect people in a car crash all rely on nitrogen suddenly, violently letting go and rushing back to its happy, peaceful N₂ form. The same shy gas that gently feeds your dinner can also explode with tremendous force. Nature is full of these wonderful contradictions.",
+          "audio": "audio/ch7-ch7-p5.opus"
+        }
+      ]
+    },
+    {
+      "id": "ch8",
+      "title": "A Little Experiment, If You Like",
+      "nodes": [
+        {
+          "type": "paragraph",
+          "id": "ch8-p1",
+          "text": "Stories are lovely, but seeing something with your own eyes is even better. Here's a gentle experiment to see nitrogen's power — the slow, patient power of the bacteria — with your own hands. It takes a few weeks, so it's the sort of thing you start now and check on like a tiny science detective.",
+          "audio": "audio/ch8-ch8-p1.opus"
+        },
+        {
+          "type": "paragraph",
+          "id": "ch8-p2",
+          "text": "The Hungry Plant test. You will need: two small pots of soil, some fast-growing seeds (beans are perfect — they're cheap and eager to sprout), water, a sunny windowsill, and a small bag of plant fertiliser from a garden shop (ask an adult to help pick a simple one).",
+          "audio": "audio/ch8-ch8-p2.opus"
+        },
+        {
+          "type": "list",
+          "id": "ch8-list1",
+          "ordered": true,
+          "items": [
+            "Plant a couple of seeds in each pot, exactly the same way. Same soil, same amount, same sunny spot.",
+            "Label one pot “Fed” and one pot “Plain.”",
+            "Water both pots the same amount, on the same days. But for the “Fed” pot, add a tiny pinch of fertiliser to the water now and then, following the instructions on the packet. Give the “Plain” pot only plain water.",
+            "Now wait, and watch, and write down what you see every few days. Which one grows taller? Which leaves are a deeper, healthier green?"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "id": "ch8-p3",
+          "text": "Most of the time, the “Fed” plant will grow noticeably bigger and greener. And when it does, you'll be looking, right there on your windowsill, at the proof of everything in this story: that nitrogen is food for life, and that giving a plant the nitrogen it craves makes it flourish.",
+          "audio": "audio/ch8-ch8-p3.opus"
+        },
+        {
+          "type": "callout",
+          "id": "ch8-c1",
+          "label": "A bonus, no experiment needed",
+          "text": "Scientists discovered that air is about four-fifths nitrogen partly by burning a candle inside a sealed jar standing in water. The flame uses up the oxygen and goes out, the water rises to fill about one-fifth of the jar — and the gas left behind, refusing to burn, was the shy four-fifths: nitrogen. Best left to a science teacher with the proper setup, but a brilliant thing to picture in your mind."
+        }
+      ]
+    },
+    {
+      "id": "ch9",
+      "title": "The Journey of One Little Atom",
+      "nodes": [
+        {
+          "type": "paragraph",
+          "id": "ch9-p1",
+          "text": "Before you drift off to sleep, here is the most wondrous thought of all. I've saved it for last.",
+          "audio": "audio/ch9-ch9-p1.opus"
+        },
+        {
+          "type": "paragraph",
+          "id": "ch9-p2",
+          "text": "The nitrogen inside your body — the nitrogen in your muscles, in your skin, in the DNA that makes you you — did not start there. It has been on an extraordinary journey.",
+          "audio": "audio/ch9-ch9-p2.opus"
+        },
+        {
+          "type": "paragraph",
+          "id": "ch9-p3",
+          "text": "Once upon a time, it was floating high in the sky, holding tightly to its partner in that unbreakable handshake. Then perhaps a bolt of lightning cracked it open in the middle of a roaring storm. Or perhaps a tiny bacterium, no bigger than a speck of dust, gently set it free inside the root of a bean plant. From the soil it travelled up into a growing plant. Maybe an animal ate that plant. And then, somewhere along the way, that very same nitrogen became part of a meal — and became part of you.",
+          "audio": "audio/ch9-ch9-p3.opus"
+        },
+        {
+          "type": "paragraph",
+          "id": "ch9-p4",
+          "text": "And one day, far in the future, that nitrogen will leave you again. It will return to the soil, rise back into the air, drift up into the sky, and wait — perhaps for another thunderstorm, another plant, another living creature not yet born.",
+          "audio": "audio/ch9-ch9-p4.opus"
+        },
+        {
+          "type": "paragraph",
+          "id": "ch9-p5",
+          "text": "Round and round it goes, forever. We call this the nitrogen cycle, and it has been turning, quietly, for billions of years — long before there were dinosaurs, long before there were oceans full of fish, long before anyone was here to wonder about it.",
+          "audio": "audio/ch9-ch9-p5.opus"
+        },
+        {
+          "type": "paragraph",
+          "id": "ch9-p6",
+          "text": "So tonight, take one more slow, deep breath. Four-fifths of it is nitrogen — the shy gas, the quiet hero, the unbreakable handshake. Some of those very atoms have ridden inside thunderstorms. Some have lived inside the roots of ancient plants. Some, long ago, may even have been part of a creature that walked the Earth millions of years before you were born.",
+          "audio": "audio/ch9-ch9-p6.opus"
+        },
+        {
+          "type": "paragraph",
+          "id": "ch9-p7",
+          "text": "And now, for just a moment, they're inside you. Isn't that a wonderful thing to fall asleep thinking about? Goodnight.",
+          "audio": "audio/ch9-ch9-p7.opus"
+        }
+      ]
+    }
+  ]
+}
