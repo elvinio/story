@@ -55,11 +55,12 @@ async function init() {
       content.appendChild(el);
 
       if (node.audio) {
-        audioQueue.push({
-          id: node.id,
-          audioSrc: storyBase + node.audio,
-          text: node.type === 'paragraph' ? node.text : (node.caption || ''),
-        });
+        let previewText = '';
+        if (node.type === 'paragraph') previewText = node.text;
+        else if (node.type === 'diagram') previewText = node.caption || '';
+        else if (node.type === 'callout') previewText = [node.label, node.text].filter(Boolean).join('. ');
+        else if (node.type === 'list') previewText = (node.items || []).join('. ');
+        audioQueue.push({ id: node.id, audioSrc: storyBase + node.audio, text: previewText });
       }
     }
   }

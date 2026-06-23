@@ -1,0 +1,105 @@
+name: Generate Audio Narration
+
+on:
+  workflow_dispatch:
+    inputs:
+      story_id:
+        description: 'Story ID (must match an id in stories/index.json)'
+        required: true
+        type: string
+      chapter_ids:
+        description: 'Chapter IDs to regenerate (space-separated, leave blank for all)'
+        required: false
+        default: ''
+        type: string
+      voice:
+        description: 'Kokoro voice (e.g. af_heart, af_sky, am_adam)'
+        required: false
+        default: 'af_heart'
+        type: string
+      speed:
+        description: 'Speech speed (0.5 – 2.0)'
+        required: false
+        default: '0.9'
+        type: string
+      format:
+        description: 'Output audio format'
+        required: false
+        default: 'opus'
+        type: choice
+        options:
+          - opus
+          - mp3
+      force:
+        description: 'Overwrite existing audio files'
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: write
+
+jobs:
+  generate-audio:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Validate story ID
+        run: |
+          python - <<'EOF'
+          import json, sys
+          index = json.load(open("stories/index.json"))
+          valid = [s["id"] for s in index]
+          story_id = "${{ inputs.story_id }}"
+          if story_id not in valid:
+              print(f"ERROR: Unknown story_id '{story_id}'")
+              print(f"       Valid IDs: {', '.join(valid)}")
+              sys.exit(1)
+          print(f"Story '{story_id}' found in index.")
+          EOF
+
+      - name: Generate audio
+        env:
+          STORY_TTS_API_KEY: ${{ secrets.STORY_TTS_API_KEY }}
+        run: |
+          FORCE_FLAG=""
+          if [ "${{ inputs.force }}" = "true" ]; then
+            FORCE_FLAG="--force"
+          fi
+
+          CHAPTER_FLAG=""
+          if [ -n "${{ inputs.chapter_ids }}" ]; then
+            CHAPTER_FLAG="--chapter ${{ inputs.chapter_ids }}"
+          fi
+
+          python generate_audio.py \
+            "stories/${{ inputs.story_id }}/story.json" \
+            --voice "${{ inputs.voice }}" \
+            --speed "${{ inputs.speed }}" \
+            --format "${{ inputs.format }}" \
+            $FORCE_FLAG \
+            $CHAPTER_FLAG
+
+      - name: Commit and push audio files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add "stories/${{ inputs.story_id }}/audio/"
+          git add "stories/${{ inputs.story_id }}/story.json"
+          if git diff --staged --quiet; then
+            echo "No changes to commit — all audio files already up to date."
+          else
+            git commit -m "chore: regenerate audio for ${{ inputs.story_id }} [voice=${{ inputs.voice }}, speed=${{ inputs.speed }}, format=${{ inputs.format }}]"
+            git push
+          fi
