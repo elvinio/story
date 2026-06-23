@@ -67,7 +67,13 @@ def collect_nodes(story: dict, fmt: str) -> list[dict]:
                 text  = (label + ". " + body) if label and body else (label or body)
             elif node["type"] == "list":
                 items = [i.strip() for i in node.get("items", []) if i.strip()]
-                text  = ". ".join(items)
+                if node.get("ordered"):
+                    _words = ["One","Two","Three","Four","Five","Six","Seven","Eight",
+                              "Nine","Ten","Eleven","Twelve","Thirteen","Fourteen",
+                              "Fifteen","Sixteen","Seventeen","Eighteen","Nineteen","Twenty"]
+                    items = [f"{_words[i] if i < len(_words) else i+1}: {item}"
+                             for i, item in enumerate(items)]
+                text = ". ".join(items)
             if not text:
                 continue
             # Use existing audio path or derive one from chapter/node IDs
