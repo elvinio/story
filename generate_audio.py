@@ -17,6 +17,7 @@ Options:
     --voice VOICE        Kokoro voice (default: af_heart)
     --speed FLOAT        Speech speed, 0.5–2.0 (default: 0.9)
     --format FORMAT      Audio format: opus or mp3 (default: opus)
+    --chapter ID [ID …]  Only process these chapter IDs (default: all chapters)
     --force              Overwrite existing audio files
     --dry-run            Print what would be generated without calling the API
     --workers N          Parallel workers (default: 3)
@@ -24,6 +25,7 @@ Options:
 Examples:
     python generate_audio.py stories/the-old-lighthouse/story.json
     python generate_audio.py stories/the-old-lighthouse/story.json --voice af_sky --speed 1.0
+    python generate_audio.py stories/the-old-lighthouse/story.json --chapter ch2 ch3
     python generate_audio.py stories/the-old-lighthouse/story.json --dry-run
     STORY_TTS_API_KEY=abc123 python generate_audio.py stories/the-old-lighthouse/story.json
 """
@@ -50,11 +52,16 @@ MAX_RETRIES   = 3
 RETRY_DELAYS  = [2, 5, 10]
 
 
-def collect_nodes(story: dict, fmt: str) -> list[dict]:
-    """Return all nodes that need audio, in chapter order."""
+def collect_nodes(story: dict, fmt: str, chapters: list[str] | None = None) -> list[dict]:
+    """Return all nodes that need audio, in chapter order.
+
+    If *chapters* is given, only nodes from those chapter IDs are included.
+    """
     nodes = []
     for chapter in story.get("chapters", []):
         chapter_id = chapter["id"]
+        if chapters and chapter_id not in chapters:
+            continue
         for node in chapter.get("nodes", []):
             text = ""
             if node["type"] == "paragraph":
@@ -164,6 +171,8 @@ def main() -> None:
                         help=f"Speech speed 0.5–2.0 (default: {DEFAULT_SPEED})")
     parser.add_argument("--format",   default=DEFAULT_FMT, choices=["opus", "mp3"],
                         help=f"Output audio format (default: {DEFAULT_FMT})")
+    parser.add_argument("--chapter",  nargs="+", metavar="CHAPTER_ID",
+                        help="Only generate audio for these chapter IDs (default: all chapters)")
     parser.add_argument("--force",    action="store_true", help="Overwrite existing audio files")
     parser.add_argument("--dry-run",  action="store_true", help="Show plan without calling the API")
     parser.add_argument("--workers",  type=int, default=3,
@@ -182,12 +191,23 @@ def main() -> None:
     story_dir = story_path.parent
     title = story.get("meta", {}).get("title", story_path.parent.name)
 
-    nodes = collect_nodes(story, args.format)
+    # Validate --chapter IDs if provided
+    if args.chapter:
+        known = {ch["id"] for ch in story.get("chapters", [])}
+        bad = [c for c in args.chapter if c not in known]
+        if bad:
+            print(f"ERROR: Unknown chapter ID(s): {', '.join(bad)}", file=sys.stderr)
+            print(f"       Available: {', '.join(sorted(known))}", file=sys.stderr)
+            sys.exit(1)
+
+    nodes = collect_nodes(story, args.format, chapters=args.chapter)
     if not nodes:
         print("No audio nodes found in story.json (no paragraph, diagram, callout, or list nodes with text).")
         sys.exit(0)
 
     print(f"\nStory:   {title}")
+    if args.chapter:
+        print(f"Chapters: {', '.join(args.chapter)}")
     print(f"Nodes:   {len(nodes)} audio nodes to process")
     print(f"Voice:   {args.voice}  speed={args.speed}  format={args.format}")
     print(f"Output:  {story_dir / 'audio'}/")
