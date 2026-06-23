@@ -2,6 +2,9 @@
 """
 Generate audio narration for a Story Reader story using a Kokoro TTS endpoint.
 
+Generates audio for paragraph, diagram, callout, and list nodes.
+Callout text is spoken as "label. body". List items are joined with ". ".
+
 Usage:
     python generate_audio.py stories/my-story/story.json
 
@@ -58,6 +61,13 @@ def collect_nodes(story: dict, fmt: str) -> list[dict]:
                 text = node.get("text", "").strip()
             elif node["type"] == "diagram":
                 text = node.get("caption", "").strip()
+            elif node["type"] == "callout":
+                label = node.get("label", "").strip()
+                body  = node.get("text", "").strip()
+                text  = (label + ". " + body) if label and body else (label or body)
+            elif node["type"] == "list":
+                items = [i.strip() for i in node.get("items", []) if i.strip()]
+                text  = ". ".join(items)
             if not text:
                 continue
             # Use existing audio path or derive one from chapter/node IDs
@@ -135,7 +145,7 @@ def process_node(node: dict, story_dir: Path, args, session: requests.Session) -
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Generate TTS audio for every paragraph in a Story Reader story.json",
+        description="Generate TTS audio for story nodes (paragraph, diagram, callout, list) in a Story Reader story.json",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=__doc__,
     )
@@ -168,7 +178,7 @@ def main() -> None:
 
     nodes = collect_nodes(story, args.format)
     if not nodes:
-        print("No audio nodes found in story.json (no paragraph or diagram nodes with text).")
+        print("No audio nodes found in story.json (no paragraph, diagram, callout, or list nodes with text).")
         sys.exit(0)
 
     print(f"\nStory:   {title}")

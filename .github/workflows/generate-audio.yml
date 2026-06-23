@@ -1,0 +1,82 @@
+name: Generate Audio Narration
+
+on:
+  workflow_dispatch:
+    inputs:
+      story_id:
+        description: 'Story ID to generate audio for'
+        required: true
+        type: choice
+        options:
+          - the-old-lighthouse
+          - the-shy-gas-a-nitrogen-story
+      voice:
+        description: 'Kokoro voice (e.g. af_heart, af_sky, am_adam)'
+        required: false
+        default: 'af_heart'
+        type: string
+      speed:
+        description: 'Speech speed (0.5 – 2.0)'
+        required: false
+        default: '0.9'
+        type: string
+      format:
+        description: 'Output audio format'
+        required: false
+        default: 'opus'
+        type: choice
+        options:
+          - opus
+          - mp3
+      force:
+        description: 'Overwrite existing audio files'
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: write
+
+jobs:
+  generate-audio:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Generate audio
+        env:
+          STORY_TTS_API_KEY: ${{ secrets.STORY_TTS_API_KEY }}
+        run: |
+          FORCE_FLAG=""
+          if [ "${{ inputs.force }}" = "true" ]; then
+            FORCE_FLAG="--force"
+          fi
+          python generate_audio.py \
+            "stories/${{ inputs.story_id }}/story.json" \
+            --voice "${{ inputs.voice }}" \
+            --speed "${{ inputs.speed }}" \
+            --format "${{ inputs.format }}" \
+            $FORCE_FLAG
+
+      - name: Commit and push audio files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add "stories/${{ inputs.story_id }}/audio/"
+          git add "stories/${{ inputs.story_id }}/story.json"
+          if git diff --staged --quiet; then
+            echo "No changes to commit — all audio files already up to date."
+          else
+            git commit -m "chore: regenerate audio for ${{ inputs.story_id }} [voice=${{ inputs.voice }}, speed=${{ inputs.speed }}, format=${{ inputs.format }}]"
+            git push
+          fi
