@@ -120,6 +120,71 @@ re-appended to `document.body` *after* the SVG is in the page, because inline SV
 `<script>` does not auto-execute when inserted via DOMParser. Keep diagram SVGs
 self-contained and trusted — their scripts run in the page context.
 
+### Animated diagrams (GSAP)
+
+Animated diagrams are self-contained SVG files in `stories/<id>/diagrams/`. Each
+one loads [GSAP](https://gsap.com/) lazily from CDN and runs its timeline inside
+a `<script><![CDATA[...]]></script>` block wrapped in an IIFE.
+
+**Conventions to follow when authoring a new animated diagram:**
+
+1. **Unique ID prefix** — every element ID and every global function name must be
+   prefixed with a short, diagram-specific token (e.g. `n2tb-` for the triple-bond,
+   `nltg-` for the lightning diagram). Multiple SVGs may be inlined on the same page;
+   clashing IDs will break both.
+
+2. **Lazy GSAP load** — check `window.gsap` first; only inject the CDN `<script>`
+   if it is absent. This avoids a double-download when a second diagram on the same
+   page has already loaded it:
+   ```js
+   if (window.gsap) {
+     setup();
+   } else {
+     var s = document.createElement('script');
+     s.src = 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js';
+     s.onload = setup;
+     document.head.appendChild(s);
+   }
+   ```
+
+3. **IntersectionObserver auto-play** — start the animation only once, when the SVG
+   is 30 % visible (`threshold: 0.3`). Disconnect the observer after first trigger so
+   scrolling back does not restart it (the Replay button handles that):
+   ```js
+   var played = false;
+   var io = new IntersectionObserver(function (entries) {
+     if (entries[0].isIntersecting && !played) {
+       played = true; io.disconnect(); animate();
+     }
+   }, { threshold: 0.3 });
+   io.observe(svgEl);
+   ```
+
+4. **Replay button** — include a visible replay button (opacity animated to 1 at the
+   end of the timeline). Its `onclick` calls a named global function (prefixed, e.g.
+   `window.n2tbReplay`) that resets all GSAP state with `gsap.set(...)` and re-runs
+   `animate()`.
+
+5. **Phase labels** — use a centered `<text id="…-phase">` element to narrate each
+   step. Update it with `gsap.call()` between timeline segments so readers follow
+   along without audio.
+
+6. **Pacing** — atom/object approach durations around 1.5–2 s (`power2.inOut`);
+   bond/element snap-ins around 0.3–0.5 s (`back.out(2)`); flash pulses ≤ 0.2 s.
+   Keep total runtime under ~10 s for classroom attention spans.
+
+7. **`transform-box` / `transform-origin`** — set both on any element GSAP will
+   scale or rotate via CSS (`transform-box: fill-box; transform-origin: center center`
+   in the SVG `<style>`), otherwise `scaleX` pivots from the SVG origin instead of
+   the element centre.
+
+**Existing animated diagrams:**
+
+| File | Prefix | What it shows |
+|---|---|---|
+| `nitrogen-triple-bond.svg` | `n2tb-` | Two N atoms approach and form N≡N |
+| `nitrogen-lightning.svg` | `nltg-` | Lightning strikes N₂ → NO → soil nitrates |
+
 ## Audio narration
 
 `audio-player.js` owns playback. `reader.js` builds an ordered queue of
