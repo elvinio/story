@@ -1,4 +1,4 @@
-<svg id="nltg-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 340"
+<svg id="nltg-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 360"
      style="max-width:100%;height:auto;display:block;">
   <defs>
     <style>
@@ -6,6 +6,7 @@
       #nltg-replay { cursor: pointer; }
       #nltg-replay:hover rect { opacity: 0.82; }
       #nltg-plant { transform-box: fill-box; transform-origin: 50% 100%; }
+      #nltg-ozone { transform-box: fill-box; transform-origin: 50% 50%; }
     </style>
     <linearGradient id="nltg-sky" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%"   stop-color="#1a3a5f"/>
@@ -31,158 +32,233 @@
   </defs>
 
   <!-- Sky background -->
-  <rect width="420" height="340" rx="10" fill="url(#nltg-sky)"/>
+  <rect width="420" height="360" rx="10" fill="url(#nltg-sky)"/>
   <!-- Border -->
-  <rect width="420" height="340" rx="10" fill="none" stroke="#4a90d9"
+  <rect width="420" height="360" rx="10" fill="none" stroke="#4a90d9"
         stroke-width="1.5" opacity="0.5"/>
 
   <!-- Ground soil -->
-  <rect x="0" y="285" width="420" height="55" fill="#2d5a27"/>
+  <rect x="0" y="300" width="420" height="60" fill="#2d5a27"/>
   <!-- Topsoil strip -->
-  <rect x="0" y="285" width="420" height="7" fill="#7a5c3a"/>
+  <rect x="0" y="300" width="420" height="7" fill="#7a5c3a"/>
 
   <!-- Title -->
-  <text x="210" y="28" text-anchor="middle" font-family="Georgia,serif"
-        font-size="15" fill="white" font-weight="bold">Lightning: Fixing Nitrogen</text>
+  <text x="210" y="26" text-anchor="middle" font-family="Georgia,serif"
+        font-size="15" fill="white" font-weight="bold">Lightning: Making Plant Food</text>
 
   <!-- Phase label -->
-  <text id="nltg-phase" x="210" y="50" text-anchor="middle" font-family="Georgia,serif"
-        font-size="12" font-style="italic" fill="#ddeeff" opacity="0">&#160;</text>
+  <text id="nltg-phase" x="210" y="46" text-anchor="middle" font-family="Georgia,serif"
+        font-size="11.5" font-style="italic" fill="#ddeeff" opacity="0">&#160;</text>
 
   <!-- Lightning bolt — glow (wide pale layer) then bright layer on top; both hidden -->
   <path id="nltg-lightning-glow"
-        d="M210,18 L196,52 L213,52 L197,75 L214,75 L205,93"
+        d="M210,18 L196,52 L213,52 L197,75 L214,75 L205,95"
         fill="none" stroke="#fffce8" stroke-width="14" stroke-linecap="round"
         stroke-linejoin="round" opacity="0"/>
   <path id="nltg-lightning"
-        d="M210,18 L196,52 L213,52 L197,75 L214,75 L205,93"
+        d="M210,18 L196,52 L213,52 L197,75 L214,75 L205,95"
         fill="none" stroke="#fbbf24" stroke-width="5" stroke-linecap="round"
         stroke-linejoin="round" opacity="0"/>
 
-  <!-- Flash overlay on molecule zone -->
-  <rect id="nltg-flash" x="100" y="88" width="220" height="90" rx="8"
+  <!-- Flash overlay on the reaction zone -->
+  <rect id="nltg-flash" x="40" y="55" width="340" height="150" rx="10"
         fill="#ffffff" opacity="0" pointer-events="none"/>
 
-  <!-- N₂ triple bonds (drawn before atom groups so atom circles sit on top) -->
-  <!-- Between left-N right edge (175+19=194) and right-N left edge (245-19=226) -->
-  <rect id="nltg-bond1" x="194" y="108" width="32" height="3" rx="1.5" fill="#c98e00"/>
-  <rect id="nltg-bond2" x="194" y="113" width="32" height="3" rx="1.5" fill="#e6a817"/>
-  <rect id="nltg-bond3" x="194" y="118" width="32" height="3" rx="1.5" fill="#c98e00"/>
+  <!-- ============================================================= -->
+  <!-- N2 triple bonds (drawn first so atom circles sit on top)       -->
+  <!-- Between left-N right edge (175+18=193) and right-N left (245-18=227) -->
+  <rect id="nltg-bond1" x="193" y="108"  width="34" height="2.5" rx="1.25" fill="#c98e00"/>
+  <rect id="nltg-bond2" x="193" y="111.5" width="34" height="2.5" rx="1.25" fill="#e6a817"/>
+  <rect id="nltg-bond3" x="193" y="115"  width="34" height="2.5" rx="1.25" fill="#c98e00"/>
 
-  <!-- Left N atom group (SVG centre 175,115; GSAP split: x−60, y+47 → visual 115,162) -->
+  <!-- O2 double bonds (one group per molecule; fade out when atoms dissociate) -->
+  <g id="nltg-o2bond-l">
+    <rect x="71"  y="90" width="8" height="2.5" rx="1.25" fill="#7b1928"/>
+    <rect x="71"  y="94" width="8" height="2.5" rx="1.25" fill="#7b1928"/>
+  </g>
+  <g id="nltg-o2bond-r">
+    <rect x="341" y="90" width="8" height="2.5" rx="1.25" fill="#7b1928"/>
+    <rect x="341" y="94" width="8" height="2.5" rx="1.25" fill="#7b1928"/>
+  </g>
+  <g id="nltg-o2bond-x">
+    <rect x="139" y="58" width="8" height="2.5" rx="1.25" fill="#7b1928"/>
+    <rect x="139" y="62" width="8" height="2.5" rx="1.25" fill="#7b1928"/>
+  </g>
+
+  <!-- N-O bonds (appear as molecules form; static at final geometry, fall with their side) -->
+  <!-- Left NO: O1 right edge 126 → N left edge 132 -->
+  <rect id="nltg-nobond-l1" x="126"  y="148.5" width="6" height="3" rx="1.5" fill="#6b46c1" opacity="0"/>
+  <!-- Left NO2 second O (upper): O2 bottom 127 → N top 132 -->
+  <rect id="nltg-nobond-l2" x="148.5" y="127" width="3" height="5" rx="1.5" fill="#6b46c1" opacity="0"/>
+  <!-- Right NO: N right edge 288 → O1 left edge 294 -->
+  <rect id="nltg-nobond-r1" x="288"  y="148.5" width="6" height="3" rx="1.5" fill="#6b46c1" opacity="0"/>
+  <!-- Right NO2 second O (upper): O2 bottom 127 → N top 132 -->
+  <rect id="nltg-nobond-r2" x="268.5" y="127" width="3" height="5" rx="1.5" fill="#6b46c1" opacity="0"/>
+
+  <!-- ============================================================= -->
+  <!-- Nitrogen atoms (from N2). SVG centres then GSAP-translated.    -->
+  <!-- Left N: centre 175,112 → final 150,150 (dx -25, dy +38)        -->
   <g id="nltg-n-left">
-    <circle cx="175" cy="115" r="32" fill="url(#nltg-n-halo)"/>
-    <circle cx="175" cy="115" r="19" fill="url(#nltg-n-fill)" stroke="#1a365d" stroke-width="1.5"/>
-    <text x="175" y="115" text-anchor="middle" dominant-baseline="central"
-          font-family="Georgia,serif" font-size="17" font-weight="bold" fill="white">N</text>
-    <text x="187" y="107" text-anchor="start" font-family="Georgia,serif"
-          font-size="8" fill="#bee3f8">7</text>
+    <circle cx="175" cy="112" r="28" fill="url(#nltg-n-halo)"/>
+    <circle cx="175" cy="112" r="18" fill="url(#nltg-n-fill)" stroke="#1a365d" stroke-width="1.5"/>
+    <text x="175" y="112" text-anchor="middle" dominant-baseline="central"
+          font-family="Georgia,serif" font-size="16" font-weight="bold" fill="white">N</text>
   </g>
-
-  <!-- Right N atom group (SVG centre 245,115; GSAP split: x+60, y+47 → visual 305,162) -->
+  <!-- Right N: centre 245,112 → final 270,150 (dx +25, dy +38) -->
   <g id="nltg-n-right">
-    <circle cx="245" cy="115" r="32" fill="url(#nltg-n-halo)"/>
-    <circle cx="245" cy="115" r="19" fill="url(#nltg-n-fill)" stroke="#1a365d" stroke-width="1.5"/>
-    <text x="245" y="115" text-anchor="middle" dominant-baseline="central"
-          font-family="Georgia,serif" font-size="17" font-weight="bold" fill="white">N</text>
-    <text x="233" y="107" text-anchor="end" font-family="Georgia,serif"
-          font-size="8" fill="#bee3f8">7</text>
+    <circle cx="245" cy="112" r="28" fill="url(#nltg-n-halo)"/>
+    <circle cx="245" cy="112" r="18" fill="url(#nltg-n-fill)" stroke="#1a365d" stroke-width="1.5"/>
+    <text x="245" y="112" text-anchor="middle" dominant-baseline="central"
+          font-family="Georgia,serif" font-size="16" font-weight="bold" fill="white">N</text>
   </g>
 
-  <!-- Left O atom (SVG centre 67,162; GSAP initial x:−80 opacity:0; slides to x:0) -->
-  <g id="nltg-o-left">
-    <circle cx="67" cy="162" r="26" fill="url(#nltg-o-halo)"/>
-    <circle cx="67" cy="162" r="15" fill="url(#nltg-o-fill)" stroke="#7b1928" stroke-width="1.5"/>
-    <text x="67" y="162" text-anchor="middle" dominant-baseline="central"
-          font-family="Georgia,serif" font-size="14" font-weight="bold" fill="white">O</text>
+  <!-- Oxygen atoms that react with the left nitrogen (from O2-L) -->
+  <!-- O_L1 centre 58,92 → left NO oxygen 113,150 (dx 55, dy 58) -->
+  <g id="nltg-o-l1">
+    <circle cx="58" cy="92" r="20" fill="url(#nltg-o-halo)"/>
+    <circle cx="58" cy="92" r="13" fill="url(#nltg-o-fill)" stroke="#7b1928" stroke-width="1.5"/>
+    <text x="58" y="92" text-anchor="middle" dominant-baseline="central"
+          font-family="Georgia,serif" font-size="13" font-weight="bold" fill="white">O</text>
+  </g>
+  <!-- O_L2 centre 92,92 → upper NO2 oxygen 150,114 (dx 58, dy 22) -->
+  <g id="nltg-o-l2">
+    <circle cx="92" cy="92" r="20" fill="url(#nltg-o-halo)"/>
+    <circle cx="92" cy="92" r="13" fill="url(#nltg-o-fill)" stroke="#7b1928" stroke-width="1.5"/>
+    <text x="92" y="92" text-anchor="middle" dominant-baseline="central"
+          font-family="Georgia,serif" font-size="13" font-weight="bold" fill="white">O</text>
   </g>
 
-  <!-- Right O atom (SVG centre 353,162; GSAP initial x:+80 opacity:0) -->
-  <g id="nltg-o-right">
-    <circle cx="353" cy="162" r="26" fill="url(#nltg-o-halo)"/>
-    <circle cx="353" cy="162" r="15" fill="url(#nltg-o-fill)" stroke="#7b1928" stroke-width="1.5"/>
-    <text x="353" y="162" text-anchor="middle" dominant-baseline="central"
-          font-family="Georgia,serif" font-size="14" font-weight="bold" fill="white">O</text>
+  <!-- Oxygen atoms that react with the right nitrogen (from O2-R) -->
+  <!-- O_R1 centre 362,92 → right NO oxygen 307,150 (dx -55, dy 58) -->
+  <g id="nltg-o-r1">
+    <circle cx="362" cy="92" r="20" fill="url(#nltg-o-halo)"/>
+    <circle cx="362" cy="92" r="13" fill="url(#nltg-o-fill)" stroke="#7b1928" stroke-width="1.5"/>
+    <text x="362" y="92" text-anchor="middle" dominant-baseline="central"
+          font-family="Georgia,serif" font-size="13" font-weight="bold" fill="white">O</text>
+  </g>
+  <!-- O_R2 centre 328,92 → upper NO2 oxygen 270,114 (dx -58, dy 22) -->
+  <g id="nltg-o-r2">
+    <circle cx="328" cy="92" r="20" fill="url(#nltg-o-halo)"/>
+    <circle cx="328" cy="92" r="13" fill="url(#nltg-o-fill)" stroke="#7b1928" stroke-width="1.5"/>
+    <text x="328" y="92" text-anchor="middle" dominant-baseline="central"
+          font-family="Georgia,serif" font-size="13" font-weight="bold" fill="white">O</text>
   </g>
 
-  <!-- N-O bond rects (appear after O atoms arrive; also fall in Phase 4) -->
-  <!-- Left:  O right edge 67+15=82  to N left edge 115-19=96  → width 14 -->
-  <rect id="nltg-no-bond-left"  x="82"  y="160" width="14" height="4" rx="2"
-        fill="#6b46c1" opacity="0"/>
-  <!-- Right: N right edge 305+19=324 to O left edge 353-15=338 → width 14 -->
-  <rect id="nltg-no-bond-right" x="324" y="160" width="14" height="4" rx="2"
-        fill="#6b46c1" opacity="0"/>
-
-  <!-- "NO" labels (appear when bonds form; fall with atoms in Phase 4) -->
-  <!-- Left pair centre: (67+115)/2=91 -->
-  <text id="nltg-no-text-left" x="91" y="147" text-anchor="middle"
+  <!-- Spare oxygen pair (from O2-X) that does not form NO — rejoins as O2 / ozone -->
+  <g id="nltg-o-x1">
+    <circle cx="126" cy="60" r="18" fill="url(#nltg-o-halo)"/>
+    <circle cx="126" cy="60" r="12" fill="url(#nltg-o-fill)" stroke="#7b1928" stroke-width="1.5"/>
+    <text x="126" y="60" text-anchor="middle" dominant-baseline="central"
+          font-family="Georgia,serif" font-size="12" font-weight="bold" fill="white">O</text>
+  </g>
+  <g id="nltg-o-x2">
+    <circle cx="160" cy="60" r="18" fill="url(#nltg-o-halo)"/>
+    <circle cx="160" cy="60" r="12" fill="url(#nltg-o-fill)" stroke="#7b1928" stroke-width="1.5"/>
+    <text x="160" y="60" text-anchor="middle" dominant-baseline="central"
+          font-family="Georgia,serif" font-size="12" font-weight="bold" fill="white">O</text>
+  </g>
+  <!-- "O₂" label for the recombined spare oxygen -->
+  <text id="nltg-o2-text" x="143" y="84" text-anchor="middle"
         font-family="Georgia,serif" font-size="11" font-weight="bold"
+        fill="#fffde7" opacity="0">O&#x2082;</text>
+
+  <!-- Molecule labels for the two reacting strands: NO → NO₂ → NO₃⁻ -->
+  <text id="nltg-mol-left" x="131" y="186" text-anchor="middle"
+        font-family="Georgia,serif" font-size="12" font-weight="bold"
         fill="#fffde7" opacity="0">NO</text>
-  <!-- Right pair centre: (305+353)/2=329 -->
-  <text id="nltg-no-text-right" x="329" y="147" text-anchor="middle"
-        font-family="Georgia,serif" font-size="11" font-weight="bold"
+  <text id="nltg-mol-right" x="288" y="186" text-anchor="middle"
+        font-family="Georgia,serif" font-size="12" font-weight="bold"
         fill="#fffde7" opacity="0">NO</text>
 
-  <!-- Rain drops (fall during Phase 4 alongside the NO molecules) -->
-  <ellipse class="nltg-rain" cx="82"  cy="186" rx="3" ry="5" fill="#4299e1" opacity="0"/>
-  <ellipse class="nltg-rain" cx="128" cy="192" rx="3" ry="5" fill="#63b3ed" opacity="0"/>
-  <ellipse class="nltg-rain" cx="210" cy="184" rx="3" ry="5" fill="#4299e1" opacity="0"/>
-  <ellipse class="nltg-rain" cx="292" cy="190" rx="3" ry="5" fill="#63b3ed" opacity="0"/>
-  <ellipse class="nltg-rain" cx="338" cy="186" rx="3" ry="5" fill="#4299e1" opacity="0"/>
+  <!-- Ozone (O₃) byproduct badge with "smell" wisps, top-right -->
+  <g id="nltg-ozone" opacity="0">
+    <circle cx="300" cy="54" r="8" fill="url(#nltg-o-fill)" stroke="#7b1928" stroke-width="1"/>
+    <circle cx="318" cy="62" r="8" fill="url(#nltg-o-fill)" stroke="#7b1928" stroke-width="1"/>
+    <circle cx="336" cy="54" r="8" fill="url(#nltg-o-fill)" stroke="#7b1928" stroke-width="1"/>
+    <text x="318" y="80" text-anchor="middle" font-family="Georgia,serif"
+          font-size="10.5" font-weight="bold" fill="#fffde7">O&#x2083; ozone</text>
+    <path d="M352,58 q6,-5 0,-10 q-6,-5 0,-10" fill="none"
+          stroke="#fffde7" stroke-width="1.5" stroke-linecap="round" opacity="0.8"/>
+    <path d="M362,62 q6,-5 0,-10 q-6,-5 0,-10" fill="none"
+          stroke="#fffde7" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+  </g>
 
-  <!-- Ground glow (brief pulse when NO molecules land) -->
-  <ellipse id="nltg-ground-glow" cx="210" cy="272" rx="115" ry="11"
+  <!-- Rain drops (fall during the nitrate phase) -->
+  <ellipse class="nltg-rain" cx="120" cy="206" rx="3" ry="5" fill="#4299e1" opacity="0"/>
+  <ellipse class="nltg-rain" cx="165" cy="212" rx="3" ry="5" fill="#63b3ed" opacity="0"/>
+  <ellipse class="nltg-rain" cx="210" cy="204" rx="3" ry="5" fill="#4299e1" opacity="0"/>
+  <ellipse class="nltg-rain" cx="255" cy="210" rx="3" ry="5" fill="#63b3ed" opacity="0"/>
+  <ellipse class="nltg-rain" cx="300" cy="206" rx="3" ry="5" fill="#4299e1" opacity="0"/>
+
+  <!-- Ground glow (brief pulse when nitrate soaks in) -->
+  <ellipse id="nltg-ground-glow" cx="210" cy="288" rx="130" ry="11"
            fill="#90ee90" opacity="0"/>
 
-  <!-- Plant (grows from ground; CSS transform-origin: bottom-centre via #nltg-plant style) -->
+  <!-- Plant (grows from ground; transform-origin bottom-centre via #nltg-plant style) -->
   <g id="nltg-plant" opacity="0">
-    <line x1="210" y1="285" x2="210" y2="259"
+    <line x1="210" y1="300" x2="210" y2="272"
           stroke="#2d5a27" stroke-width="2.5" stroke-linecap="round"/>
-    <path d="M210,274 Q200,264 197,254"
+    <path d="M210,289 Q200,279 197,269"
           fill="none" stroke="#276749" stroke-width="2" stroke-linecap="round"/>
-    <path d="M210,274 Q220,264 223,254"
+    <path d="M210,289 Q220,279 223,269"
           fill="none" stroke="#276749" stroke-width="2" stroke-linecap="round"/>
-    <ellipse cx="210" cy="258" rx="5" ry="4" fill="#276749"/>
+    <ellipse cx="210" cy="271" rx="5" ry="4" fill="#276749"/>
   </g>
 
   <!-- End formula label -->
-  <text id="nltg-label" x="210" y="302" text-anchor="middle"
-        font-family="Georgia,serif" font-size="12.5" fill="#ddeeff" opacity="0">
-    N&#x2082; + &#x26A1; &#x2192; 2&#x00A0;NO &#x2192; plant food
+  <text id="nltg-label" x="210" y="320" text-anchor="middle"
+        font-family="Georgia,serif" font-size="12" fill="#ddeeff" opacity="0">
+    N&#x2082; + O&#x2082; + &#x26A1; &#x2192; NO &#x2192; NO&#x2082; &#x2192; NO&#x2083;&#x207B; (nitrate)
   </text>
 
   <!-- Replay button -->
   <g id="nltg-replay" opacity="0" onclick="nltgReplay()">
-    <rect x="170" y="312" width="80" height="24" rx="12" fill="#1a3a5f"/>
-    <text x="210" y="324" text-anchor="middle" dominant-baseline="central"
+    <rect x="170" y="332" width="80" height="24" rx="12" fill="#1a3a5f"/>
+    <text x="210" y="344" text-anchor="middle" dominant-baseline="central"
           font-family="Georgia,serif" font-size="12" fill="white">&#x21BA; Replay</text>
   </g>
 
   <script><![CDATA[
   (function () {
     var PHASES = [
-      'Nitrogen gas (N₂) drifts in the atmosphere…',
-      '⚡ Lightning strikes — 30,000°C, hotter than the Sun!',
-      'The triple bond shatters! Nitrogen atoms fly free!',
-      'Each nitrogen grabs an oxygen atom',
-      'Rain carries them down to the soil…',
-      '…soaking in as natural plant food!'
+      'Nitrogen (N₂) and oxygen (O₂) float in the storm cloud…',
+      '⚡ Lightning! 30,000°C — hotter than the Sun!',
+      'The blast tears BOTH molecules into single atoms!',
+      'A nitrogen grabs an oxygen → NO (nitric oxide)',
+      'NO grabs one more oxygen → NO₂',
+      'Spare oxygen rejoins as O₂ — or O₃, the ozone smell!',
+      'Rain dissolves NO₂ into nitrate (NO₃⁻)…',
+      '…the plant food that soaks into the soil!'
     ];
 
     function setPhase(txt) {
       var el = document.getElementById('nltg-phase');
       if (el) el.textContent = txt;
     }
+    function setMol(txt) {
+      var l = document.getElementById('nltg-mol-left');
+      var r = document.getElementById('nltg-mol-right');
+      if (l) l.textContent = txt;
+      if (r) r.textContent = txt;
+    }
 
     function animate() {
-      /* Reset all elements to initial state */
+      /* Reset every element to its initial state */
       gsap.set('#nltg-n-left',  { x: 0, y: 0 });
       gsap.set('#nltg-n-right', { x: 0, y: 0 });
       gsap.set(['#nltg-bond1', '#nltg-bond2', '#nltg-bond3'], { opacity: 1 });
-      gsap.set('#nltg-o-left',  { x: -80, opacity: 0, y: 0 });
-      gsap.set('#nltg-o-right', { x:  80, opacity: 0, y: 0 });
-      gsap.set(['#nltg-no-bond-left',  '#nltg-no-bond-right'],  { opacity: 0, y: 0 });
-      gsap.set(['#nltg-no-text-left',  '#nltg-no-text-right'],  { opacity: 0, y: 0 });
+      gsap.set(['#nltg-o2bond-l', '#nltg-o2bond-r', '#nltg-o2bond-x'], { opacity: 1 });
+      gsap.set('#nltg-o-l1', { x: 0, y: 0 });
+      gsap.set('#nltg-o-l2', { x: 0, y: 0 });
+      gsap.set('#nltg-o-r1', { x: 0, y: 0 });
+      gsap.set('#nltg-o-r2', { x: 0, y: 0 });
+      gsap.set('#nltg-o-x1', { x: 0, y: 0 });
+      gsap.set('#nltg-o-x2', { x: 0, y: 0 });
+      gsap.set('#nltg-o2-text', { opacity: 0 });
+      gsap.set(['#nltg-nobond-l1', '#nltg-nobond-l2',
+                '#nltg-nobond-r1', '#nltg-nobond-r2'], { opacity: 0, y: 0 });
+      gsap.set(['#nltg-mol-left', '#nltg-mol-right'], { opacity: 0, y: 0 });
+      gsap.set('#nltg-ozone', { opacity: 0 });
       gsap.set('#nltg-lightning',      { opacity: 0 });
       gsap.set('#nltg-lightning-glow', { opacity: 0 });
       gsap.set('#nltg-flash',          { opacity: 0 });
@@ -192,11 +268,12 @@
       gsap.set('#nltg-label',  { opacity: 0 });
       gsap.set('#nltg-replay', { opacity: 0 });
       gsap.set('#nltg-phase',  { opacity: 0 });
+      setMol('NO');
 
       var tl = gsap.timeline();
 
       tl
-        /* Phase 0 — N₂ drifts in the sky */
+        /* Phase 0 — N₂ and O₂ drift in the cloud */
         .call(function () { setPhase(PHASES[0]); })
         .to('#nltg-phase', { opacity: 1, duration: 0.6 })
 
@@ -209,36 +286,59 @@
         .to('#nltg-lightning',      { opacity: 0, duration: 0.50 }, '<+=0.1')
         .to('#nltg-flash',          { opacity: 0, duration: 0.45 }, '<')
 
-        /* Phase 2 — triple bond shatters, N atoms fly apart */
+        /* Phase 2 — BOTH molecules dissociate into single atoms */
         .call(function () { setPhase(PHASES[2]); })
-        .to('#nltg-n-left',  { x: -60, y: 47, duration: 0.65, ease: 'power2.out' })
-        .to('#nltg-n-right', { x:  60, y: 47, duration: 0.65, ease: 'power2.out' }, '<')
+        /* N₂ triple bond breaks; nitrogens drift to their reaction spots */
+        .to('#nltg-n-left',  { x: -25, y: 38, duration: 0.6, ease: 'power2.out' })
+        .to('#nltg-n-right', { x:  25, y: 38, duration: 0.6, ease: 'power2.out' }, '<')
         .to(['#nltg-bond1', '#nltg-bond2', '#nltg-bond3'],
-            { opacity: 0, duration: 0.35 }, '<')
+            { opacity: 0, duration: 0.3 }, '<')
+        /* O₂ bonds snap; the spare oxygen pair drifts apart */
+        .to(['#nltg-o2bond-l', '#nltg-o2bond-r', '#nltg-o2bond-x'],
+            { opacity: 0, duration: 0.3 }, '<')
+        .to('#nltg-o-x1', { x: -18, duration: 0.6, ease: 'power2.out' }, '<')
+        .to('#nltg-o-x2', { x:  18, duration: 0.6, ease: 'power2.out' }, '<')
 
-        /* Phase 3 — O atoms fly in, N-O bonds form */
-        .call(function () { setPhase(PHASES[3]); }, null, '+=0.4')
-        .to('#nltg-o-left',  { x: 0, opacity: 1, duration: 0.7, ease: 'power2.out' })
-        .to('#nltg-o-right', { x: 0, opacity: 1, duration: 0.7, ease: 'power2.out' }, '<')
-        .to(['#nltg-no-bond-left', '#nltg-no-bond-right'],
-            { opacity: 1, duration: 0.4 }, '<+=0.5')
-        .to(['#nltg-no-text-left', '#nltg-no-text-right'],
-            { opacity: 1, duration: 0.4 })
+        /* Phase 3 — N + O → NO */
+        .call(function () { setPhase(PHASES[3]); }, null, '+=0.3')
+        .to('#nltg-o-l1', { x: 55, y: 58, duration: 0.7, ease: 'power2.out' })
+        .to('#nltg-o-r1', { x: -55, y: 58, duration: 0.7, ease: 'power2.out' }, '<')
+        .to(['#nltg-nobond-l1', '#nltg-nobond-r1'],
+            { opacity: 1, duration: 0.35 }, '<+=0.45')
+        .call(function () { setMol('NO'); })
+        .to(['#nltg-mol-left', '#nltg-mol-right'], { opacity: 1, duration: 0.35 })
 
-        /* Phase 4 — NO molecules fall as rain */
+        /* Phase 4 — NO + O → NO₂ */
         .call(function () { setPhase(PHASES[4]); }, null, '+=0.4')
-        .to([
-            '#nltg-n-left',       '#nltg-n-right',
-            '#nltg-o-left',       '#nltg-o-right',
-            '#nltg-no-bond-left', '#nltg-no-bond-right',
-            '#nltg-no-text-left', '#nltg-no-text-right'
-          ],
-          { y: '+=86', duration: 1.5, ease: 'power1.in' })
-        .to('.nltg-rain',
-          { opacity: 0.8, y: 75, duration: 1.3, stagger: 0.08, ease: 'power1.in' }, '<')
+        .to('#nltg-o-l2', { x: 58, y: 22, duration: 0.7, ease: 'power2.out' })
+        .to('#nltg-o-r2', { x: -58, y: 22, duration: 0.7, ease: 'power2.out' }, '<')
+        .to(['#nltg-nobond-l2', '#nltg-nobond-r2'],
+            { opacity: 1, duration: 0.35 }, '<+=0.45')
+        .call(function () { setMol('NO₂'); })
 
-        /* Phase 5 — ground absorption, plant emerges */
-        .call(function () { setPhase(PHASES[5]); })
+        /* Phase 5 — spare oxygen rejoins as O₂ / ozone (O₃) */
+        .call(function () { setPhase(PHASES[5]); }, null, '+=0.4')
+        .to('#nltg-o-x1', { x: 0, duration: 0.55, ease: 'power2.inOut' })
+        .to('#nltg-o-x2', { x: 0, duration: 0.55, ease: 'power2.inOut' }, '<')
+        .to('#nltg-o2bond-x', { opacity: 1, duration: 0.3 }, '<+=0.35')
+        .to('#nltg-o2-text',  { opacity: 1, duration: 0.3 }, '<')
+        .to('#nltg-ozone',    { opacity: 1, duration: 0.5 }, '+=0.1')
+
+        /* Phase 6 — rain dissolves NO₂ into nitrate (NO₃⁻) */
+        .call(function () { setPhase(PHASES[6]); }, null, '+=0.4')
+        .to('.nltg-rain',
+          { opacity: 0.8, y: 70, duration: 1.3, stagger: 0.07, ease: 'power1.in' })
+        .call(function () { setMol('NO₃⁻'); }, null, '<+=0.5')
+        .to([
+            '#nltg-n-left',  '#nltg-o-l1', '#nltg-o-l2',
+            '#nltg-nobond-l1', '#nltg-nobond-l2', '#nltg-mol-left',
+            '#nltg-n-right', '#nltg-o-r1', '#nltg-o-r2',
+            '#nltg-nobond-r1', '#nltg-nobond-r2', '#nltg-mol-right'
+          ],
+          { y: '+=90', duration: 1.4, ease: 'power1.in' }, '<')
+
+        /* Phase 7 — nitrate soaks in, plant grows */
+        .call(function () { setPhase(PHASES[7]); })
         .to('#nltg-ground-glow', { opacity: 0.7, duration: 0.3 })
         .to('#nltg-ground-glow', { opacity: 0,   duration: 1.0 })
         .to('#nltg-plant',

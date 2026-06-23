@@ -171,14 +171,14 @@
         {
           "type": "paragraph",
           "id": "ch4-p4",
-          "text": "With that monstrous burst of energy, the lightning rips apart the stubborn triple bond. The freed nitrogen atoms, suddenly able to make new friends, immediately grab onto oxygen. They form brand-new molecules, and when the rain comes pouring down, it carries them gently to the ground, soaking into the soil as a kind of natural plant food.",
+          "text": "With that monstrous burst of energy, the lightning rips apart the stubborn triple bond — and it shatters the oxygen molecules in the air, too. For an instant the channel is full of lonely nitrogen and oxygen atoms, all suddenly desperate to make new friends. A nitrogen atom grabs an oxygen to make a tiny molecule called nitric oxide, then snatches one more oxygen to become nitrogen dioxide. When the rain comes pouring down, it dissolves these into nitrate — the exact kind of nitrogen that plants can finally drink up — and carries it gently into the soil as natural plant food. The leftover oxygen atoms mostly just join back into pairs, though a few link up in threes to make ozone, which is why the air smells so sharp and clean right after a lightning storm.",
           "audio": "audio/ch4-ch4-p4.opus"
         },
         {
           "type": "diagram",
           "id": "ch4-d1",
-          "caption": "Lightning rips apart N₂, the freed nitrogen grabs oxygen to form NO, and rain carries it down to fertilise the soil.",
-          "altText": "Animated diagram: lightning splits N₂, nitrogen atoms bond with oxygen, NO molecules fall as rain into the soil.",
+          "caption": "Lightning tears both N₂ and O₂ into single atoms. Nitrogen joins oxygen to make NO, then NO₂, which rain dissolves into nitrate (NO₃⁻) — the plant food that soaks into the soil. Spare oxygen rejoins as O₂ or forms a little ozone (O₃) — that sharp smell after a storm.",
+          "altText": "Animated diagram: lightning splits N₂ and O₂ into atoms; nitrogen bonds with oxygen to form NO and then NO₂, which rain turns into nitrate in the soil, while leftover oxygen reforms O₂ and ozone.",
           "svgFile": "diagrams/nitrogen-lightning.svg"
         },
         {
