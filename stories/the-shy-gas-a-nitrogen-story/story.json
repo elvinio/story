@@ -177,8 +177,8 @@
         {
           "type": "diagram",
           "id": "ch4-d1",
-          "caption": "Lightning rips apart N₂, the freed nitrogen grabs oxygen to form NO, and rain carries it down to fertilise the soil.",
-          "altText": "Animated diagram: lightning splits N₂, nitrogen atoms bond with oxygen, NO molecules fall as rain into the soil.",
+          "caption": "Lightning tears both N₂ and O₂ into single atoms. Nitrogen joins oxygen to make NO, then NO₂, which rain dissolves into nitrate (NO₃⁻) — the plant food that soaks into the soil. Spare oxygen rejoins as O₂ or forms a little ozone (O₃) — that sharp smell after a storm.",
+          "altText": "Animated diagram: lightning splits N₂ and O₂ into atoms; nitrogen bonds with oxygen to form NO and then NO₂, which rain turns into nitrate in the soil, while leftover oxygen reforms O₂ and ozone.",
           "svgFile": "diagrams/nitrogen-lightning.svg"
         },
         {

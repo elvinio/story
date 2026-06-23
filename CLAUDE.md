@@ -183,7 +183,7 @@ a `<script><![CDATA[...]]></script>` block wrapped in an IIFE.
 | File | Prefix | What it shows |
 |---|---|---|
 | `nitrogen-triple-bond.svg` | `n2tb-` | Two N atoms approach and form N≡N |
-| `nitrogen-lightning.svg` | `nltg-` | Lightning strikes N₂ → NO → soil nitrates |
+| `nitrogen-lightning.svg` | `nltg-` | Lightning splits N₂ and O₂ → NO → NO₂ → nitrate (NO₃⁻); spare O → O₂/O₃ |
 
 ## Audio narration
 
