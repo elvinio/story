@@ -1,0 +1,140 @@
+name: Auto-Regenerate Audio
+
+# Triggers on any push to main that touches story content.
+# Two mechanisms are handled in the same job:
+#
+#   1. Auto-detect: story.json text changes → regenerate only the affected chapters.
+#   2. Explicit override: presence of stories/<id>/audio-regen.json → regenerate
+#      the listed chapters (or all), then delete the file so it's a one-shot signal.
+#
+# The bot commit includes [ci skip] so it does not re-trigger this workflow.
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'stories/*/story.json'
+      - 'stories/*/audio-regen.json'
+
+permissions:
+  contents: write
+
+jobs:
+  auto-regen:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4.2.2
+        with:
+          fetch-depth: 2  # need parent commit for git diff / detect_audio_changes.py
+
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      # ── Mechanism 1: auto-detect changed chapters from story.json diffs ──────
+
+      - name: Regenerate audio for changed story.json chapters
+        env:
+          STORY_TTS_API_KEY: ${{ secrets.STORY_TTS_API_KEY }}
+        run: |
+          changed_stories=$(git diff HEAD~1 HEAD --name-only -- 'stories/*/story.json' 2>/dev/null || true)
+
+          if [ -z "$changed_stories" ]; then
+            echo "No story.json files changed in this push."
+          fi
+
+          for story_json in $changed_stories; do
+            story_id=$(echo "$story_json" | cut -d'/' -f2)
+            echo "--- Checking $story_id for text changes ---"
+
+            chapters=$(python detect_audio_changes.py "$story_json")
+
+            if [ -z "$chapters" ]; then
+              echo "No narrated text changed in $story_id — skipping."
+              continue
+            fi
+
+            echo "Chapters with changed text: $chapters"
+            python generate_audio.py \
+              "$story_json" \
+              --chapter $chapters \
+              --force
+          done
+
+      # ── Mechanism 2: explicit audio-regen.json override ───────────────────────
+
+      - name: Process audio-regen.json override files
+        env:
+          STORY_TTS_API_KEY: ${{ secrets.STORY_TTS_API_KEY }}
+        run: |
+          python - <<'PYEOF'
+          import json, os, subprocess, sys
+          from pathlib import Path
+          import glob
+
+          override_files = glob.glob("stories/*/audio-regen.json")
+          if not override_files:
+              print("No audio-regen.json files found.")
+              sys.exit(0)
+
+          for override_path in override_files:
+              story_dir = Path(override_path).parent
+              story_id = story_dir.name
+              story_json = str(story_dir / "story.json")
+
+              print(f"--- Processing override for {story_id} ---")
+
+              try:
+                  cfg = json.loads(Path(override_path).read_text())
+              except Exception as e:
+                  print(f"ERROR: Could not parse {override_path}: {e}", file=sys.stderr)
+                  continue
+
+              chapters = cfg.get("chapters") or []
+              voice   = cfg.get("voice",  "af_heart")
+              speed   = cfg.get("speed",  "0.9")
+              fmt     = cfg.get("format", "opus")
+
+              cmd = [
+                  sys.executable, "generate_audio.py",
+                  story_json,
+                  "--voice",  str(voice),
+                  "--speed",  str(speed),
+                  "--format", str(fmt),
+                  "--force",
+              ]
+              if chapters:
+                  cmd += ["--chapter"] + [str(c) for c in chapters]
+
+              print("Running:", " ".join(cmd))
+              result = subprocess.run(cmd, env={**os.environ})
+
+              if result.returncode != 0:
+                  print(f"ERROR: generate_audio.py failed for {story_id}", file=sys.stderr)
+                  continue
+
+              # Remove the trigger file — it's a one-shot signal
+              Path(override_path).unlink()
+              print(f"Removed {override_path}")
+          PYEOF
+
+      # ── Commit all generated audio + removed override files ──────────────────
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add stories/
+          if git diff --staged --quiet; then
+            echo "No changes to commit — audio already up to date."
+          else
+            git commit -m "chore: auto-regenerate audio [ci skip]"
+            git push
+          fi

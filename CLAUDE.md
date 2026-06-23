@@ -50,7 +50,9 @@ stories/
     assets/cover.svg    Cover art (referenced by index.json + story.json meta)
     audio/              One audio file per narrated node
     diagrams/           Interactive SVGs referenced by diagram nodes
+    audio-regen.json    (optional) One-shot override to trigger CI audio regen
 generate_audio.py       TTS narration generator (Kokoro endpoint)
+detect_audio_changes.py Compares story.json to previous commit; outputs changed chapter IDs
 story-format-prompt.md  Prompt for asking an AI to author a new story.json
 README.md               User-facing overview
 ```
@@ -211,12 +213,49 @@ node and (if missing) writes the `audio` paths back into `story.json`.
 STORY_TTS_API_KEY=... python generate_audio.py stories/<id>/story.json
 python generate_audio.py stories/<id>/story.json --dry-run   # plan only
 python generate_audio.py stories/<id>/story.json --force      # overwrite
+python generate_audio.py stories/<id>/story.json --chapter ch1 ch3 --force
 ```
 
 Naming convention it expects/creates: `audio/<chapter-id>-<node-id>.<fmt>`.
 (The nitrogen story's files are doubled, e.g. `audio/ch1-ch1-p1.opus`, because
 its node IDs already include the chapter prefix — match whatever the
 `story.json` `audio` field actually says.)
+
+### CI audio regeneration workflows
+
+Two GitHub Actions workflows handle audio generation:
+
+**`generate-audio.yml`** (manual, `workflow_dispatch`) — full control: pick
+story, chapters, voice, speed, format, and whether to force-overwrite. Use this
+for initial generation or deliberate full reruns.
+
+**`auto-regen-audio.yml`** (automatic, push to `main`) — triggers whenever
+`stories/*/story.json` or `stories/*/audio-regen.json` changes. Two modes:
+
+1. **Auto-detect**: uses `detect_audio_changes.py` to compare the changed
+   `story.json` against the previous commit. Only chapters whose narrated text
+   actually changed are regenerated (`--force` for those chapters). Metadata-only
+   edits (title, estimatedMinutes, etc.) produce no audio output.
+
+2. **Explicit override** (`audio-regen.json`): commit a file at
+   `stories/<id>/audio-regen.json` to force regeneration with specific settings.
+   The workflow processes it, then **deletes the file** and commits the deletion
+   so it fires only once. Schema:
+
+   ```json
+   {
+     "chapters": ["ch1", "ch3"],
+     "voice": "af_heart",
+     "speed": "0.9",
+     "format": "opus"
+   }
+   ```
+
+   Omit `chapters` (or use `[]`) to regenerate all chapters. All fields except
+   `chapters` are optional and default to the same values as the manual workflow.
+
+The bot commit from `auto-regen-audio.yml` uses `[ci skip]` in its message to
+avoid re-triggering the workflow.
 
 ## Reading settings & persistence (localStorage)
 
