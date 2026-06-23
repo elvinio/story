@@ -1,6 +1,6 @@
 {
   "id": "the-shy-gas-a-nitrogen-story",
-  "version": 2,
+  "version": 3,
   "meta": {
     "title": "The Shy Gas: A Nitrogen Story",
     "subtitle": "A bedtime tale about the most quiet, most important gas in the whole wide world",
@@ -173,6 +173,13 @@
           "id": "ch4-p4",
           "text": "With that monstrous burst of energy, the lightning rips apart the stubborn triple bond. The freed nitrogen atoms, suddenly able to make new friends, immediately grab onto oxygen. They form brand-new molecules, and when the rain comes pouring down, it carries them gently to the ground, soaking into the soil as a kind of natural plant food.",
           "audio": "audio/ch4-ch4-p4.opus"
+        },
+        {
+          "type": "diagram",
+          "id": "ch4-d1",
+          "caption": "Lightning rips apart N₂, the freed nitrogen grabs oxygen to form NO, and rain carries it down to fertilise the soil.",
+          "altText": "Animated diagram: lightning splits N₂, nitrogen atoms bond with oxygen, NO molecules fall as rain into the soil.",
+          "svgFile": "diagrams/nitrogen-lightning.svg"
         },
         {
           "type": "paragraph",
