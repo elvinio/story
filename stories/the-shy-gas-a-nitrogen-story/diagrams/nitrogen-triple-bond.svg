@@ -1,0 +1,169 @@
+<svg id="n2tb-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 290"
+     style="max-width:100%;height:auto;display:block;">
+  <defs>
+    <style>
+      .n2tb-bond {
+        transform-box: fill-box;
+        transform-origin: center center;
+      }
+      #n2tb-replay { cursor: pointer; }
+      #n2tb-replay:hover rect { opacity: 0.82; }
+    </style>
+    <radialGradient id="n2tb-halo" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#90cdf4" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#90cdf4" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="n2tb-atom-fill" cx="38%" cy="32%" r="70%">
+      <stop offset="0%"   stop-color="#4299e1"/>
+      <stop offset="100%" stop-color="#1a3a6e"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="420" height="290" rx="10" fill="#eef4fb" stroke="#bee3f8" stroke-width="1.5"/>
+
+  <!-- Title -->
+  <text x="210" y="30" text-anchor="middle" font-family="Georgia,serif"
+        font-size="15" fill="#2d3748" font-weight="bold">N&#x2082; &#x2014; The Triple Bond</text>
+
+  <!-- Phase label (updated by script) -->
+  <text id="n2tb-phase" x="210" y="52" text-anchor="middle" font-family="Georgia,serif"
+        font-size="12.5" font-style="italic" fill="#4a5568" opacity="0">&#160;</text>
+
+  <!-- Bond rects rendered before atoms so atom circles sit on top -->
+  <rect id="n2tb-bond1" class="n2tb-bond"
+        x="162" y="137" width="96" height="4" rx="2" fill="#c98e00" opacity="0"/>
+  <rect id="n2tb-bond2" class="n2tb-bond"
+        x="162" y="143" width="96" height="4" rx="2" fill="#e6a817" opacity="0"/>
+  <rect id="n2tb-bond3" class="n2tb-bond"
+        x="162" y="149" width="96" height="4" rx="2" fill="#c98e00" opacity="0"/>
+
+  <!-- Left atom group (drawn at 140,145; GSAP translates x by -80 at start) -->
+  <g id="n2tb-atom-left">
+    <circle cx="140" cy="145" r="40" fill="url(#n2tb-halo)"/>
+    <circle cx="140" cy="145" r="25" fill="url(#n2tb-atom-fill)" stroke="#1a365d" stroke-width="1.5"/>
+    <text x="140" y="145" text-anchor="middle" dominant-baseline="central"
+          font-family="Georgia,serif" font-size="21" font-weight="bold" fill="white">N</text>
+    <text x="154" y="136" text-anchor="start" font-family="Georgia,serif"
+          font-size="9" fill="#bee3f8">7</text>
+  </g>
+
+  <!-- Right atom group (drawn at 280,145; GSAP translates x by +80 at start) -->
+  <g id="n2tb-atom-right">
+    <circle cx="280" cy="145" r="40" fill="url(#n2tb-halo)"/>
+    <circle cx="280" cy="145" r="25" fill="url(#n2tb-atom-fill)" stroke="#1a365d" stroke-width="1.5"/>
+    <text x="280" y="145" text-anchor="middle" dominant-baseline="central"
+          font-family="Georgia,serif" font-size="21" font-weight="bold" fill="white">N</text>
+    <text x="266" y="136" text-anchor="end" font-family="Georgia,serif"
+          font-size="9" fill="#bee3f8">7</text>
+  </g>
+
+  <!-- Flash overlay centred on the bond region -->
+  <rect id="n2tb-flash" x="130" y="118" width="160" height="54" rx="8"
+        fill="#fffde7" opacity="0" pointer-events="none"/>
+
+  <!-- N&#x2261;N label (slides up and fades in at end) -->
+  <text id="n2tb-label" x="210" y="210" text-anchor="middle" dominant-baseline="central"
+        font-family="Georgia,serif" font-size="28" font-weight="bold"
+        fill="#1a3a6e" opacity="0">N&#x2261;N</text>
+
+  <!-- Sub-label -->
+  <text id="n2tb-sublabel" x="210" y="230" text-anchor="middle"
+        font-family="Georgia,serif" font-size="11" fill="#718096" opacity="0">three shared electron pairs &#xb7; the strongest bond in chemistry</text>
+
+  <!-- Replay button -->
+  <g id="n2tb-replay" opacity="0" onclick="n2tbReplay()">
+    <rect x="170" y="253" width="80" height="28" rx="14" fill="#2c5282"/>
+    <text x="210" y="267" text-anchor="middle" dominant-baseline="central"
+          font-family="Georgia,serif" font-size="13" fill="white">&#x21BA; Replay</text>
+  </g>
+
+  <script><![CDATA[
+  (function () {
+    var PHASES = [
+      'Two nitrogen atoms, each with unpaired electrons…',
+      'Drifting toward each other…',
+      'First bond forms!',
+      'Two bonds!',
+      'Triple bond — the strongest grip in nature!'
+    ];
+
+    function setPhase(txt) {
+      var el = document.getElementById('n2tb-phase');
+      if (el) el.textContent = txt;
+    }
+
+    function animate() {
+      gsap.set('#n2tb-atom-left',  { x: -80 });
+      gsap.set('#n2tb-atom-right', { x:  80 });
+      gsap.set('#n2tb-bond1',      { scaleX: 0, opacity: 0 });
+      gsap.set('#n2tb-bond2',      { scaleX: 0, opacity: 0 });
+      gsap.set('#n2tb-bond3',      { scaleX: 0, opacity: 0 });
+      gsap.set('#n2tb-flash',      { opacity: 0 });
+      gsap.set('#n2tb-label',      { opacity: 0, y: 12 });
+      gsap.set('#n2tb-sublabel',   { opacity: 0 });
+      gsap.set('#n2tb-replay',     { opacity: 0 });
+      gsap.set('#n2tb-phase',      { opacity: 0 });
+
+      var tl = gsap.timeline();
+
+      tl
+        .call(function () { setPhase(PHASES[0]); })
+        .to('#n2tb-phase', { opacity: 1, duration: 0.4 })
+
+        /* atoms approach */
+        .call(function () { setPhase(PHASES[1]); }, null, '+=0.25')
+        .to('#n2tb-atom-left',  { x: 0, duration: 1.1, ease: 'power2.inOut' }, '<')
+        .to('#n2tb-atom-right', { x: 0, duration: 1.1, ease: 'power2.inOut' }, '<')
+
+        /* middle bond snaps in first for impact */
+        .call(function () { setPhase(PHASES[2]); })
+        .to('#n2tb-bond2', { scaleX: 1, opacity: 1, duration: 0.28, ease: 'back.out(2)' })
+
+        /* top bond */
+        .call(function () { setPhase(PHASES[3]); }, null, '+=0.15')
+        .to('#n2tb-bond1', { scaleX: 1, opacity: 1, duration: 0.28, ease: 'back.out(2)' })
+
+        /* bottom bond + flash pulse */
+        .call(function () { setPhase(PHASES[4]); }, null, '+=0.15')
+        .to('#n2tb-bond3', { scaleX: 1, opacity: 1, duration: 0.22, ease: 'back.out(2)' })
+        .to('#n2tb-flash', { opacity: 0.55, duration: 0.12 }, '<')
+        .to('#n2tb-flash', { opacity: 0,    duration: 0.55 })
+
+        /* N≡N label floats up */
+        .to('#n2tb-label',    { opacity: 1, y: 0, duration: 0.5 }, '-=0.3')
+        .to('#n2tb-sublabel', { opacity: 1, duration: 0.4 })
+
+        /* replay button */
+        .to('#n2tb-replay', { opacity: 1, duration: 0.35 }, '+=0.2');
+    }
+
+    window.n2tbReplay = function () {
+      if (window.gsap) animate();
+    };
+
+    function setup() {
+      var svgEl = document.getElementById('n2tb-svg');
+      if (!svgEl) return;
+      var played = false;
+      var io = new IntersectionObserver(function (entries) {
+        if (entries[0].isIntersecting && !played) {
+          played = true;
+          io.disconnect();
+          animate();
+        }
+      }, { threshold: 0.3 });
+      io.observe(svgEl);
+    }
+
+    if (window.gsap) {
+      setup();
+    } else {
+      var s = document.createElement('script');
+      s.src = 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js';
+      s.onload = setup;
+      document.head.appendChild(s);
+    }
+  }());
+  ]]></script>
+</svg>
