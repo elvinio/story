@@ -1,6 +1,6 @@
 {
   "id": "the-shy-gas-a-nitrogen-story",
-  "version": 1,
+  "version": 2,
   "meta": {
     "title": "The Shy Gas: A Nitrogen Story",
     "subtitle": "A bedtime tale about the most quiet, most important gas in the whole wide world",
@@ -70,6 +70,13 @@
           "id": "ch2-p1",
           "text": "Nitrogen almost never travels alone. In the air, two nitrogen atoms grab hold of each other and refuse to let go. We write this little pair as N₂.",
           "audio": "audio/ch2-ch2-p1.opus"
+        },
+        {
+          "type": "diagram",
+          "id": "ch2-d1",
+          "caption": "Two nitrogen atoms drifting together and locking into N₂ — a triple bond, the strongest handshake in chemistry.",
+          "altText": "Animated diagram showing two N atoms approaching and bonding with a triple bond to form N₂.",
+          "svgFile": "diagrams/nitrogen-triple-bond.svg"
         },
         {
           "type": "paragraph",
