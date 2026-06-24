@@ -123,7 +123,8 @@
           "id": "goe-diagram",
           "caption": "Watch the Great Oxidation Event unfold: rust fills the seafloor, then oxygen floods the sky",
           "altText": "An animated diagram of the Great Oxidation Event. Cyanobacteria near the ocean surface release O₂ bubbles. The oxygen reacts with dissolved iron ions (Fe²⁺), creating a flash and turning them into rust particles. The rust sinks in layers to the seafloor, building up striped rock formations. Once the ocean's iron supply runs out, fresh O₂ bubbles rise straight through the water and into the atmosphere, which brightens from dark purple to blue as O₂ molecules fill the air.",
-          "svgFile": "diagrams/great-oxidation-event.svg"
+          "svgFile": "diagrams/great-oxidation-event.svg",
+          "audio": "audio/ch4-goe-diagram.opus"
         },
         {
           "type": "paragraph",
