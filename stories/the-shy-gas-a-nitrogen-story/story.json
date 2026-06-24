@@ -266,7 +266,8 @@
           "type": "callout",
           "id": "ch6-c1",
           "label": "A wondering thought",
-          "text": "Ammonia has a sharp, stinging smell — it's the eye-watering whiff you might notice in some cleaning sprays. A strong smell for such an important little molecule."
+          "text": "Ammonia has a sharp, stinging smell — it's the eye-watering whiff you might notice in some cleaning sprays. A strong smell for such an important little molecule.",
+          "audio": "audio/ch6-ch6-c1.opus"
         }
       ]
     },
