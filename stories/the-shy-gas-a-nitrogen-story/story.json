@@ -76,7 +76,8 @@
           "id": "ch2-d1",
           "caption": "Two nitrogen atoms drifting together and locking into N₂ — a triple bond, the strongest handshake in chemistry.",
           "altText": "Animated diagram showing two N atoms approaching and bonding with a triple bond to form N₂.",
-          "svgFile": "diagrams/nitrogen-triple-bond.svg"
+          "svgFile": "diagrams/nitrogen-triple-bond.svg",
+          "audio": "audio/ch2-ch2-d1.opus"
         },
         {
           "type": "paragraph",
@@ -179,7 +180,8 @@
           "id": "ch4-d1",
           "caption": "Lightning tears both N₂ and O₂ into single atoms. Nitrogen joins oxygen to make NO, then NO₂, which rain dissolves into nitrate (NO₃⁻) — the plant food that soaks into the soil. Spare oxygen rejoins as O₂ or forms a little ozone (O₃) — that sharp smell after a storm.",
           "altText": "Animated diagram: lightning splits N₂ and O₂ into atoms; nitrogen bonds with oxygen to form NO and then NO₂, which rain turns into nitrate in the soil, while leftover oxygen reforms O₂ and ozone.",
-          "svgFile": "diagrams/nitrogen-lightning.svg"
+          "svgFile": "diagrams/nitrogen-lightning.svg",
+          "audio": "audio/ch4-ch4-d1.opus"
         },
         {
           "type": "paragraph",
