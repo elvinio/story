@@ -138,13 +138,13 @@
         .to('#n2tb-replay', { opacity: 1, duration: 0.53 }, '+=0.3');
     }
 
-    window.n2tbReplay = function () {
-      if (window.gsap) animate();
-    };
+    window.n2tbAnimate = function () { if (window.gsap) animate(); };
+    window.n2tbReplay = function () { if (window.gsap) animate(); };
 
     function setup() {
       var svgEl = document.getElementById('n2tb-svg');
       if (!svgEl) return;
+      svgEl.setAttribute('data-anim-fn', 'n2tbAnimate');
       var played = false;
       var io = new IntersectionObserver(function (entries) {
         if (entries[0].isIntersecting && !played) {
@@ -157,7 +157,7 @@
     }
 
     if (window.gsap) {
-      setup();
+      setTimeout(setup, 0);
     } else {
       var s = document.createElement('script');
       s.src = 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js';

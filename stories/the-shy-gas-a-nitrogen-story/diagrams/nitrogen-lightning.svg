@@ -349,13 +349,13 @@
         .to('#nltg-replay', { opacity: 1, duration: 0.4 }, '+=0.2');
     }
 
-    window.nltgReplay = function () {
-      if (window.gsap) animate();
-    };
+    window.nltgAnimate = function () { if (window.gsap) animate(); };
+    window.nltgReplay = function () { if (window.gsap) animate(); };
 
     function setup() {
       var svgEl = document.getElementById('nltg-svg');
       if (!svgEl) return;
+      svgEl.setAttribute('data-anim-fn', 'nltgAnimate');
       var played = false;
       var io = new IntersectionObserver(function (entries) {
         if (entries[0].isIntersecting && !played) {
@@ -368,7 +368,7 @@
     }
 
     if (window.gsap) {
-      setup();
+      setTimeout(setup, 0);
     } else {
       var s = document.createElement('script');
       s.src = 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js';

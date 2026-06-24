@@ -220,6 +220,12 @@ function setupAudioBar() {
       const rect = active.getBoundingClientRect();
       const visible = rect.top >= 60 && rect.bottom <= window.innerHeight - 70;
       if (!visible) active.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+      const svgAnim = active.querySelector('svg[data-anim-fn]');
+      if (svgAnim) {
+        const fn = window[svgAnim.getAttribute('data-anim-fn')];
+        if (typeof fn === 'function') fn();
+      }
     }
 
     const short = nodeText.length > 65
