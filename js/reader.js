@@ -179,7 +179,23 @@ async function loadInlineSVG(url, container) {
     scripts.forEach(s => s.remove());
 
     const svg = doc.documentElement;
-    container.appendChild(svg);
+
+    // Safari requires explicit width/height attributes to compute the intrinsic
+    // aspect ratio used by height:auto — derive them from viewBox if absent
+    if (!svg.hasAttribute('width') || !svg.hasAttribute('height')) {
+      const vb = svg.getAttribute('viewBox');
+      if (vb) {
+        const parts = vb.trim().split(/[\s,]+/);
+        if (parts.length === 4) {
+          if (!svg.hasAttribute('width'))  svg.setAttribute('width',  parts[2]);
+          if (!svg.hasAttribute('height')) svg.setAttribute('height', parts[3]);
+        }
+      }
+    }
+
+    // adoptNode moves the element into this document before insertion (required
+    // when appending nodes parsed by DOMParser into a different document)
+    container.appendChild(document.adoptNode(svg));
 
     // Execute extracted scripts now that SVG elements are in the page DOM
     scriptContents.forEach(src => {
