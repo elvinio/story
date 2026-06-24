@@ -119,6 +119,13 @@
           "audio": "audio/ch4-p13.opus"
         },
         {
+          "type": "diagram",
+          "id": "goe-diagram",
+          "caption": "Watch the Great Oxidation Event unfold: rust fills the seafloor, then oxygen floods the sky",
+          "altText": "An animated diagram of the Great Oxidation Event. Cyanobacteria near the ocean surface release O₂ bubbles. The oxygen reacts with dissolved iron ions (Fe²⁺), creating a flash and turning them into rust particles. The rust sinks in layers to the seafloor, building up striped rock formations. Once the ocean's iron supply runs out, fresh O₂ bubbles rise straight through the water and into the atmosphere, which brightens from dark purple to blue as O₂ molecules fill the air.",
+          "svgFile": "diagrams/great-oxidation-event.svg"
+        },
+        {
           "type": "paragraph",
           "id": "p14",
           "text": "But the cyanobacteria never stopped working. Eventually, after countless years, the oceans simply ran out of iron and other materials to soak up all that oxygen. The sponge was full. And once there was nothing left to mop it up, the oxygen had nowhere to go but up. It started leaking into the sky, and the amount of oxygen in the air began to climb. Scientists call this turning point, around two and a half billion years ago, the Great Oxidation Event. It sounds grand and triumphant. For most of the living things on Earth at the time, it was a total disaster.",
