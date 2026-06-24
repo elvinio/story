@@ -1,0 +1,347 @@
+<svg id="goe-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 360"
+     style="max-width:100%;height:auto;display:block;">
+  <defs>
+    <style>
+      #goe-replay { cursor: pointer; }
+      #goe-replay:hover rect { opacity: 0.82; }
+    </style>
+
+    <linearGradient id="goe-grad-night" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#080418"/>
+      <stop offset="100%" stop-color="#1a0a2e"/>
+    </linearGradient>
+    <linearGradient id="goe-grad-day" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#4fc3f7"/>
+      <stop offset="100%" stop-color="#81d4fa"/>
+    </linearGradient>
+    <linearGradient id="goe-grad-ocean" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#0d4f6e"/>
+      <stop offset="100%" stop-color="#072d40"/>
+    </linearGradient>
+
+    <radialGradient id="goe-rg-fe" cx="35%" cy="30%" r="70%">
+      <stop offset="0%"   stop-color="#f5a623"/>
+      <stop offset="100%" stop-color="#b56d00"/>
+    </radialGradient>
+    <radialGradient id="goe-rg-o2" cx="35%" cy="30%" r="70%">
+      <stop offset="0%"   stop-color="#e0f7fa"/>
+      <stop offset="100%" stop-color="#4dd0e1"/>
+    </radialGradient>
+    <radialGradient id="goe-rg-rust" cx="35%" cy="30%" r="70%">
+      <stop offset="0%"   stop-color="#bf360c"/>
+      <stop offset="100%" stop-color="#7a1a05"/>
+    </radialGradient>
+  </defs>
+
+  <!-- === BACKGROUNDS === -->
+  <!-- Night sky covers whole SVG (base layer) -->
+  <rect width="420" height="360" rx="10" fill="url(#goe-grad-night)"/>
+  <!-- Day sky fades in (sky area only, no rx needed as it sits on top) -->
+  <rect id="goe-sky-day" x="0" y="0" width="420" height="113" fill="url(#goe-grad-day)" opacity="0"/>
+  <!-- Ocean -->
+  <rect x="0" y="113" width="420" height="180" fill="url(#goe-grad-ocean)"/>
+  <!-- Iron tint over ocean (fades as iron is consumed) -->
+  <rect id="goe-iron-tint" x="0" y="113" width="420" height="180" fill="#8a5d00" opacity="0.30"/>
+  <!-- Seafloor -->
+  <rect x="0" y="293" width="420" height="67" fill="#2c1a0e"/>
+  <!-- Border -->
+  <rect width="420" height="360" rx="10" fill="none" stroke="#4a90d9" stroke-width="1.5" opacity="0.45"/>
+
+  <!-- === SECTION LABELS === -->
+  <text x="14" y="72" font-family="Georgia,serif" font-size="9" fill="#bbddff" opacity="0.55">ATMOSPHERE</text>
+  <text x="14" y="130" font-family="Georgia,serif" font-size="9" fill="#aaccdd" opacity="0.55">OCEAN</text>
+  <text x="14" y="310" font-family="Georgia,serif" font-size="9" fill="#c4a27a" opacity="0.55">SEAFLOOR</text>
+
+  <!-- === TITLE + PHASE LABEL === -->
+  <text x="210" y="26" text-anchor="middle" font-family="Georgia,serif"
+        font-size="14" font-weight="bold" fill="white">The Great Oxidation Event</text>
+  <text id="goe-phase" x="210" y="45" text-anchor="middle" font-family="Georgia,serif"
+        font-size="10.5" font-style="italic" fill="#cce8ff" opacity="0">&#160;</text>
+
+  <!-- === SEAFLOOR RUST STRIPES (revealed one by one) === -->
+  <rect id="goe-stripe1" x="0" y="286" width="420" height="9" fill="#7a2310" opacity="0"/>
+  <rect id="goe-stripe2" x="0" y="276" width="420" height="9" fill="#9e3218" opacity="0"/>
+  <rect id="goe-stripe3" x="0" y="266" width="420" height="9" fill="#7a2310" opacity="0"/>
+
+  <!-- === CYANOBACTERIA (near ocean surface) === -->
+  <g id="goe-cyano" opacity="0">
+    <ellipse cx="100" cy="128" rx="14" ry="9"  fill="#2e7d32" stroke="#1b5e20" stroke-width="1"/>
+    <ellipse cx="120" cy="131" rx="11" ry="8"  fill="#388e3c" stroke="#1b5e20" stroke-width="1"/>
+    <ellipse cx="290" cy="126" rx="13" ry="8"  fill="#2e7d32" stroke="#1b5e20" stroke-width="1"/>
+    <ellipse cx="309" cy="130" rx="11" ry="7"  fill="#388e3c" stroke="#1b5e20" stroke-width="1"/>
+    <text x="110" y="149" text-anchor="middle" font-family="Georgia,serif"
+          font-size="8" font-style="italic" fill="#a5d6a7">cyanobacteria</text>
+    <text x="299" y="147" text-anchor="middle" font-family="Georgia,serif"
+          font-size="8" font-style="italic" fill="#a5d6a7">cyanobacteria</text>
+  </g>
+
+  <!-- === IRON IONS (Fe²⁺) scattered in ocean === -->
+  <g id="goe-fe1" opacity="0">
+    <circle cx="65"  cy="178" r="14" fill="url(#goe-rg-fe)" stroke="#8a5500" stroke-width="1"/>
+    <text x="65"  y="178" text-anchor="middle" dominant-baseline="central"
+          font-family="Georgia,serif" font-size="8" font-weight="bold" fill="white">Fe&#xB2;&#x207A;</text>
+  </g>
+  <g id="goe-fe2" opacity="0">
+    <circle cx="175" cy="218" r="14" fill="url(#goe-rg-fe)" stroke="#8a5500" stroke-width="1"/>
+    <text x="175" y="218" text-anchor="middle" dominant-baseline="central"
+          font-family="Georgia,serif" font-size="8" font-weight="bold" fill="white">Fe&#xB2;&#x207A;</text>
+  </g>
+  <g id="goe-fe3" opacity="0">
+    <circle cx="265" cy="188" r="14" fill="url(#goe-rg-fe)" stroke="#8a5500" stroke-width="1"/>
+    <text x="265" y="188" text-anchor="middle" dominant-baseline="central"
+          font-family="Georgia,serif" font-size="8" font-weight="bold" fill="white">Fe&#xB2;&#x207A;</text>
+  </g>
+  <g id="goe-fe4" opacity="0">
+    <circle cx="360" cy="238" r="14" fill="url(#goe-rg-fe)" stroke="#8a5500" stroke-width="1"/>
+    <text x="360" y="238" text-anchor="middle" dominant-baseline="central"
+          font-family="Georgia,serif" font-size="8" font-weight="bold" fill="white">Fe&#xB2;&#x207A;</text>
+  </g>
+  <g id="goe-fe5" opacity="0">
+    <circle cx="130" cy="255" r="14" fill="url(#goe-rg-fe)" stroke="#8a5500" stroke-width="1"/>
+    <text x="130" y="255" text-anchor="middle" dominant-baseline="central"
+          font-family="Georgia,serif" font-size="8" font-weight="bold" fill="white">Fe&#xB2;&#x207A;</text>
+  </g>
+  <g id="goe-fe6" opacity="0">
+    <circle cx="375" cy="163" r="14" fill="url(#goe-rg-fe)" stroke="#8a5500" stroke-width="1"/>
+    <text x="375" y="163" text-anchor="middle" dominant-baseline="central"
+          font-family="Georgia,serif" font-size="8" font-weight="bold" fill="white">Fe&#xB2;&#x207A;</text>
+  </g>
+
+  <!-- === O2 BUBBLES (from cyanobacteria, rise toward surface) === -->
+  <g id="goe-bub1" opacity="0">
+    <circle cx="95"  cy="116" r="9" fill="url(#goe-rg-o2)" stroke="#00838f" stroke-width="1"/>
+    <text x="95"  y="116" text-anchor="middle" dominant-baseline="central"
+          font-family="Georgia,serif" font-size="7.5" font-weight="bold" fill="#004d40">O&#x2082;</text>
+  </g>
+  <g id="goe-bub2" opacity="0">
+    <circle cx="122" cy="120" r="9" fill="url(#goe-rg-o2)" stroke="#00838f" stroke-width="1"/>
+    <text x="122" y="120" text-anchor="middle" dominant-baseline="central"
+          font-family="Georgia,serif" font-size="7.5" font-weight="bold" fill="#004d40">O&#x2082;</text>
+  </g>
+  <g id="goe-bub3" opacity="0">
+    <circle cx="286" cy="115" r="9" fill="url(#goe-rg-o2)" stroke="#00838f" stroke-width="1"/>
+    <text x="286" y="115" text-anchor="middle" dominant-baseline="central"
+          font-family="Georgia,serif" font-size="7.5" font-weight="bold" fill="#004d40">O&#x2082;</text>
+  </g>
+  <g id="goe-bub4" opacity="0">
+    <circle cx="314" cy="119" r="9" fill="url(#goe-rg-o2)" stroke="#00838f" stroke-width="1"/>
+    <text x="314" y="119" text-anchor="middle" dominant-baseline="central"
+          font-family="Georgia,serif" font-size="7.5" font-weight="bold" fill="#004d40">O&#x2082;</text>
+  </g>
+
+  <!-- === FLASH OVERLAY (chemical reaction moment) === -->
+  <rect id="goe-flash" x="0" y="113" width="420" height="180"
+        fill="white" opacity="0" pointer-events="none"/>
+
+  <!-- === RUST PARTICLES (appear at iron positions, then sink) === -->
+  <g id="goe-rust1" opacity="0">
+    <circle cx="65"  cy="178" r="12" fill="url(#goe-rg-rust)" stroke="#4a0e05" stroke-width="1"/>
+    <text x="65"  y="178" text-anchor="middle" dominant-baseline="central"
+          font-family="Georgia,serif" font-size="7" font-weight="bold" fill="#ffccaa">rust</text>
+  </g>
+  <g id="goe-rust2" opacity="0">
+    <circle cx="175" cy="218" r="12" fill="url(#goe-rg-rust)" stroke="#4a0e05" stroke-width="1"/>
+    <text x="175" y="218" text-anchor="middle" dominant-baseline="central"
+          font-family="Georgia,serif" font-size="7" font-weight="bold" fill="#ffccaa">rust</text>
+  </g>
+  <g id="goe-rust3" opacity="0">
+    <circle cx="265" cy="188" r="12" fill="url(#goe-rg-rust)" stroke="#4a0e05" stroke-width="1"/>
+    <text x="265" y="188" text-anchor="middle" dominant-baseline="central"
+          font-family="Georgia,serif" font-size="7" font-weight="bold" fill="#ffccaa">rust</text>
+  </g>
+  <g id="goe-rust4" opacity="0">
+    <circle cx="360" cy="238" r="12" fill="url(#goe-rg-rust)" stroke="#4a0e05" stroke-width="1"/>
+    <text x="360" y="238" text-anchor="middle" dominant-baseline="central"
+          font-family="Georgia,serif" font-size="7" font-weight="bold" fill="#ffccaa">rust</text>
+  </g>
+  <g id="goe-rust5" opacity="0">
+    <circle cx="130" cy="255" r="12" fill="url(#goe-rg-rust)" stroke="#4a0e05" stroke-width="1"/>
+    <text x="130" y="255" text-anchor="middle" dominant-baseline="central"
+          font-family="Georgia,serif" font-size="7" font-weight="bold" fill="#ffccaa">rust</text>
+  </g>
+  <g id="goe-rust6" opacity="0">
+    <circle cx="375" cy="163" r="12" fill="url(#goe-rg-rust)" stroke="#4a0e05" stroke-width="1"/>
+    <text x="375" y="163" text-anchor="middle" dominant-baseline="central"
+          font-family="Georgia,serif" font-size="7" font-weight="bold" fill="#ffccaa">rust</text>
+  </g>
+
+  <!-- === O2 IN SKY (appear as atmosphere fills with oxygen) === -->
+  <g id="goe-sky1" opacity="0">
+    <circle cx="45"  cy="88" r="10" fill="url(#goe-rg-o2)" stroke="#0288d1" stroke-width="1"/>
+    <text x="45"  y="88" text-anchor="middle" dominant-baseline="central"
+          font-family="Georgia,serif" font-size="8" font-weight="bold" fill="#01579b">O&#x2082;</text>
+  </g>
+  <g id="goe-sky2" opacity="0">
+    <circle cx="128" cy="74" r="10" fill="url(#goe-rg-o2)" stroke="#0288d1" stroke-width="1"/>
+    <text x="128" y="74" text-anchor="middle" dominant-baseline="central"
+          font-family="Georgia,serif" font-size="8" font-weight="bold" fill="#01579b">O&#x2082;</text>
+  </g>
+  <g id="goe-sky3" opacity="0">
+    <circle cx="207" cy="84" r="10" fill="url(#goe-rg-o2)" stroke="#0288d1" stroke-width="1"/>
+    <text x="207" y="84" text-anchor="middle" dominant-baseline="central"
+          font-family="Georgia,serif" font-size="8" font-weight="bold" fill="#01579b">O&#x2082;</text>
+  </g>
+  <g id="goe-sky4" opacity="0">
+    <circle cx="302" cy="70" r="10" fill="url(#goe-rg-o2)" stroke="#0288d1" stroke-width="1"/>
+    <text x="302" y="70" text-anchor="middle" dominant-baseline="central"
+          font-family="Georgia,serif" font-size="8" font-weight="bold" fill="#01579b">O&#x2082;</text>
+  </g>
+  <g id="goe-sky5" opacity="0">
+    <circle cx="377" cy="80" r="10" fill="url(#goe-rg-o2)" stroke="#0288d1" stroke-width="1"/>
+    <text x="377" y="80" text-anchor="middle" dominant-baseline="central"
+          font-family="Georgia,serif" font-size="8" font-weight="bold" fill="#01579b">O&#x2082;</text>
+  </g>
+  <g id="goe-sky6" opacity="0">
+    <circle cx="86"  cy="60" r="10" fill="url(#goe-rg-o2)" stroke="#0288d1" stroke-width="1"/>
+    <text x="86"  y="60" text-anchor="middle" dominant-baseline="central"
+          font-family="Georgia,serif" font-size="8" font-weight="bold" fill="#01579b">O&#x2082;</text>
+  </g>
+  <g id="goe-sky7" opacity="0">
+    <circle cx="167" cy="57" r="10" fill="url(#goe-rg-o2)" stroke="#0288d1" stroke-width="1"/>
+    <text x="167" y="57" text-anchor="middle" dominant-baseline="central"
+          font-family="Georgia,serif" font-size="8" font-weight="bold" fill="#01579b">O&#x2082;</text>
+  </g>
+  <g id="goe-sky8" opacity="0">
+    <circle cx="256" cy="62" r="10" fill="url(#goe-rg-o2)" stroke="#0288d1" stroke-width="1"/>
+    <text x="256" y="62" text-anchor="middle" dominant-baseline="central"
+          font-family="Georgia,serif" font-size="8" font-weight="bold" fill="#01579b">O&#x2082;</text>
+  </g>
+  <g id="goe-sky9" opacity="0">
+    <circle cx="340" cy="56" r="10" fill="url(#goe-rg-o2)" stroke="#0288d1" stroke-width="1"/>
+    <text x="340" y="56" text-anchor="middle" dominant-baseline="central"
+          font-family="Georgia,serif" font-size="8" font-weight="bold" fill="#01579b">O&#x2082;</text>
+  </g>
+
+  <!-- === END FORMULA + REPLAY === -->
+  <text id="goe-label" x="210" y="316" text-anchor="middle"
+        font-family="Georgia,serif" font-size="9.5" fill="#c4a27a" opacity="0">
+    <tspan x="210" dy="0">Fe&#xB2;&#x207A; + O&#x2082; &#x2192; Fe&#x2082;O&#x2083; (rust) &#x2193; sinks, layer by layer</tspan>
+    <tspan x="210" dy="14">No iron left &#x2192; O&#x2082; fills the air &#x2014; ~2.4 billion years ago</tspan>
+  </text>
+
+  <!-- Replay button -->
+  <g id="goe-replay" opacity="0" onclick="goeReplay()">
+    <rect x="170" y="340" width="80" height="22" rx="11" fill="#1a3a5f"/>
+    <text x="210" y="351" text-anchor="middle" dominant-baseline="central"
+          font-family="Georgia,serif" font-size="12" fill="white">&#x21BA; Replay</text>
+  </g>
+
+  <script><![CDATA[
+  (function () {
+    var PHASES = [
+      'Ancient ocean, ~2.4 billion years ago — packed with dissolved iron…',
+      'Tiny cyanobacteria release O₂ as waste from photosynthesis…',
+      'O₂ meets iron! Fe²⁺ + O₂ → rust (Fe₂O₃)',
+      'Rust can’t stay dissolved — it sinks to the seafloor…',
+      'Millions of years pass; layer after layer builds up…',
+      'The ocean runs out of iron — nothing left to grab the O₂!',
+      'O₂ escapes into the air. The Great Oxidation Event! (~2.4 Ga)'
+    ];
+
+    var FE   = ['#goe-fe1','#goe-fe2','#goe-fe3','#goe-fe4','#goe-fe5','#goe-fe6'];
+    var RUST = ['#goe-rust1','#goe-rust2','#goe-rust3','#goe-rust4','#goe-rust5','#goe-rust6'];
+    var BUBS = ['#goe-bub1','#goe-bub2','#goe-bub3','#goe-bub4'];
+    var SKY  = ['#goe-sky1','#goe-sky2','#goe-sky3','#goe-sky4','#goe-sky5',
+                '#goe-sky6','#goe-sky7','#goe-sky8','#goe-sky9'];
+
+    function setPhase(txt) {
+      var el = document.getElementById('goe-phase');
+      if (el) el.textContent = txt;
+    }
+
+    function animate() {
+      gsap.set(FE,            { opacity: 0, y: 0 });
+      gsap.set(RUST,          { opacity: 0, y: 0 });
+      gsap.set(BUBS,          { opacity: 0, y: 0 });
+      gsap.set(SKY,           { opacity: 0, y: 20 });
+      gsap.set('#goe-cyano',      { opacity: 0 });
+      gsap.set('#goe-sky-day',    { opacity: 0 });
+      gsap.set('#goe-iron-tint',  { opacity: 0.30 });
+      gsap.set('#goe-flash',      { opacity: 0 });
+      gsap.set(['#goe-stripe1','#goe-stripe2','#goe-stripe3'], { opacity: 0 });
+      gsap.set('#goe-label',      { opacity: 0 });
+      gsap.set('#goe-replay',     { opacity: 0 });
+      gsap.set('#goe-phase',      { opacity: 0 });
+
+      var tl = gsap.timeline();
+
+      /* Phase 0 — ancient iron-rich ocean */
+      tl
+        .call(function () { setPhase(PHASES[0]); })
+        .to('#goe-phase', { opacity: 1, duration: 0.5 })
+        .to(FE, { opacity: 1, duration: 0.35, stagger: 0.12 }, '+=0.4')
+
+        /* Phase 1 — cyanobacteria appear and release O2 */
+        .call(function () { setPhase(PHASES[1]); }, null, '+=0.6')
+        .to('#goe-cyano', { opacity: 1, duration: 0.5 })
+        .to(BUBS, { opacity: 1, duration: 0.3, stagger: 0.08 }, '<+=0.3')
+        /* Bubbles drift up toward iron */
+        .to(BUBS, { y: -20, duration: 0.9, ease: 'power1.out', stagger: 0.07 }, '<+=0.2')
+
+        /* Phase 2 — O2 meets iron — REACTION FLASH */
+        .call(function () { setPhase(PHASES[2]); })
+        .to('#goe-flash', { opacity: 0.55, duration: 0.1 })
+        .to('#goe-flash', { opacity: 0,    duration: 0.45 })
+        .to(FE,   { opacity: 0, duration: 0.25 }, '<')
+        .to(BUBS, { opacity: 0, duration: 0.25 }, '<')
+        .to(RUST, { opacity: 1, duration: 0.35, stagger: 0.06 }, '<+=0.1')
+
+        /* Phase 3 — rust sinks, stripe 1 forms */
+        .call(function () { setPhase(PHASES[3]); })
+        .to(RUST, { y: 95, duration: 1.5, ease: 'power1.in', stagger: 0.09 }, '+=0.3')
+        .to('#goe-stripe1',   { opacity: 0.9, duration: 0.4 }, '<+=0.7')
+        .to('#goe-iron-tint', { opacity: 0.14, duration: 1.1 }, '<')
+
+        /* Phase 4 — more cycles; more stripes (iron being depleted) */
+        .call(function () { setPhase(PHASES[4]); })
+        .to('#goe-stripe2', { opacity: 0.9, duration: 0.35 }, '+=0.15')
+        .to('#goe-stripe3', { opacity: 0.9, duration: 0.35 }, '+=0.25')
+
+        /* Phase 5 — iron runs out; O2 now builds up in ocean */
+        .call(function () { setPhase(PHASES[5]); })
+        .to(RUST,           { opacity: 0, duration: 0.5 }, '+=0.2')
+        .to('#goe-iron-tint', { opacity: 0, duration: 0.7 })
+        /* Reset bubbles and show them rising with nowhere to go */
+        .set(BUBS, { y: 0 })
+        .to(BUBS,  { opacity: 1, y: -118, duration: 2.1, ease: 'power1.out', stagger: 0.1 })
+
+        /* Phase 6 — O2 escapes into sky; atmosphere brightens */
+        .call(function () { setPhase(PHASES[6]); })
+        .to(BUBS, { opacity: 0, duration: 0.5 }, '<+=0.8')
+        .to(SKY,  { opacity: 1, y: 0, duration: 0.55, stagger: 0.09, ease: 'power2.out' })
+        .to('#goe-sky-day', { opacity: 0.88, duration: 1.6 }, '<+=0.1')
+
+        /* End */
+        .to('#goe-label',  { opacity: 1, duration: 0.5 }, '+=0.3')
+        .to('#goe-replay', { opacity: 1, duration: 0.4 }, '+=0.2');
+    }
+
+    window.goeAnimate = function () { if (window.gsap) animate(); };
+    window.goeReplay  = function () { if (window.gsap) animate(); };
+
+    function setup() {
+      var svgEl = document.getElementById('goe-svg');
+      if (!svgEl) return;
+      svgEl.setAttribute('data-anim-fn', 'goeAnimate');
+      var played = false;
+      var io = new IntersectionObserver(function (entries) {
+        if (entries[0].isIntersecting && !played) {
+          played = true;
+          io.disconnect();
+          animate();
+        }
+      }, { threshold: 0.3 });
+      io.observe(svgEl);
+    }
+
+    if (window.gsap) {
+      setTimeout(setup, 0);
+    } else {
+      var s = document.createElement('script');
+      s.src = 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js';
+      s.onload = setup;
+      document.head.appendChild(s);
+    }
+  }());
+  ]]></script>
+</svg>
