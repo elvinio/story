@@ -31,6 +31,7 @@ html {
 
 body {
   min-height: 100vh;
+  min-height: -webkit-fill-available;
   background-color: var(--reader-bg);
   color: var(--reader-text);
   transition: background-color 0.3s, color 0.3s;
