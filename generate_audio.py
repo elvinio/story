@@ -33,6 +33,7 @@ Examples:
 import argparse
 import json
 import os
+import re
 import sys
 import time
 from pathlib import Path
@@ -50,6 +51,62 @@ DEFAULT_SPEED = 0.9
 DEFAULT_FMT   = "opus"
 MAX_RETRIES   = 3
 RETRY_DELAYS  = [2, 5, 10]
+
+# Unicode subscript digits (₀–₉) → ASCII digits
+_SUBSCRIPT = str.maketrans('₀₁₂₃₄₅₆₇₈₉', '0123456789')
+
+# Chemical formula pattern — matches after subscript normalisation:
+#   • Two or more element groups: NO, NO2, NH3, NO3-, DNA, etc.
+#   • Single element + number: O2, N2, O3
+# Negative lookbehind/ahead for lowercase letters prevents mid-word matches.
+_CHEM_RE = re.compile(
+    r'(?<![a-z])(?:[A-Z][a-z]?\d*){2,}[+\-]?(?![a-zA-Z])'
+    r'|(?<![a-z])[A-Z]\d+[+\-]?(?![a-zA-Z])'
+)
+
+
+def _expand_chem(m: re.Match) -> str:
+    """Space-separate element symbols and numbers so TTS reads them letter-by-letter."""
+    parts = []
+    s = m.group()
+    i = 0
+    while i < len(s):
+        ch = s[i]
+        if ch.isupper():
+            if i + 1 < len(s) and s[i + 1].islower():
+                parts.append(s[i:i + 2])
+                i += 2
+            else:
+                parts.append(ch)
+                i += 1
+        elif ch.isdigit():
+            j = i + 1
+            while j < len(s) and s[j].isdigit():
+                j += 1
+            parts.append(s[i:j])
+            i = j
+        elif ch == '-':
+            parts.append('minus')
+            i += 1
+        elif ch == '+':
+            parts.append('plus')
+            i += 1
+        else:
+            parts.append(ch)
+            i += 1
+    return ' '.join(parts)
+
+
+def normalize_tts_text(text: str) -> str:
+    """Expand Unicode subscripts/superscripts and chemical notation for TTS.
+
+    Converts e.g. "NO₂" → "N O 2", "NO₃⁻" → "N O 3 minus", "N₂" → "N 2".
+    """
+    text = text.translate(_SUBSCRIPT)
+    text = text.replace('⁻', '-').replace('⁺', '+')
+    for sup, asc in zip('⁰¹²³⁴⁵⁶⁷⁸⁹', '0123456789'):
+        text = text.replace(sup, asc)
+    return _CHEM_RE.sub(_expand_chem, text)
 
 
 def collect_nodes(story: dict, fmt: str, chapters: list[str] | None = None) -> list[dict]:
@@ -139,7 +196,8 @@ def process_node(node: dict, story_dir: Path, args, session: requests.Session) -
     if audio_path.suffix.lstrip(".").lower() != args.format:
         audio_path = audio_path.with_suffix("." + args.format)
 
-    label = f"[{node['chapter_id']}/{node['id']}] {node['text'][:55]}{'…' if len(node['text']) > 55 else ''}"
+    tts_text = normalize_tts_text(node["text"])
+    label = f"[{node['chapter_id']}/{node['id']}] {tts_text[:55]}{'…' if len(tts_text) > 55 else ''}"
 
     if not args.force and audio_path.exists():
         return node["id"], "skip", f"skip   {label}"
@@ -148,7 +206,7 @@ def process_node(node: dict, story_dir: Path, args, session: requests.Session) -
         return node["id"], "ok", f"dry-run {label}  →  {audio_path.relative_to(story_dir)}"
 
     try:
-        call_tts(node["text"], audio_path, args, session)
+        call_tts(tts_text, audio_path, args, session)
         rel = audio_path.relative_to(story_dir)
         size_kb = audio_path.stat().st_size // 1024
         return node["id"], "ok", f"ok     {label}  →  {rel} ({size_kb} KB)"
