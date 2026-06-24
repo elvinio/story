@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 320" width="240" height="320">
+  <defs>
+    <linearGradient id="o2-sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0a1a2e"/>
+      <stop offset="50%" stop-color="#0d2b4a"/>
+      <stop offset="100%" stop-color="#1a3a5c"/>
+    </linearGradient>
+    <radialGradient id="o2-atomglow1" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#7dd3fc" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#7dd3fc" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="o2-atomglow2" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#38bdf8" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="o2-atomface" cx="38%" cy="32%" r="70%">
+      <stop offset="0%" stop-color="#e0f4ff"/>
+      <stop offset="100%" stop-color="#2e8ab8"/>
+    </radialGradient>
+    <radialGradient id="o2-flare" cx="50%" cy="80%" r="60%">
+      <stop offset="0%" stop-color="#ff6b1a" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#ff6b1a" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="o2-flame1" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#ff6b1a"/>
+      <stop offset="60%" stop-color="#ffd140"/>
+      <stop offset="100%" stop-color="#fff4b0" stop-opacity="0.7"/>
+    </linearGradient>
+    <linearGradient id="o2-flame2" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#e85000"/>
+      <stop offset="55%" stop-color="#ff9c1a"/>
+      <stop offset="100%" stop-color="#ffe590" stop-opacity="0.5"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="240" height="320" fill="url(#o2-sky)"/>
+
+  <!-- Stars -->
+  <circle cx="22" cy="18" r="1" fill="white" opacity="0.7"/>
+  <circle cx="58" cy="12" r="0.8" fill="white" opacity="0.55"/>
+  <circle cx="110" cy="24" r="1.2" fill="white" opacity="0.8"/>
+  <circle cx="165" cy="10" r="0.9" fill="white" opacity="0.6"/>
+  <circle cx="205" cy="28" r="1" fill="white" opacity="0.65"/>
+  <circle cx="38" cy="52" r="0.8" fill="white" opacity="0.5"/>
+  <circle cx="190" cy="55" r="1" fill="white" opacity="0.6"/>
+  <circle cx="80" cy="44" r="0.7" fill="white" opacity="0.45"/>
+  <circle cx="218" cy="80" r="0.8" fill="white" opacity="0.5"/>
+  <circle cx="14" cy="95" r="0.9" fill="white" opacity="0.4"/>
+  <circle cx="228" cy="130" r="0.7" fill="white" opacity="0.45"/>
+  <circle cx="18" cy="165" r="0.8" fill="white" opacity="0.4"/>
+
+  <!-- Aurora ribbons (oxygen glow high in atmosphere) -->
+  <path d="M0,105 Q60,90 120,108 Q180,126 240,102" stroke="#00e676" stroke-width="2.5" stroke-opacity="0.25" fill="none"/>
+  <path d="M0,115 Q60,100 120,118 Q180,136 240,112" stroke="#69ff93" stroke-width="1.5" stroke-opacity="0.18" fill="none"/>
+  <path d="M0,98 Q80,82 140,100 Q200,118 240,96" stroke="#00c853" stroke-width="1" stroke-opacity="0.15" fill="none"/>
+
+  <!-- Flame glow on lower half -->
+  <ellipse cx="120" cy="270" rx="90" ry="50" fill="url(#o2-flare)"/>
+
+  <!-- Flame shapes -->
+  <path d="M105,265 Q98,238 108,220 Q115,238 112,255 Q118,235 122,215 Q128,235 126,255 Q132,232 140,218 Q144,238 134,265 Z" fill="url(#o2-flame1)" opacity="0.92"/>
+  <path d="M110,265 Q104,246 114,230 Q118,244 116,258 Q122,240 124,224 Q129,242 127,258 Q133,238 138,225 Q141,244 132,265 Z" fill="url(#o2-flame2)" opacity="0.7"/>
+  <!-- Bright core -->
+  <path d="M116,263 Q114,248 120,238 Q126,250 124,263 Z" fill="#fffde0" opacity="0.85"/>
+
+  <!-- Spark particles -->
+  <circle cx="102" cy="218" r="1.4" fill="#ffd140" opacity="0.8"/>
+  <circle cx="138" cy="212" r="1.1" fill="#ff9c1a" opacity="0.7"/>
+  <circle cx="95" cy="232" r="1" fill="#ffe080" opacity="0.65"/>
+  <circle cx="145" cy="226" r="1.2" fill="#ffb347" opacity="0.7"/>
+  <circle cx="120" cy="205" r="0.9" fill="#fff4b0" opacity="0.6"/>
+
+  <!-- O2 molecule above flame -->
+  <!-- Glows -->
+  <circle cx="83" cy="150" r="42" fill="url(#o2-atomglow1)"/>
+  <circle cx="157" cy="150" r="42" fill="url(#o2-atomglow2)"/>
+
+  <!-- Double bond (oxygen travels in pairs with a double bond) -->
+  <g stroke="#bde8ff" stroke-width="3" stroke-linecap="round" opacity="0.9">
+    <line x1="104" y1="143" x2="136" y2="143"/>
+    <line x1="104" y1="157" x2="136" y2="157"/>
+  </g>
+
+  <!-- Atom 1 -->
+  <circle cx="83" cy="150" r="28" fill="url(#o2-atomface)" stroke="#7dd3fc" stroke-width="1.5"/>
+  <text x="83" y="159" text-anchor="middle" font-family="Georgia, serif" font-size="24" font-weight="bold" fill="#0d2b4a">O</text>
+
+  <!-- Atom 2 -->
+  <circle cx="157" cy="150" r="28" fill="url(#o2-atomface)" stroke="#7dd3fc" stroke-width="1.5"/>
+  <text x="157" y="159" text-anchor="middle" font-family="Georgia, serif" font-size="24" font-weight="bold" fill="#0d2b4a">O</text>
+
+  <!-- Title plate -->
+  <rect x="0" y="268" width="240" height="52" fill="#060f1c" opacity="0.82"/>
+  <text x="120" y="289" text-anchor="middle" font-family="Georgia, serif" font-size="15" font-style="italic" fill="#e0f4ff">The Restless Element</text>
+  <text x="120" y="305" text-anchor="middle" font-family="Georgia, serif" font-size="9.5" fill="#7dd3fc">The Wild Story of Oxygen</text>
+</svg>
