@@ -205,16 +205,17 @@
     <ellipse cx="210" cy="271" rx="5" ry="4" fill="#276749"/>
   </g>
 
-  <!-- End formula label -->
-  <text id="nltg-label" x="210" y="320" text-anchor="middle"
-        font-family="Georgia,serif" font-size="12" fill="#ddeeff" opacity="0">
-    N&#x2082; + O&#x2082; + &#x26A1; &#x2192; NO &#x2192; NO&#x2082; &#x2192; NO&#x2083;&#x207B; (nitrate)
+  <!-- End formula label (two lines: lightning step + nitric acid step) -->
+  <text id="nltg-label" x="210" y="310" text-anchor="middle"
+        font-family="Georgia,serif" font-size="10.5" fill="#ddeeff" opacity="0">
+    <tspan x="210" dy="0">N&#x2082; + O&#x2082; + &#x26A1; &#x2192; NO &#x2192; NO&#x2082;</tspan>
+    <tspan x="210" dy="13">4 NO&#x2082; + O&#x2082; + 2 H&#x2082;O &#x2192; 4 HNO&#x2083; &#x2192; NO&#x2083;&#x207B;</tspan>
   </text>
 
   <!-- Replay button -->
   <g id="nltg-replay" opacity="0" onclick="nltgReplay()">
-    <rect x="170" y="332" width="80" height="24" rx="12" fill="#1a3a5f"/>
-    <text x="210" y="344" text-anchor="middle" dominant-baseline="central"
+    <rect x="170" y="335" width="80" height="24" rx="12" fill="#1a3a5f"/>
+    <text x="210" y="347" text-anchor="middle" dominant-baseline="central"
           font-family="Georgia,serif" font-size="12" fill="white">&#x21BA; Replay</text>
   </g>
 
@@ -225,10 +226,10 @@
       '⚡ Lightning! 30,000°C — hotter than the Sun!',
       'The blast tears BOTH molecules into single atoms!',
       'A nitrogen grabs an oxygen → NO (nitric oxide)',
-      'NO grabs one more oxygen → NO₂',
-      'Spare oxygen rejoins as O₂ — or O₃, the ozone smell!',
-      'Rain dissolves NO₂ into nitrate (NO₃⁻)…',
-      '…the plant food that soaks into the soil!'
+      'NO grabs one more oxygen → NO₂ (nitrogen dioxide)',
+      'Spare O₂ forms — some becomes O₃ (that lightning smell!)',
+      '4 NO₂ + O₂ + 2 H₂O → 4 HNO₃ (nitric acid)…',
+      '…HNO₃ → H⁺ + NO₃⁻ (nitrate): plant food in the soil!'
     ];
 
     function setPhase(txt) {
@@ -252,8 +253,8 @@
       gsap.set('#nltg-o-l2', { x: 0, y: 0 });
       gsap.set('#nltg-o-r1', { x: 0, y: 0 });
       gsap.set('#nltg-o-r2', { x: 0, y: 0 });
-      gsap.set('#nltg-o-x1', { x: 0, y: 0 });
-      gsap.set('#nltg-o-x2', { x: 0, y: 0 });
+      gsap.set('#nltg-o-x1', { x: 0, y: 0, opacity: 1 });
+      gsap.set('#nltg-o-x2', { x: 0, y: 0, opacity: 1 });
       gsap.set('#nltg-o2-text', { opacity: 0 });
       gsap.set(['#nltg-nobond-l1', '#nltg-nobond-l2',
                 '#nltg-nobond-r1', '#nltg-nobond-r2'], { opacity: 0, y: 0 });
@@ -324,11 +325,18 @@
         .to('#nltg-o2-text',  { opacity: 1, duration: 0.3 }, '<')
         .to('#nltg-ozone',    { opacity: 1, duration: 0.5 }, '+=0.1')
 
-        /* Phase 6 — rain dissolves NO₂ into nitrate (NO₃⁻) */
+        /* Phase 6 — 4 NO₂ + O₂ + 2 H₂O → 4 HNO₃ */
         .call(function () { setPhase(PHASES[6]); }, null, '+=0.4')
         .to('.nltg-rain',
           { opacity: 0.8, y: 70, duration: 1.3, stagger: 0.07, ease: 'power1.in' })
-        .call(function () { setMol('NO₃⁻'); }, null, '<+=0.5')
+        /* Spare O₂ joins the reaction — drifts down into the rain and dissolves */
+        .to(['#nltg-o-x1', '#nltg-o-x2'],
+            { y: '+=65', opacity: 0, duration: 1.1, ease: 'power1.in' }, '<')
+        .to(['#nltg-o2bond-x', '#nltg-o2-text'],
+            { opacity: 0, duration: 0.4 }, '<')
+        /* Labels: NO₂ → HNO₃ (nitric acid) → NO₃⁻ (nitrate) */
+        .call(function () { setMol('HNO₃'); }, null, '<+=0.3')
+        .call(function () { setMol('NO₃⁻'); }, null, '<+=0.6')
         .to([
             '#nltg-n-left',  '#nltg-o-l1', '#nltg-o-l2',
             '#nltg-nobond-l1', '#nltg-nobond-l2', '#nltg-mol-left',
