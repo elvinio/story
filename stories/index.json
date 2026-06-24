@@ -16,5 +16,14 @@
     "ageRange": "10–13",
     "estimatedMinutes": 18,
     "tags": ["science", "chemistry", "bedtime"]
+  },
+  {
+    "id": "the-restless-element-oxygen",
+    "title": "The Restless Element",
+    "author": "Curiosity Radio",
+    "coverImage": "stories/the-restless-element-oxygen/assets/cover.svg",
+    "ageRange": "11–13",
+    "estimatedMinutes": 27,
+    "tags": ["science", "chemistry", "earth-history", "biology", "curiosity"]
   }
 ]
