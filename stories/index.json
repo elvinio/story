@@ -25,5 +25,32 @@
     "ageRange": "11–13",
     "estimatedMinutes": 27,
     "tags": ["science", "chemistry", "earth-history", "biology", "curiosity"]
+  },
+  {
+    "id": "yingshuo-giant-story",
+    "title": "Yingshuo and the Daydream Giant",
+    "author": "Chinese Stories",
+    "coverImage": "stories/yingshuo-giant-story/assets/cover.svg",
+    "ageRange": "6–10",
+    "estimatedMinutes": 4,
+    "tags": ["dream", "giant", "adventure", "chinese"]
+  },
+  {
+    "id": "arcadia-space-invader-story",
+    "title": "The Lone Swordsman of Planet Arcadia",
+    "author": "Chinese Stories",
+    "coverImage": "stories/arcadia-space-invader-story/assets/cover.svg",
+    "ageRange": "6–11",
+    "estimatedMinutes": 4,
+    "tags": ["space", "friendship", "adventure", "chinese"]
+  },
+  {
+    "id": "space-rangers-last-stand",
+    "title": "The Last Stand of the Space Rangers",
+    "author": "Chinese Stories",
+    "coverImage": "stories/space-rangers-last-stand/assets/cover.svg",
+    "ageRange": "7–12",
+    "estimatedMinutes": 4,
+    "tags": ["space", "courage", "sacrifice", "chinese"]
   }
 ]
