@@ -1,3 +1,9 @@
+@font-face {
+  font-family: 'KaiTiRegular';
+  src: url('../fonts/KaiTiRegular.ttf') format('truetype');
+  font-display: swap;
+}
+
 :root {
   --reader-bg: #f5efe6;
   --reader-text: #3b2f1e;

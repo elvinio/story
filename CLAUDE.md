@@ -33,6 +33,8 @@ Two HTML pages, each loading the same settings dialog markup:
 ```
 index.html              Library page
 reader.html             Reader page
+fonts/
+  KaiTiRegular.ttf      KaiTi (楷体) font for Chinese text (@font-face in base.css)
 css/
   base.css              Shared variables, settings dialog, base typography
   library.css           Library grid + cards
@@ -97,7 +99,9 @@ version no longer matches. Bump `version` when node IDs change.
 
 `reader.js` (`renderNode`) renders **four** node types:
 
-- **`paragraph`** — `{ type, id, text, audio }`. Rendered as a `<p>`.
+- **`paragraph`** — `{ type, id, text, audio }`. Rendered as a `<p>`. May also
+  carry **bilingual Chinese** fields `zh` and `audioZh` (see "Bilingual Chinese
+  stories" below).
 - **`diagram`** — `{ type, id, caption, altText, svgFile, audio }`. The SVG is
   fetched and inlined (see "Interactive diagrams" below); `caption` becomes the
   `<figcaption>` and supplies the audio-bar preview text.
@@ -113,6 +117,46 @@ Any node with an `audio` field also gets a ▶ "play from here" button.
 > produces audio for `paragraph` and `diagram` text. If you add new renderable
 > node types, add an `else if (node.type === ...)` branch to `renderNode` in
 > `js/reader.js` plus matching styles in `css/reader.css`.
+
+### Bilingual Chinese stories
+
+A story can carry both English and Chinese text and let the reader flip between
+them. The format additions are all **optional and backward compatible** —
+English-only stories are unchanged.
+
+- **`meta`** — optional `titleZh` (Chinese title) and `lang: "zh"`.
+- **`chapter`** — optional `titleZh`.
+- **`paragraph` node** — optional:
+  - `zh`: an array of `[character, pinyin]` token pairs (same shape as the
+    `elvinio/chinese` repo). Punctuation uses an empty-string pinyin, e.g.
+    `["，",""]`.
+  - `audioZh`: path to the Chinese narration clip
+    (convention `audio/<chapter>-<node>.zh.opus`).
+
+```json
+{ "type": "paragraph", "id": "p1",
+  "text": "English translation…",
+  "zh": [["华","huá"],["文","wén"],["，",""]],
+  "audio": "audio/ch1-p1.opus",
+  "audioZh": "audio/ch1-p1.zh.opus" }
+```
+
+**Reader behaviour** (`js/reader.js`): for a paragraph with `zh`, the reader
+renders both an English `<p class="para-en">` and a Chinese
+`<p class="para-zh">` (character + pinyin stacks), and CSS toggles which is
+shown. Stories that contain any `zh` node get two header buttons:
+
+- **中 / EN** (`#lang-toggle`) — flips the displayed language. Chinese stories
+  **default to Chinese**.
+- **拼** (`#pinyin-toggle`) — shows/hides the pinyin above each character
+  (defaults on).
+
+Both preferences persist in localStorage (`story-reader:lang`,
+`story-reader:pinyin`) and the active audio queue switches to `audio` or
+`audioZh` with the language. The Chinese text uses the **KaiTi** font
+(`fonts/KaiTiRegular.ttf`, declared via `@font-face` in `css/base.css`). The
+char+pinyin renderer (`makeW`, punctuation no-break handling) is ported from
+`elvinio/chinese`.
 
 ### Interactive diagrams
 
@@ -209,11 +253,18 @@ browsers, generate an `.mp3` alongside each `.opus`.
 Calls a Kokoro TTS endpoint to produce one audio file per `paragraph`/`diagram`
 node and (if missing) writes the `audio` paths back into `story.json`.
 
+For **bilingual** stories it also generates a Chinese clip for every node that
+has a `zh` token array — using the Chinese voice (`--voice-zh`, default
+`zf_xiaobei`) — and writes the path back into `audioZh`. A single run therefore
+produces both English (`--voice`, default `af_heart`) and Chinese narration;
+`--speed` (default 0.9) applies to both.
+
 ```bash
 STORY_TTS_API_KEY=... python generate_audio.py stories/<id>/story.json
 python generate_audio.py stories/<id>/story.json --dry-run   # plan only
 python generate_audio.py stories/<id>/story.json --force      # overwrite
 python generate_audio.py stories/<id>/story.json --chapter ch1 ch3 --force
+python generate_audio.py stories/<id>/story.json --voice-zh zf_xiaobei
 ```
 
 Naming convention it expects/creates: `audio/<chapter-id>-<node-id>.<fmt>`.
@@ -246,6 +297,7 @@ for initial generation or deliberate full reruns.
    {
      "chapters": ["ch1", "ch3"],
      "voice": "af_heart",
+     "voiceZh": "zf_xiaobei",
      "speed": "0.9",
      "format": "opus"
    }
@@ -253,6 +305,7 @@ for initial generation or deliberate full reruns.
 
    Omit `chapters` (or use `[]`) to regenerate all chapters. All fields except
    `chapters` are optional and default to the same values as the manual workflow.
+   `voiceZh` sets the Chinese voice for bilingual stories (default `zf_xiaobei`).
 
 The bot commit from `auto-regen-audio.yml` uses `[ci skip]` in its message to
 avoid re-triggering the workflow.

@@ -11,6 +11,71 @@ if (!storyId) {
 let player = null;
 let tracker = null;
 
+// Bilingual state ----------------------------------------------------------
+let storyMeta = null;
+let queueEn = [];
+let queueZh = [];
+let currentLang = 'en';   // 'en' | 'zh'
+
+const LANG_KEY   = 'story-reader:lang';
+const PINYIN_KEY = 'story-reader:pinyin';
+
+// Character + pinyin rendering (ported from the Chinese stories repo) -------
+const PUNCT_RE   = /^[，。！？、：；…—“”‘’「」『』【】〔〕·～\-–—]+$/;
+// Closing punctuation must not start a line — attach to the preceding token.
+const CLOSING_RE = /^[，。！？、：；”’」』】〕…—]+$/;
+// Opening punctuation must not end a line — attach to the following token.
+const OPENING_RE = /^[“‘「『【〔]+$/;
+
+function makeW(ch, py) {
+  const w = document.createElement('span');
+  w.className = 'w' + (PUNCT_RE.test(ch) ? ' punct' : '');
+  const pyEl = document.createElement('span');
+  pyEl.className = 'py';
+  pyEl.textContent = py;
+  const chEl = document.createElement('span');
+  chEl.textContent = ch;
+  w.appendChild(pyEl);
+  w.appendChild(chEl);
+  return w;
+}
+
+function appendNoBreak(parent, ...nodes) {
+  const g = document.createElement('span');
+  g.style.whiteSpace = 'nowrap';
+  nodes.forEach(n => g.appendChild(n));
+  parent.appendChild(g);
+}
+
+// Build a <p class="para-zh"> from an array of [char, pinyin] tokens.
+function renderChineseParagraph(tokens) {
+  const p = document.createElement('p');
+  p.className = 'para-zh';
+  let pending = []; // opening punctuation waiting to attach to next char
+  for (const [ch, py] of tokens) {
+    const w = makeW(ch, py);
+    if (CLOSING_RE.test(ch) && p.lastChild) {
+      const prev = p.lastChild;
+      p.removeChild(prev);
+      appendNoBreak(p, prev, w);
+    } else if (OPENING_RE.test(ch)) {
+      pending.push(w);
+    } else if (pending.length) {
+      appendNoBreak(p, ...pending, w);
+      pending = [];
+    } else {
+      p.appendChild(w);
+    }
+  }
+  pending.forEach(w => p.appendChild(w)); // flush trailing opening punctuation
+  return p;
+}
+
+// Plain-text Chinese (no pinyin) for the audio-bar preview.
+function zhText(tokens) {
+  return tokens.map(t => t[0]).join('');
+}
+
 async function init() {
   let story;
   try {
@@ -23,6 +88,7 @@ async function init() {
     return;
   }
 
+  storyMeta = story.meta;
   document.title = story.meta.title + ' — Story Library';
   document.getElementById('story-title').textContent = story.meta.title;
 
@@ -31,13 +97,25 @@ async function init() {
 
   const tocNav = document.getElementById('toc-nav');
   const storyBase = `stories/${storyId}/`;
-  const audioQueue = [];
+  queueEn = [];
+  queueZh = [];
+  let hasZh = false;
 
   for (const chapter of story.chapters) {
     const h2 = document.createElement('h2');
     h2.className = 'chapter-title';
     h2.id = 'chapter-' + chapter.id;
-    h2.textContent = chapter.title;
+    if (chapter.titleZh) {
+      const en = document.createElement('span');
+      en.className = 't-en';
+      en.textContent = chapter.title;
+      const zh = document.createElement('span');
+      zh.className = 't-zh';
+      zh.textContent = chapter.titleZh;
+      h2.append(en, zh);
+    } else {
+      h2.textContent = chapter.title;
+    }
     content.appendChild(h2);
 
     const tocLink = document.createElement('a');
@@ -51,6 +129,7 @@ async function init() {
     tocNav.appendChild(tocLink);
 
     for (const node of chapter.nodes) {
+      if (node.zh) hasZh = true;
       const el = await renderNode(node, storyBase, chapter.id);
       content.appendChild(el);
 
@@ -60,14 +139,17 @@ async function init() {
         else if (node.type === 'diagram') previewText = node.caption || '';
         else if (node.type === 'callout') previewText = [node.label, node.text].filter(Boolean).join('. ');
         else if (node.type === 'list') previewText = (node.items || []).join('. ');
-        audioQueue.push({ id: node.id, audioSrc: storyBase + node.audio, text: previewText });
+        queueEn.push({ id: node.id, audioSrc: storyBase + node.audio, text: previewText });
+      }
+      if (node.audioZh && node.zh) {
+        queueZh.push({ id: node.id, audioSrc: storyBase + node.audioZh, text: zhText(node.zh) });
       }
     }
   }
 
   player = new AudioPlayer();
-  player.loadQueue(audioQueue);
   setupAudioBar();
+  setupLanguageControls(hasZh);
 
   tracker = new ScrollTracker(storyId, story.version);
   tracker.observe(content);
@@ -90,8 +172,13 @@ async function renderNode(node, base, chapterId) {
 
   if (node.type === 'paragraph') {
     const p = document.createElement('p');
+    p.className = 'para-en';
     p.textContent = node.text;
     wrapper.appendChild(p);
+
+    if (node.zh) {
+      wrapper.appendChild(renderChineseParagraph(node.zh));
+    }
 
   } else if (node.type === 'diagram') {
     const fig = document.createElement('figure');
@@ -146,7 +233,7 @@ async function renderNode(node, base, chapterId) {
     wrapper.appendChild(list);
   }
 
-  if (node.audio) {
+  if (node.audio || node.audioZh) {
     const btn = document.createElement('button');
     btn.className = 'play-from-here';
     btn.setAttribute('aria-label', 'Play from here');
@@ -276,6 +363,67 @@ function setupAudioBar() {
       .forEach(el => el.classList.remove('is-narrating'));
     progressFill.style.width = '100%';
   });
+}
+
+// ── Language / pinyin controls ───────────────────────
+function applyQueue() {
+  player?.loadQueue(currentLang === 'zh' ? queueZh : queueEn);
+}
+
+function setLanguage(lang) {
+  currentLang = lang === 'zh' ? 'zh' : 'en';
+  document.body.classList.toggle('lang-zh', currentLang === 'zh');
+
+  const useZh = currentLang === 'zh' && storyMeta?.titleZh;
+  const title = useZh ? storyMeta.titleZh : (storyMeta?.title || '');
+  document.getElementById('story-title').textContent = title;
+  document.title = title + ' — Story Library';
+
+  const btn = document.getElementById('lang-toggle');
+  if (btn) {
+    // The button shows the language you'll switch TO.
+    btn.textContent = currentLang === 'zh' ? 'EN' : '中';
+    btn.setAttribute('aria-pressed', String(currentLang === 'zh'));
+  }
+
+  applyQueue();
+  try { localStorage.setItem(LANG_KEY, currentLang); } catch {}
+}
+
+function setPinyin(on) {
+  document.body.classList.toggle('show-pinyin', on);
+  const btn = document.getElementById('pinyin-toggle');
+  if (btn) btn.setAttribute('aria-pressed', String(on));
+  try { localStorage.setItem(PINYIN_KEY, on ? '1' : '0'); } catch {}
+}
+
+function setupLanguageControls(hasZh) {
+  if (!hasZh) {
+    // English-only story: keep the English queue, leave toggles hidden.
+    applyQueue();
+    return;
+  }
+
+  const langBtn = document.getElementById('lang-toggle');
+  const pinyinBtn = document.getElementById('pinyin-toggle');
+  langBtn.hidden = false;
+  pinyinBtn.hidden = false;
+
+  let savedLang = null, savedPinyin = null;
+  try { savedLang = localStorage.getItem(LANG_KEY); } catch {}
+  try { savedPinyin = localStorage.getItem(PINYIN_KEY); } catch {}
+
+  // Chinese stories default to Chinese with pinyin shown.
+  const lang = savedLang === 'en' ? 'en' : 'zh';
+  const pinyinOn = savedPinyin === null ? true : savedPinyin === '1';
+
+  setLanguage(lang);
+  setPinyin(pinyinOn);
+
+  langBtn.addEventListener('click', () =>
+    setLanguage(currentLang === 'zh' ? 'en' : 'zh'));
+  pinyinBtn.addEventListener('click', () =>
+    setPinyin(!document.body.classList.contains('show-pinyin')));
 }
 
 // TOC toggle

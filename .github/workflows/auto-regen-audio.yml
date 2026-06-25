@@ -98,16 +98,18 @@ jobs:
                   continue
 
               chapters = cfg.get("chapters") or []
-              voice   = cfg.get("voice",  "af_heart")
-              speed   = cfg.get("speed",  "0.9")
-              fmt     = cfg.get("format", "opus")
+              voice    = cfg.get("voice",   "af_heart")
+              voice_zh = cfg.get("voiceZh", "zf_xiaobei")
+              speed    = cfg.get("speed",   "0.9")
+              fmt      = cfg.get("format",  "opus")
 
               cmd = [
                   sys.executable, "generate_audio.py",
                   story_json,
-                  "--voice",  str(voice),
-                  "--speed",  str(speed),
-                  "--format", str(fmt),
+                  "--voice",    str(voice),
+                  "--voice-zh", str(voice_zh),
+                  "--speed",    str(speed),
+                  "--format",   str(fmt),
                   "--force",
               ]
               if chapters:
