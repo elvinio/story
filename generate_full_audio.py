@@ -349,7 +349,7 @@ def main() -> None:
         combined += audio + silence
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
-    combined.export(str(output_path), format="mp3", bitrate="192k")
+    combined.export(str(output_path), format="mp3", bitrate="128k")
 
     duration_min = len(combined) / 1000 / 60
     size_mb      = output_path.stat().st_size / (1024 * 1024)
