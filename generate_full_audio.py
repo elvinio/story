@@ -216,9 +216,14 @@ def call_tts(text: str, args, session) -> bytes:
         time.sleep(delay)
 
 
-def fetch_segment(seg: Segment, args, session) -> tuple:
+def fetch_segment(seg: Segment, args, session, cache_dir: Path) -> tuple:
+    cache_file = cache_dir / f"{seg.index:04d}.mp3"
+    if cache_file.exists():
+        return seg.index, cache_file.read_bytes(), True
     data = call_tts(seg.text, args, session)
-    return seg.index, data
+    cache_dir.mkdir(parents=True, exist_ok=True)
+    cache_file.write_bytes(data)
+    return seg.index, data, False
 
 
 # ── Main ──────────────────────────────────────────────────────────────────────
@@ -250,6 +255,8 @@ def main() -> None:
                         help=f"Silence between paragraphs in seconds (default: {DEFAULT_PARA_PAUSE})")
     parser.add_argument("--workers",       type=int, default=3,
                         help="Parallel TTS workers (default: 3)")
+    parser.add_argument("--cache-dir",     default=None, dest="cache_dir",
+                        help="Directory to cache per-segment MP3s (default: <story-dir>/.segment-cache)")
     parser.add_argument("--dry-run",       action="store_true", dest="dry_run",
                         help="Print segment list without calling the API")
     args = parser.parse_args()
@@ -267,6 +274,7 @@ def main() -> None:
     title     = story.get("meta", {}).get("title", story_id)
 
     output_path = Path(args.output) if args.output else story_dir / f"{story_id}.mp3"
+    cache_dir   = Path(args.cache_dir) if args.cache_dir else story_dir / ".segment-cache"
 
     segments = build_segments(story, args)
     if not segments:
@@ -279,6 +287,7 @@ def main() -> None:
     print(f"Segments: {len(segments)}")
     print(f"Voice:    {args.voice}  speed={args.speed}")
     print(f"Output:   {output_path}")
+    print(f"Cache:    {cache_dir}")
     print(f"Pauses:   title={args.title_pause}s  chapter={args.chapter_pause}s  para={args.para_pause}s")
     print(f"          (~{total_silence_s:.0f}s of silence total)")
     print()
@@ -301,15 +310,21 @@ def main() -> None:
     mp3_map = {}
     errors = 0
 
-    print(f"Fetching {len(segments)} segments from TTS API...")
+    cached_count = sum(1 for s in segments if (cache_dir / f"{s.index:04d}.mp3").exists())
+    if cached_count:
+        print(f"Fetching segments ({cached_count}/{len(segments)} already cached)...")
+    else:
+        print(f"Fetching {len(segments)} segments from TTS API...")
+
     with requests.Session() as session:
         if args.workers == 1:
             for i, seg in enumerate(segments, 1):
                 print(f"  [{i:>3}/{len(segments)}] {seg.label}", end=" ", flush=True)
                 try:
-                    _, data = fetch_segment(seg, args, session)
+                    _, data, from_cache = fetch_segment(seg, args, session, cache_dir)
                     mp3_map[seg.index] = data
-                    print(f"({len(data) // 1024} KB)")
+                    tag = "cached" if from_cache else f"{len(data) // 1024} KB"
+                    print(f"({tag})")
                 except RuntimeError as exc:
                     print(f"ERROR: {exc}")
                     errors += 1
@@ -317,7 +332,7 @@ def main() -> None:
             futures = {}
             with ThreadPoolExecutor(max_workers=args.workers) as pool:
                 for seg in segments:
-                    fut = pool.submit(fetch_segment, seg, args, session)
+                    fut = pool.submit(fetch_segment, seg, args, session, cache_dir)
                     futures[fut] = seg
 
                 done = 0
@@ -325,9 +340,10 @@ def main() -> None:
                     done += 1
                     seg = futures[fut]
                     try:
-                        idx, data = fut.result()
+                        idx, data, from_cache = fut.result()
                         mp3_map[idx] = data
-                        print(f"  [{done:>3}/{len(segments)}] {seg.label} ({len(data) // 1024} KB)")
+                        tag = "cached" if from_cache else f"{len(data) // 1024} KB"
+                        print(f"  [{done:>3}/{len(segments)}] {seg.label} ({tag})")
                     except RuntimeError as exc:
                         print(f"  [{done:>3}/{len(segments)}] ERROR {seg.label}: {exc}")
                         errors += 1
@@ -344,11 +360,7 @@ def main() -> None:
         combined += audio + silence
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
-<<<<<<< HEAD
-    combined.export(str(output_path), format="mp3", bitrate="192k")
-=======
     combined.export(str(output_path), format="mp3", bitrate="128k")
->>>>>>> claude/story-mp3-tts-script-iq5pd1
 
     duration_min = len(combined) / 1000 / 60
     size_mb      = output_path.stat().st_size / (1024 * 1024)
