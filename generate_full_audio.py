@@ -156,7 +156,6 @@ def build_segments(story: dict, args) -> list:
     meta     = story.get("meta", {})
     title    = meta.get("title", "").strip()
     subtitle = meta.get("subtitle", "").strip()
-    author   = meta.get("author", "").strip()
 
     if title:
         segs.append(Segment(idx, "title", normalize_tts_text(title), title_pause_ms))
@@ -164,10 +163,6 @@ def build_segments(story: dict, args) -> list:
 
     if subtitle:
         segs.append(Segment(idx, "subtitle", normalize_tts_text(subtitle), 500))
-        idx += 1
-
-    if author:
-        segs.append(Segment(idx, "author", f"Written by {author}.", title_pause_ms))
         idx += 1
 
     chapters = story.get("chapters", [])
