@@ -168,7 +168,10 @@ def build_segments(story: dict, args) -> list:
     chapters = story.get("chapters", [])
     for ch_num, chapter in enumerate(chapters, start=1):
         ch_title = chapter.get("title", "").strip()
-        heading  = f"Chapter {ch_num}: {ch_title}" if ch_title else f"Chapter {ch_num}"
+        if args.no_chapter_numbers:
+            heading = ch_title or f"Chapter {ch_num}"
+        else:
+            heading = f"Chapter {ch_num}: {ch_title}" if ch_title else f"Chapter {ch_num}"
         segs.append(Segment(idx, f"ch{ch_num} heading", normalize_tts_text(heading), chap_pause_ms))
         idx += 1
 
@@ -255,6 +258,8 @@ def main() -> None:
                         help=f"Silence between paragraphs in seconds (default: {DEFAULT_PARA_PAUSE})")
     parser.add_argument("--workers",       type=int, default=3,
                         help="Parallel TTS workers (default: 3)")
+    parser.add_argument("--no-chapter-numbers", action="store_true", dest="no_chapter_numbers",
+                        help="Read chapter title only, without 'Chapter N:' prefix")
     parser.add_argument("--cache-dir",     default=None, dest="cache_dir",
                         help="Directory to cache per-segment MP3s (default: <story-dir>/.segment-cache)")
     parser.add_argument("--dry-run",       action="store_true", dest="dry_run",
