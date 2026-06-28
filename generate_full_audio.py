@@ -166,12 +166,16 @@ def build_segments(story: dict, args) -> list:
         idx += 1
 
     chapters = story.get("chapters", [])
+    _part_words = ["One","Two","Three","Four","Five","Six","Seven","Eight",
+                   "Nine","Ten","Eleven","Twelve","Thirteen","Fourteen","Fifteen",
+                   "Sixteen","Seventeen","Eighteen","Nineteen","Twenty"]
     for ch_num, chapter in enumerate(chapters, start=1):
         ch_title = chapter.get("title", "").strip()
         if args.no_chapter_numbers:
-            heading = ch_title or f"Chapter {ch_num}"
+            heading = ch_title or f"Part {ch_num}"
         else:
-            heading = f"Chapter {ch_num}: {ch_title}" if ch_title else f"Chapter {ch_num}"
+            part = _part_words[ch_num - 1] if ch_num <= len(_part_words) else str(ch_num)
+            heading = f"Part {part}: {ch_title}" if ch_title else f"Part {part}"
         segs.append(Segment(idx, f"ch{ch_num} heading", normalize_tts_text(heading), chap_pause_ms))
         idx += 1
 
