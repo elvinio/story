@@ -119,9 +119,7 @@ def _english_text(node: dict) -> str:
     if node["type"] == "diagram":
         return ""
     if node["type"] == "callout":
-        label = node.get("label", "").strip()
-        body  = node.get("text", "").strip()
-        return (label + ". " + body) if label and body else (label or body)
+        return ""
     if node["type"] == "list":
         items = [i.strip() for i in node.get("items", []) if i.strip()]
         if node.get("ordered"):
