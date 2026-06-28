@@ -117,7 +117,7 @@ def _english_text(node: dict) -> str:
     if node["type"] == "paragraph":
         return node.get("text", "").strip()
     if node["type"] == "diagram":
-        return node.get("caption", "").strip()
+        return ""
     if node["type"] == "callout":
         label = node.get("label", "").strip()
         body  = node.get("text", "").strip()
